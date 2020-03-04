@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ModularMonolith.Payments\ModularMonolith.Payments.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Registrations\ModularMonolith.Registrations.csproj" />
+  </ItemGroup>
+
+</Project>

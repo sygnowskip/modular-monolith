@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ModularMonolith.Payments.Contracts\ModularMonolith.Payments.Contracts.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Payments.Queries\ModularMonolith.Payments.Queries.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Payments\ModularMonolith.Payments.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Persistence\ModularMonolith.Persistence.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Registrations.Contracts\ModularMonolith.Registrations.Contracts.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Registrations.EventHandlers\ModularMonolith.Registrations.EventHandlers.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Registrations.Queries\ModularMonolith.Registrations.Queries.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Registrations\ModularMonolith.Registrations.csproj" />
+  </ItemGroup>
+
+</Project>
