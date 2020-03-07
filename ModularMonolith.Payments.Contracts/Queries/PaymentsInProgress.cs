@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using CSharpFunctionalExtensions;
 using MediatR;
+using ModularMonolith.Payments.Language;
 
 namespace ModularMonolith.Payments.Contracts.Queries
 {

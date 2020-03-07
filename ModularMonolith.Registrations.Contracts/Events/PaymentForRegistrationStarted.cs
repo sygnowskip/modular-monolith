@@ -1,4 +1,6 @@
-﻿namespace ModularMonolith.Registrations.Contracts.Events
+﻿using ModularMonolith.Registrations.Language;
+
+namespace ModularMonolith.Registrations.Contracts.Events
 {
     public class PaymentForRegistrationStarted
     {

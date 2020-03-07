@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using ModularMonolith.Registrations.Language;
 
 namespace ModularMonolith.Registrations.Contracts.Events
 {

@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
-using ModularMonolith.Payments.Contracts;
-using ModularMonolith.Registrations.Contracts;
+using ModularMonolith.Payments.Language;
+using ModularMonolith.Registrations.Language;
 
 namespace ModularMonolith.Registrations
 {
@@ -32,15 +32,7 @@ namespace ModularMonolith.Registrations
             Status = RegistrationStatus.Completed;
         }
     }
-
-    public enum RegistrationStatus
-    {
-        New,
-        AwaitingPayment,
-        Paid,
-        Completed
-    }
-
+    
     public class RegistrationPayment
     {
         public RegistrationPayment(decimal fee, string currency)

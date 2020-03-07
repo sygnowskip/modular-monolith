@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ModularMonolith.Persistence;
 using ModularMonolith.Registrations.Contracts.Queries;
+using ModularMonolith.Registrations.Language;
 
 namespace ModularMonolith.Registrations.Queries
 {

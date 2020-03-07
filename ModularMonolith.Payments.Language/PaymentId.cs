@@ -1,4 +1,4 @@
-﻿namespace ModularMonolith.Payments.Contracts
+﻿namespace ModularMonolith.Payments.Language
 {
     public class PaymentId
     {

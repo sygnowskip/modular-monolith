@@ -1,6 +1,7 @@
 ﻿using System;
 using CSharpFunctionalExtensions;
 using MediatR;
+using ModularMonolith.Payments.Language;
 
 namespace ModularMonolith.Payments.Contracts.Commands
 {

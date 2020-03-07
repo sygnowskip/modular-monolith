@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MediatR;
+using ModularMonolith.Registrations.Language;
 
 namespace ModularMonolith.Registrations.Contracts.Queries
 {
     public class UnpaidRegistrationDto
     {
-        public UnpaidRegistrationDto(RegistrationId id, Enum status)
+        public UnpaidRegistrationDto(RegistrationId id, RegistrationStatus status)
         {
             Id = id;
             Status = status;
@@ -14,7 +14,7 @@ namespace ModularMonolith.Registrations.Contracts.Queries
 
         public RegistrationId Id { get; }
         //TODO: Problem
-        public Enum Status { get; }
+        public RegistrationStatus Status { get; }
     }
 
     public class UnpaidRegistrations : IRequest<IEnumerable<UnpaidRegistrationDto>>

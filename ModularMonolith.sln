@@ -15,17 +15,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith.Payments.Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith.Persistence", "ModularMonolith.Persistence\ModularMonolith.Persistence.csproj", "{2B3852B1-6AAC-4CAB-9CE5-415ECB131E7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Payments.Queries", "ModularMonolith.Payments.Queries\ModularMonolith.Payments.Queries.csproj", "{9D078DFE-DA4C-4E64-BBC0-D7917AB4836F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith.Payments.Queries", "ModularMonolith.Payments.Queries\ModularMonolith.Payments.Queries.csproj", "{9D078DFE-DA4C-4E64-BBC0-D7917AB4836F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Common.Aggregates", "ModularMonolith.Common.Aggregates\ModularMonolith.Common.Aggregates.csproj", "{3E3E6A5E-DA07-4A08-BFD4-E5A4F7D12CAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith.Common.Aggregates", "ModularMonolith.Common.Aggregates\ModularMonolith.Common.Aggregates.csproj", "{3E3E6A5E-DA07-4A08-BFD4-E5A4F7D12CAE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payments", "Payments", "{3DA3F64B-4234-443D-8ED0-409B7CAA2980}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Registrations", "Registrations", "{14E020DA-D08E-48A1-A6F2-3E611C1AD5FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Registrations.EventHandlers", "ModularMonolith.Registrations.EventHandlers\ModularMonolith.Registrations.EventHandlers.csproj", "{BA819EB1-C223-499A-8DDA-618CECCB1EF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith.Registrations.EventHandlers", "ModularMonolith.Registrations.EventHandlers\ModularMonolith.Registrations.EventHandlers.csproj", "{BA819EB1-C223-499A-8DDA-618CECCB1EF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Registrations.Queries", "ModularMonolith.Registrations.Queries\ModularMonolith.Registrations.Queries.csproj", "{727BDAE0-8D09-4663-BF1B-AB0A2208BD30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith.Registrations.Queries", "ModularMonolith.Registrations.Queries\ModularMonolith.Registrations.Queries.csproj", "{727BDAE0-8D09-4663-BF1B-AB0A2208BD30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Payments.Language", "ModularMonolith.Payments.Language\ModularMonolith.Payments.Language.csproj", "{05CC703C-4105-462B-BBA4-49D7FA083BC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Registrations.Language", "ModularMonolith.Registrations.Language\ModularMonolith.Registrations.Language.csproj", "{E1189F4D-776E-4BAD-BF39-9B553747634A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +77,14 @@ Global
 		{727BDAE0-8D09-4663-BF1B-AB0A2208BD30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{727BDAE0-8D09-4663-BF1B-AB0A2208BD30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{727BDAE0-8D09-4663-BF1B-AB0A2208BD30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05CC703C-4105-462B-BBA4-49D7FA083BC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05CC703C-4105-462B-BBA4-49D7FA083BC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05CC703C-4105-462B-BBA4-49D7FA083BC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05CC703C-4105-462B-BBA4-49D7FA083BC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1189F4D-776E-4BAD-BF39-9B553747634A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1189F4D-776E-4BAD-BF39-9B553747634A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1189F4D-776E-4BAD-BF39-9B553747634A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1189F4D-776E-4BAD-BF39-9B553747634A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +97,8 @@ Global
 		{9D078DFE-DA4C-4E64-BBC0-D7917AB4836F} = {3DA3F64B-4234-443D-8ED0-409B7CAA2980}
 		{BA819EB1-C223-499A-8DDA-618CECCB1EF8} = {14E020DA-D08E-48A1-A6F2-3E611C1AD5FA}
 		{727BDAE0-8D09-4663-BF1B-AB0A2208BD30} = {14E020DA-D08E-48A1-A6F2-3E611C1AD5FA}
+		{05CC703C-4105-462B-BBA4-49D7FA083BC9} = {3DA3F64B-4234-443D-8ED0-409B7CAA2980}
+		{E1189F4D-776E-4BAD-BF39-9B553747634A} = {14E020DA-D08E-48A1-A6F2-3E611C1AD5FA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E7E695AA-1518-4605-B9FA-647A0D19D4F9}

@@ -1,7 +1,7 @@
 ﻿using System;
 using CSharpFunctionalExtensions;
 using ModularMonolith.Common.Aggregates;
-using ModularMonolith.Registrations.Contracts;
+using ModularMonolith.Registrations.Language;
 
 namespace ModularMonolith.Registrations
 {

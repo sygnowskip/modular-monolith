@@ -1,5 +1,5 @@
 ﻿using ModularMonolith.Common.Aggregates;
-using ModularMonolith.Payments.Contracts;
+using ModularMonolith.Payments.Language;
 
 namespace ModularMonolith.Payments
 {

@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using MediatR;
-using ModularMonolith.Payments.Contracts;
 using ModularMonolith.Payments.Contracts.Commands;
 using ModularMonolith.Payments.Contracts.Events;
+using ModularMonolith.Payments.Language;
 
 namespace ModularMonolith.Payments.Commands
 {

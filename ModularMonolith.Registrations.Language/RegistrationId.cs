@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ModularMonolith.Registrations.Contracts
+namespace ModularMonolith.Registrations.Language
 {
     public class RegistrationId
     {

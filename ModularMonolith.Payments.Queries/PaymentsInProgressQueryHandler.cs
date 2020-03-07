@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ModularMonolith.Payments.Contracts.Queries;
+using ModularMonolith.Payments.Language;
 using ModularMonolith.Persistence;
 
 namespace ModularMonolith.Payments.Queries

@@ -1,6 +1,6 @@
 ﻿using System;
 using CSharpFunctionalExtensions;
-using ModularMonolith.Payments.Contracts;
+using ModularMonolith.Payments.Language;
 
 namespace ModularMonolith.Payments
 {
@@ -26,11 +26,5 @@ namespace ModularMonolith.Payments
         { 
             return Result.Ok(new Payment(correlationId));
         }
-    }
-
-    public enum PaymentStatus
-    {
-        New,
-        Completed
     }
 }
