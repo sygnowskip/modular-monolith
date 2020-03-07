@@ -6,14 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ModularMonolith.Payments.Contracts\ModularMonolith.Payments.Contracts.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Payments.Commands\ModularMonolith.Payments.Commands.csproj" />
     <ProjectReference Include="..\ModularMonolith.Payments.Queries\ModularMonolith.Payments.Queries.csproj" />
-    <ProjectReference Include="..\ModularMonolith.Payments\ModularMonolith.Payments.csproj" />
     <ProjectReference Include="..\ModularMonolith.Persistence\ModularMonolith.Persistence.csproj" />
-    <ProjectReference Include="..\ModularMonolith.Registrations.Contracts\ModularMonolith.Registrations.Contracts.csproj" />
-    <ProjectReference Include="..\ModularMonolith.Registrations.EventHandlers\ModularMonolith.Registrations.EventHandlers.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Registrations.Commands\ModularMonolith.Registrations.Commands.csproj" />
     <ProjectReference Include="..\ModularMonolith.Registrations.Queries\ModularMonolith.Registrations.Queries.csproj" />
-    <ProjectReference Include="..\ModularMonolith.Registrations\ModularMonolith.Registrations.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ModularMonolith.Payments.Contracts\ModularMonolith.Payments.Contracts.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Payments\ModularMonolith.Payments.csproj" />
+  </ItemGroup>
+
+</Project>
