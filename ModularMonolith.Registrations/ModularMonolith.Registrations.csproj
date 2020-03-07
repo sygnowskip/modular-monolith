@@ -11,8 +11,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ModularMonolith.Common.Aggregates\ModularMonolith.Common.Aggregates.csproj" />
-    <ProjectReference Include="..\ModularMonolith.Payments.Contracts\ModularMonolith.Payments.Contracts.csproj" />
-    <ProjectReference Include="..\ModularMonolith.Registrations.Contracts\ModularMonolith.Registrations.Contracts.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Payments.Language\ModularMonolith.Payments.Language.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Registrations.Language\ModularMonolith.Registrations.Language.csproj" />
   </ItemGroup>
 
 </Project>
