@@ -4,7 +4,7 @@ using ModularMonolith.Payments.Language;
 
 namespace ModularMonolith.Payments
 {
-    public class Payment
+    internal class Payment
     {
         private Payment(Guid correlationId)
         {

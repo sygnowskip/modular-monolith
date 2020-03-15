@@ -3,7 +3,7 @@ using ModularMonolith.Payments.Language;
 
 namespace ModularMonolith.Payments
 {
-    public interface IPaymentRepository : IAggregateRootRepository<Payment, PaymentId>
+    internal interface IPaymentRepository : IAggregateRootRepository<Payment, PaymentId>
     {
     }
 }

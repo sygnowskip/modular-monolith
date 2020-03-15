@@ -3,26 +3,25 @@ using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using MediatR;
 using ModularMonolith.Payments.Contracts.Events;
-using ModularMonolith.Registrations.Contracts.Commands;
+using ModularMonolith.Registrations.Contracts;
 
 namespace ModularMonolith.Registrations.EventHandlers
 {
-    public class OnPaymentCompleted : INotificationHandler<PaymentCompleted>
+    internal class OnPaymentCompleted : INotificationHandler<PaymentCompleted>
     {
         private readonly IRegistrationRepository _registrationRepository;
-        private readonly IMediator _mediator;
+        private readonly IRegistrationApplicationService _registrationApplicationService;
 
-        public OnPaymentCompleted(IRegistrationRepository registrationRepository, IMediator mediator)
+        public OnPaymentCompleted(IRegistrationRepository registrationRepository, IRegistrationApplicationService registrationApplicationService)
         {
             _registrationRepository = registrationRepository;
-            _mediator = mediator;
+            _registrationApplicationService = registrationApplicationService;
         }
 
         public async Task Handle(PaymentCompleted notification, CancellationToken cancellationToken)
         {
             await _registrationRepository.GetIdentifierForCorrelation(notification.CorrelationId)
-                .Bind(async registrationId =>
-                    await _mediator.Send(new MarkRegistrationAsPaid(registrationId), cancellationToken));
+                .Bind(async registrationId => await _registrationApplicationService.MarkAsPaid(registrationId));
         }
     }
 }

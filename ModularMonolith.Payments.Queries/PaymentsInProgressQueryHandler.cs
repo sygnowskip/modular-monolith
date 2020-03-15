@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ModularMonolith.Payments.Contracts.Queries;
 using ModularMonolith.Payments.Language;
-using ModularMonolith.Persistence;
+using ModularMonolith.Persistence.Read;
 
 namespace ModularMonolith.Payments.Queries
 {

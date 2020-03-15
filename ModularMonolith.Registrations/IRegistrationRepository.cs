@@ -5,7 +5,7 @@ using ModularMonolith.Registrations.Language;
 
 namespace ModularMonolith.Registrations
 {
-    public interface IRegistrationRepository : IAggregateRootRepository<Registration, RegistrationId>
+    internal interface IRegistrationRepository : IAggregateRootRepository<Registration, RegistrationId>
     {
         Result<RegistrationId> GetIdentifierForCorrelation(Guid correlationId);
     }

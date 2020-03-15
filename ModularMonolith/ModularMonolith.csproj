@@ -6,10 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ModularMonolith.Payments.Commands\ModularMonolith.Payments.Commands.csproj" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ModularMonolith.Payments.ApplicationServices\ModularMonolith.Payments.ApplicationServices.csproj" />
     <ProjectReference Include="..\ModularMonolith.Payments.Queries\ModularMonolith.Payments.Queries.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Persistence.Read\ModularMonolith.Persistence.Read.csproj" />
     <ProjectReference Include="..\ModularMonolith.Persistence\ModularMonolith.Persistence.csproj" />
-    <ProjectReference Include="..\ModularMonolith.Registrations.Commands\ModularMonolith.Registrations.Commands.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Registrations.ApplicationServices\ModularMonolith.Registrations.ApplicationServices.csproj" />
     <ProjectReference Include="..\ModularMonolith.Registrations.Queries\ModularMonolith.Registrations.Queries.csproj" />
   </ItemGroup>
 

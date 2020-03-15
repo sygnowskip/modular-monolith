@@ -2,12 +2,22 @@
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using MediatR;
-using ModularMonolith.Payments.Contracts.Commands;
 using ModularMonolith.Payments.Contracts.Events;
+using ModularMonolith.Payments.Language;
 
 namespace ModularMonolith.Payments.Commands
 {
-    public class CompletePaymentCommandHandler : IRequestHandler<CompletePayment, Result>
+    internal class CompletePayment : IRequest<Result>
+    {
+        public CompletePayment(PaymentId id)
+        {
+            Id = id;
+        }
+
+        public PaymentId Id { get; }
+    }
+
+    internal class CompletePaymentCommandHandler : IRequestHandler<CompletePayment, Result>
     {
         private readonly IPaymentRepository _paymentRepository;
         private readonly IMediator _mediator;

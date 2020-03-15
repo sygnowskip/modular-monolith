@@ -4,13 +4,13 @@ using ModularMonolith.Registrations.Language;
 
 namespace ModularMonolith.Registrations
 {
-    public class Registration
+    internal class Registration
     {
-        public Registration(RegistrationId id)
+        private Registration(RegistrationId id, RegistrationPayment payment)
         {
             Id = id;
             Status = RegistrationStatus.New;
-            Payment = new RegistrationPayment(120, "USD");
+            Payment = payment;
         }
 
         public RegistrationId Id { get; private set; }
@@ -32,10 +32,10 @@ namespace ModularMonolith.Registrations
             Status = RegistrationStatus.Completed;
         }
     }
-    
-    public class RegistrationPayment
+
+    internal class RegistrationPayment
     {
-        public RegistrationPayment(decimal fee, string currency)
+        private RegistrationPayment(decimal fee, string currency)
         {
             Fee = fee;
             Currency = currency;

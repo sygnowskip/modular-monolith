@@ -1,14 +1,24 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using MediatR;
-using ModularMonolith.Payments.Contracts.Commands;
 using ModularMonolith.Payments.Contracts.Events;
 using ModularMonolith.Payments.Language;
 
 namespace ModularMonolith.Payments.Commands
 {
-    public class StartPaymentCommandHandler : IRequestHandler<StartPayment, Result<PaymentId>>
+    internal class StartPayment : IRequest<Result<PaymentId>>
+    {
+        public StartPayment(Guid correlationId)
+        {
+            CorrelationId = correlationId;
+        }
+
+        public Guid CorrelationId { get; }
+    }
+
+    internal class StartPaymentCommandHandler : IRequestHandler<StartPayment, Result<PaymentId>>
     {
         private readonly IPaymentRepository _paymentRepository;
         private readonly IMediator _mediator;

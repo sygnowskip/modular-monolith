@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using ModularMonolith.Persistence;
+using ModularMonolith.Persistence.Read;
 using ModularMonolith.Registrations.Contracts.Queries;
 using ModularMonolith.Registrations.Language;
 
@@ -24,7 +24,7 @@ namespace ModularMonolith.Registrations.Queries
             return await _queryDbContext.Registrations
                 .Where(r => r.Status == RegistrationStatus.AwaitingPayment || r.Status == RegistrationStatus.New)
                 .Select(r => new UnpaidRegistrationDto(r.Id, r.Status))
-                .ToListAsync();
+                .ToListAsync(cancellationToken: cancellationToken);
         }
     }
 }

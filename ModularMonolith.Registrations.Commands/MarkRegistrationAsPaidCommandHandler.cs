@@ -2,12 +2,22 @@
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using MediatR;
-using ModularMonolith.Registrations.Contracts.Commands;
 using ModularMonolith.Registrations.Contracts.Events;
+using ModularMonolith.Registrations.Language;
 
 namespace ModularMonolith.Registrations.Commands
 {
-    public class MarkRegistrationAsPaidCommandHandler : IRequestHandler<MarkRegistrationAsPaid, Result>
+    internal class MarkRegistrationAsPaid : IRequest<Result>
+    {
+        public MarkRegistrationAsPaid(RegistrationId id)
+        {
+            Id = id;
+        }
+
+        public RegistrationId Id { get; }
+    }
+
+    internal class MarkRegistrationAsPaidCommandHandler : IRequestHandler<MarkRegistrationAsPaid, Result>
     {
         private readonly IRegistrationRepository _registrationRepository;
         private readonly IMediator _mediator;
