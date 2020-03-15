@@ -10,8 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ModularMonolith.Payments\ModularMonolith.Payments.csproj" />
-    <ProjectReference Include="..\ModularMonolith.Registrations\ModularMonolith.Registrations.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Payments.Contracts\ModularMonolith.Payments.Contracts.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Registrations.Contracts\ModularMonolith.Registrations.Contracts.csproj" />
   </ItemGroup>
-
 </Project>
