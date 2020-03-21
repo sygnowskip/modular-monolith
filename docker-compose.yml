@@ -1,0 +1,12 @@
+version: "3"
+services:
+  identity:
+    build:
+      context: "."
+      dockerfile: "./docker/configuration/dotnet-api/Dockerfile"
+      args:
+        PROJECT_PATH: Example/IdentityServer
+        ASSEMBLY_NAME: IdentityServer
+    restart: on-failure
+    ports: 
+      - 2000:80

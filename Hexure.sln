@@ -59,6 +59,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{47
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "Example\IdentityServer\IdentityServer.csproj", "{5D173104-581B-47FD-AAD7-C7F165438084}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{BDF498E9-8739-48DF-B72C-9456B4507A16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Tests", "Example\ModularMonolith.Tests\ModularMonolith.Tests.csproj", "{C35AFD08-EE68-4C7D-90E9-1C0ADDEFF14F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -137,6 +141,10 @@ Global
 		{5D173104-581B-47FD-AAD7-C7F165438084}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D173104-581B-47FD-AAD7-C7F165438084}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D173104-581B-47FD-AAD7-C7F165438084}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C35AFD08-EE68-4C7D-90E9-1C0ADDEFF14F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C35AFD08-EE68-4C7D-90E9-1C0ADDEFF14F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C35AFD08-EE68-4C7D-90E9-1C0ADDEFF14F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C35AFD08-EE68-4C7D-90E9-1C0ADDEFF14F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -168,6 +176,8 @@ Global
 		{3DA7069C-3B35-44A6-97E5-31C50B0F666D} = {6447FD98-2D85-48B0-9AC3-6D1D91B5399B}
 		{47A56782-2C0F-48ED-BB23-8BB727BE0BE7} = {6447FD98-2D85-48B0-9AC3-6D1D91B5399B}
 		{5D173104-581B-47FD-AAD7-C7F165438084} = {47A56782-2C0F-48ED-BB23-8BB727BE0BE7}
+		{BDF498E9-8739-48DF-B72C-9456B4507A16} = {6447FD98-2D85-48B0-9AC3-6D1D91B5399B}
+		{C35AFD08-EE68-4C7D-90E9-1C0ADDEFF14F} = {BDF498E9-8739-48DF-B72C-9456B4507A16}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {598A3A02-79C7-4D50-889E-D65594383E6D}

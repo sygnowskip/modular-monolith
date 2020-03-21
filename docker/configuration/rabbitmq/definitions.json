@@ -1,0 +1,29 @@
+{
+    "rabbit_version": "3.7.17",
+    "users": [
+        {
+            "name": "admin",
+            "password": "qwerty123",
+            "tags": "administrator"
+        }
+    ],
+    "vhosts": [
+        {
+            "name": "\/"
+        }
+    ],
+    "permissions": [
+        {
+            "user": "admin",
+            "vhost": "\/",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        }
+    ],
+    "parameters": [],
+    "policies": [],
+    "queues": [],
+    "exchanges": [],
+    "bindings": []
+}
