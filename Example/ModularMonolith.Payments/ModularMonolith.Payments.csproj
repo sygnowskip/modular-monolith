@@ -1,15 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CSharpFunctionalExtensions" Version="2.3.0" />
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.4.1" />
     <PackageReference Include="MediatR" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Source\Hexure\Hexure.csproj" />
     <ProjectReference Include="..\ModularMonolith.Payments.Language\ModularMonolith.Payments.Language.csproj" />
   </ItemGroup>
 

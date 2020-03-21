@@ -1,4 +1,4 @@
-﻿using ModularMonolith.Common.Aggregates;
+﻿using Hexure;
 using ModularMonolith.Payments.Language;
 
 namespace ModularMonolith.Payments

@@ -5,13 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CSharpFunctionalExtensions" Version="2.3.0" />
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.4.1" />
     <PackageReference Include="MediatR" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ModularMonolith.Common.Aggregates\ModularMonolith.Common.Aggregates.csproj" />
-    <ProjectReference Include="..\ModularMonolith.Payments.Language\ModularMonolith.Payments.Language.csproj" />
     <ProjectReference Include="..\ModularMonolith.Registrations.Language\ModularMonolith.Registrations.Language.csproj" />
   </ItemGroup>
 

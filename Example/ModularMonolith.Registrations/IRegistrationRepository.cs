@@ -1,6 +1,6 @@
 ﻿using System;
 using CSharpFunctionalExtensions;
-using ModularMonolith.Common.Aggregates;
+using Hexure;
 using ModularMonolith.Registrations.Language;
 
 namespace ModularMonolith.Registrations

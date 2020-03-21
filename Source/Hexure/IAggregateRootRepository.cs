@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 
-namespace ModularMonolith.Common.Aggregates
+namespace Hexure
 {
     public interface IAggregateRootRepository<TAggregate, in TIdentifier>
     {
