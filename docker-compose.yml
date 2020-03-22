@@ -10,3 +10,13 @@ services:
     restart: on-failure
     ports: 
       - 2000:80
+  modular-monolith-api:
+    build:
+      context: "."
+      dockerfile: "./docker/configuration/dotnet-api/Dockerfile"
+      args:
+        PROJECT_PATH: Example/ModularMonolith.API
+        ASSEMBLY_NAME: ModularMonolith.API
+    restart: on-failure
+    ports: 
+      - 2001:80

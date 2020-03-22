@@ -1,6 +1,4 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using FluentAssertions;
 using IdentityModel.Client;
 using ModularMonolith.Tests.Common;
@@ -13,19 +11,17 @@ namespace ModularMonolith.Tests.Identity
     public class IdentityTests : BaseHttpTests
     {
         private readonly AuthoritySettings _settings;
-        private readonly HttpClient _httpClient;
 
         public IdentityTests()
         {
             _settings = ApplicationSettingsConfigurationProvider.Get().GetSection("Authority").Get<AuthoritySettings>();
-            _httpClient = HttpClientFactory.CreateClient();
         }
         
         [Test]
         public async Task ShouldBeAbleToGetTokenForClient()
         {
-            var discoveryDocument = await _httpClient.GetDiscoveryDocumentAsync(_settings.Url);
-            var token = await _httpClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest()
+            var discoveryDocument = await HttpClient.GetDiscoveryDocumentAsync(_settings.Url);
+            var token = await HttpClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest()
             {
                 Address = discoveryDocument.TokenEndpoint,
                 ClientId = "modular-monolith-client",
@@ -39,8 +35,8 @@ namespace ModularMonolith.Tests.Identity
         [Test]
         public async Task ShouldNotGetTokenForNonExistingClient()
         {
-            var discoveryDocument = await _httpClient.GetDiscoveryDocumentAsync(_settings.Url);
-            var token = await _httpClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest()
+            var discoveryDocument = await HttpClient.GetDiscoveryDocumentAsync(_settings.Url);
+            var token = await HttpClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest()
             {
                 Address = discoveryDocument.TokenEndpoint,
                 ClientId = "non-existing-client",

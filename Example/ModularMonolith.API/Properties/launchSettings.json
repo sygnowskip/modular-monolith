@@ -1,29 +1,30 @@
-{
+﻿{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:5000/",
-      "sslPort": 0
+      "applicationUrl": "http://localhost:5001",
+      "sslPort": 44344
     }
   },
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
+      "launchUrl": "api/healthmonitor",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "launchUrl": ".well-known/openid-configuration"
+      }
     },
-    "SelfHost": {
+    "ModularMonolith.API": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "api/healthmonitor",
+      "applicationUrl": "https://localhost:5002;http://localhost:5001",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "launchUrl": ".well-known/openid-configuration",
-      "applicationUrl": "http://localhost:5000/"
+      }
     }
   }
 }

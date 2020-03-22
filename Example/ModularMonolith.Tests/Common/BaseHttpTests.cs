@@ -7,12 +7,12 @@ namespace ModularMonolith.Tests.Common
     public abstract class BaseHttpTests
     {
         protected readonly IServiceProvider ServiceProvider;
-        protected readonly IHttpClientFactory HttpClientFactory;
+        protected readonly HttpClient HttpClient;
 
         protected BaseHttpTests()
         {
             ServiceProvider = ServiceProviderBuilder.Build();
-            HttpClientFactory = ServiceProvider.GetRequiredService<IHttpClientFactory>();
+            HttpClient = ServiceProvider.GetRequiredService<IHttpClientFactory>().CreateClient();
         }
     }
 }

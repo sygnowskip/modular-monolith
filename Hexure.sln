@@ -7,8 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example", "Example", "{6447
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{4352D366-EC5C-43F3-AD54-7A36A4BE0BA4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith", "Example\ModularMonolith\ModularMonolith.csproj", "{E50F03A9-A827-450F-803B-DA4CED547279}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith.Payments", "Example\ModularMonolith.Payments\ModularMonolith.Payments.csproj", "{D4FC47BC-1170-4761-8308-B53C9B0B5140}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith.Payments.ApplicationServices", "Example\ModularMonolith.Payments.ApplicationServices\ModularMonolith.Payments.ApplicationServices.csproj", "{F4C8104F-944D-4006-9A43-39B3BEDCEAA8}"
@@ -65,16 +63,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith.Tests", "Ex
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexure.Testing", "Source\Hexure.Testing\Hexure.Testing.csproj", "{D52DA70C-FD89-4B82-A42D-20454C0B1764}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.API", "Example\ModularMonolith.API\ModularMonolith.API.csproj", "{8E6E80AA-29D0-4C86-B5A3-65B49FB4BAFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E50F03A9-A827-450F-803B-DA4CED547279}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E50F03A9-A827-450F-803B-DA4CED547279}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E50F03A9-A827-450F-803B-DA4CED547279}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E50F03A9-A827-450F-803B-DA4CED547279}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D4FC47BC-1170-4761-8308-B53C9B0B5140}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D4FC47BC-1170-4761-8308-B53C9B0B5140}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4FC47BC-1170-4761-8308-B53C9B0B5140}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -151,12 +147,15 @@ Global
 		{D52DA70C-FD89-4B82-A42D-20454C0B1764}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D52DA70C-FD89-4B82-A42D-20454C0B1764}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D52DA70C-FD89-4B82-A42D-20454C0B1764}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E6E80AA-29D0-4C86-B5A3-65B49FB4BAFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E6E80AA-29D0-4C86-B5A3-65B49FB4BAFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E6E80AA-29D0-4C86-B5A3-65B49FB4BAFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E6E80AA-29D0-4C86-B5A3-65B49FB4BAFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{E50F03A9-A827-450F-803B-DA4CED547279} = {3DA7069C-3B35-44A6-97E5-31C50B0F666D}
 		{D4FC47BC-1170-4761-8308-B53C9B0B5140} = {4F7D5EBC-C747-4C9C-800C-B39CB22A7B33}
 		{F4C8104F-944D-4006-9A43-39B3BEDCEAA8} = {99FAAD0B-4254-42A9-B8E3-D65A48522A4F}
 		{D1BF151C-BE5B-430B-A28F-8CFEE72E9A6E} = {4F7D5EBC-C747-4C9C-800C-B39CB22A7B33}
@@ -185,6 +184,7 @@ Global
 		{BDF498E9-8739-48DF-B72C-9456B4507A16} = {6447FD98-2D85-48B0-9AC3-6D1D91B5399B}
 		{C35AFD08-EE68-4C7D-90E9-1C0ADDEFF14F} = {BDF498E9-8739-48DF-B72C-9456B4507A16}
 		{D52DA70C-FD89-4B82-A42D-20454C0B1764} = {4352D366-EC5C-43F3-AD54-7A36A4BE0BA4}
+		{8E6E80AA-29D0-4C86-B5A3-65B49FB4BAFB} = {3DA7069C-3B35-44A6-97E5-31C50B0F666D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {598A3A02-79C7-4D50-889E-D65594383E6D}
