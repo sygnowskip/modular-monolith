@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Source\Hexure.Testing\Hexure.Testing.csproj" />
     <ProjectReference Include="..\..\Source\Hexure\Hexure.csproj" />
   </ItemGroup>
 
