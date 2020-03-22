@@ -8,6 +8,8 @@ services:
         PROJECT_PATH: Example/IdentityServer
         ASSEMBLY_NAME: IdentityServer
     restart: on-failure
+    environment:
+      - Issuer__Url=http://identity
     ports: 
       - 2000:80
   modular-monolith-api:
@@ -18,5 +20,7 @@ services:
         PROJECT_PATH: Example/ModularMonolith.API
         ASSEMBLY_NAME: ModularMonolith.API
     restart: on-failure
+    environment:
+      - Authority__Url=http://identity
     ports: 
       - 2001:80

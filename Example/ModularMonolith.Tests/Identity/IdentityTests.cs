@@ -20,7 +20,7 @@ namespace ModularMonolith.Tests.Identity
         [Test]
         public async Task ShouldBeAbleToGetTokenForClient()
         {
-            var discoveryDocument = await HttpClient.GetDiscoveryDocumentAsync(_settings.Url);
+            var discoveryDocument = await GetDiscoveryDocumentAsync(_settings.Url);
             var token = await HttpClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest()
             {
                 Address = discoveryDocument.TokenEndpoint,
@@ -35,7 +35,7 @@ namespace ModularMonolith.Tests.Identity
         [Test]
         public async Task ShouldNotGetTokenForNonExistingClient()
         {
-            var discoveryDocument = await HttpClient.GetDiscoveryDocumentAsync(_settings.Url);
+            var discoveryDocument = await GetDiscoveryDocumentAsync(_settings.Url);
             var token = await HttpClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest()
             {
                 Address = discoveryDocument.TokenEndpoint,

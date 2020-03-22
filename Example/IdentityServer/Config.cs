@@ -18,7 +18,14 @@ namespace IdentityServer
         public static IEnumerable<ApiResource> Apis =>
             new ApiResource[]
             {
-                new ApiResource("modular-monolith"), 
+                new ApiResource("modular-monolith")
+                {
+                    Scopes = new List<Scope>()
+                    {
+                        new Scope("registrations"),
+                        new Scope("payments")
+                    }
+                }, 
             };
         
         public static IEnumerable<Client> Clients =>
@@ -32,7 +39,7 @@ namespace IdentityServer
                     {
                         new Secret("modular-monolith-client-secret".Sha256())
                     },
-                    AllowedScopes = { "modular-monolith" }
+                    AllowedScopes = { "registrations", "payments" }
                 }
             };
         
