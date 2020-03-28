@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
+using Hexure.Results;
+using Hexure.Results.Extensions;
 using MediatR;
 using ModularMonolith.Payments.Contracts.Events;
 using ModularMonolith.Payments.Language;
@@ -31,8 +32,8 @@ namespace ModularMonolith.Payments.Commands
         public async Task<Result> Handle(CompletePayment request, CancellationToken cancellationToken)
         {
             return await _paymentRepository.GetAsync(request.Id)
-                .ToResult($"Unable to get payment with id: {request.Id}")
-                .Tap(async payment =>
+                .ToResult(PaymentsRepositoryErrors.UnableToFindPayment.Build())
+                .OnSuccess(async payment =>
                 {
                     payment.CompletePayment();
 

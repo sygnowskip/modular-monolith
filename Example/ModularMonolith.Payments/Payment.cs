@@ -1,5 +1,5 @@
 ﻿using System;
-using CSharpFunctionalExtensions;
+using Hexure.Results;
 using ModularMonolith.Payments.Language;
 
 namespace ModularMonolith.Payments

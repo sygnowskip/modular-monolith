@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
+using Hexure.Results;
 using ModularMonolith.Payments.Language;
 
 namespace ModularMonolith.Payments.Contracts

@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
+using Hexure.Results;
+using Hexure.Results.Extensions;
 using MediatR;
 using ModularMonolith.Payments.Language;
 using ModularMonolith.Registrations.Contracts.Events;
@@ -34,8 +35,8 @@ namespace ModularMonolith.Registrations.Commands
         public async Task<Result> Handle(StartPaymentForRegistration request, CancellationToken cancellationToken)
         {
             return await _registrationRepository.GetAsync(request.Id)
-                .ToResult($"Unable to find registration with id: {request.Id}")
-                .Tap(async registration =>
+                .ToResult(RegistrationRepositoryErrors.UnableToFindRegistration.Build())
+                .OnSuccess(async registration =>
                 {
                     registration.PaymentStarted(request.PaymentId);
 

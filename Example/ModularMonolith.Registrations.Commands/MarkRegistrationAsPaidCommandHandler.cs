@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
+using Hexure.Results;
+using Hexure.Results.Extensions;
 using MediatR;
 using ModularMonolith.Registrations.Contracts.Events;
 using ModularMonolith.Registrations.Language;
@@ -30,16 +31,15 @@ namespace ModularMonolith.Registrations.Commands
 
         public async Task<Result> Handle(MarkRegistrationAsPaid request, CancellationToken cancellationToken)
         {
-            var registrationResult = await _registrationRepository.GetAsync(request.Id)
-                .ToResult($"Unable to find registration with id: {request.Id}");
-
-            return await registrationResult
-                .Tap(async paymentId =>
+            return await _registrationRepository.GetAsync(request.Id)
+                .ToResult(RegistrationRepositoryErrors.UnableToFindRegistration.Build())
+                .OnSuccess(async registration =>
                 {
-                    registrationResult.Value.MarkAsPaid();
+
+                    registration.MarkAsPaid();
 
                     //TODO: Event should be on aggregate
-                    await _mediator.Publish(new RegistrationPaid(registrationResult.Value.Id), cancellationToken);
+                    await _mediator.Publish(new RegistrationPaid(registration.Id), cancellationToken);
                 });
         }
     }

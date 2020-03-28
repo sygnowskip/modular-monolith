@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
+using Hexure.Results.Extensions;
 using MediatR;
 using ModularMonolith.Payments.Contracts.Events;
 using ModularMonolith.Registrations.Contracts;
@@ -20,8 +20,8 @@ namespace ModularMonolith.Registrations.EventHandlers
 
         public async Task Handle(PaymentCompleted notification, CancellationToken cancellationToken)
         {
-            await _registrationRepository.GetIdentifierForCorrelation(notification.CorrelationId)
-                .Bind(async registrationId => await _registrationApplicationService.MarkAsPaid(registrationId));
+            var identifierResult = _registrationRepository.GetIdentifierForCorrelation(notification.CorrelationId)
+                .OnSuccess(async registrationId => await _registrationApplicationService.MarkAsPaid(registrationId));
         }
     }
 }

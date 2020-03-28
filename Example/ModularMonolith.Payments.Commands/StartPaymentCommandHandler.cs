@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
+using Hexure.Results;
+using Hexure.Results.Extensions;
 using MediatR;
 using ModularMonolith.Payments.Contracts.Events;
 using ModularMonolith.Payments.Language;
@@ -32,7 +33,7 @@ namespace ModularMonolith.Payments.Commands
         public async Task<Result<PaymentId>> Handle(StartPayment request, CancellationToken cancellationToken)
         {
             return await Payment.Create(request.CorrelationId)
-                .Map(async payment =>
+                .OnSuccess(async payment =>
                 {
                     await _paymentRepository.SaveAsync(payment);
                     

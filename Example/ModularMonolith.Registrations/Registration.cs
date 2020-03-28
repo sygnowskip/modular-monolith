@@ -1,9 +1,15 @@
-﻿using CSharpFunctionalExtensions;
+﻿using Hexure.Results;
 using ModularMonolith.Payments.Language;
 using ModularMonolith.Registrations.Language;
 
 namespace ModularMonolith.Registrations
 {
+    public static class RegistrationErrors
+    {
+        public static Error.ErrorType PaymentInProgress = new Error.ErrorType(nameof(PaymentInProgress), "There is already a payment in progress");
+        public static Error.ErrorType NoPayment = new Error.ErrorType(nameof(NoPayment), "There is no payment to complete");
+    }
+
     internal class Registration
     {
         private Registration(RegistrationId id, RegistrationPayment payment)
@@ -48,7 +54,7 @@ namespace ModularMonolith.Registrations
         public Result SetInProgressPayment(PaymentId paymentId)
         {
             if (InProgressPaymentId.HasValue)
-                return Result.Failure("There is already payment in progress");
+                return Result.Fail(RegistrationErrors.PaymentInProgress.Build());
 
             InProgressPaymentId = paymentId;
             return Result.Ok();
@@ -56,7 +62,7 @@ namespace ModularMonolith.Registrations
         public Result CompletePayment()
         {
             if (InProgressPaymentId.HasNoValue)
-                return Result.Failure("There is no payment to complete");
+                return Result.Fail(RegistrationErrors.NoPayment.Build());
 
             InProgressPaymentId = Maybe<PaymentId>.None;
             return Result.Ok();

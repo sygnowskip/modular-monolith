@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
+using Hexure.Results;
+using Hexure.Results.Extensions;
 using MediatR;
 using ModularMonolith.Payments.Contracts;
 using ModularMonolith.Registrations.Commands;
@@ -19,10 +20,12 @@ namespace ModularMonolith.Registrations.ApplicationServices
             _paymentsApplicationService = paymentsApplicationService;
         }
 
+        
+
         public async Task<Result> StartPaymentAsync(RegistrationId id)
         {
             return await _paymentsApplicationService.StartPayment(id.Identifier)
-                .Bind(async paymentId => await _mediator.Send(new StartPaymentForRegistration(id, paymentId)));
+                .OnSuccess(async paymentId => await _mediator.Send(new StartPaymentForRegistration(id, paymentId)));
         }
 
         public async Task<Result> MarkAsPaid(RegistrationId id)

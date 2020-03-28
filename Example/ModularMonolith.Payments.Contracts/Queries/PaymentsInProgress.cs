@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using CSharpFunctionalExtensions;
+using Hexure.Results;
 using MediatR;
 using ModularMonolith.Payments.Language;
 
