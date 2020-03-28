@@ -1,6 +1,7 @@
 ﻿using Hexure.Results;
 using ModularMonolith.Payments.Language;
 using ModularMonolith.Registrations.Language;
+using ModularMonolith.Registrations.ValueObjects;
 
 namespace ModularMonolith.Registrations
 {
@@ -10,23 +11,25 @@ namespace ModularMonolith.Registrations
         public static Error.ErrorType NoPayment = new Error.ErrorType(nameof(NoPayment), "There is no payment to complete");
     }
 
-    internal class Registration
+    internal partial class Registration
     {
-        private Registration(RegistrationId id, RegistrationPayment payment)
+        private Registration(RegistrationId id, Candidate candidate)
         {
             Id = id;
             Status = RegistrationStatus.New;
-            Payment = payment;
+            Candidate = candidate;
         }
 
         public RegistrationId Id { get; private set; }
         public RegistrationStatus Status { get; private set; }
+        public Candidate Candidate { get; private set; }
         public RegistrationPayment Payment { get; private set; }
 
         public Result PaymentStarted(PaymentId paymentId)
         {
             return Payment.SetInProgressPayment(paymentId);
         }
+
         public void MarkAsPaid()
         {
             Status = RegistrationStatus.Paid;

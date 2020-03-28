@@ -13,4 +13,8 @@
     <ProjectReference Include="..\ModularMonolith.Registrations.Language\ModularMonolith.Registrations.Language.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Responses\" />
+  </ItemGroup>
+
 </Project>

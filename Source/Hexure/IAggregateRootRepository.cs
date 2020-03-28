@@ -3,9 +3,9 @@ using Hexure.Results;
 
 namespace Hexure
 {
-    public interface IAggregateRootRepository<TAggregate, in TIdentifier>
+    public interface IAggregateRootRepository<TAggregate, TIdentifier>
     {
-        Task<Result> SaveAsync(TAggregate aggregate);
+        Task<Result<TIdentifier>> SaveAsync(TAggregate aggregate);
         Task<Maybe<TAggregate>> GetAsync(TIdentifier identifier);
         Task<Result> Delete(TAggregate aggregate);
     }
