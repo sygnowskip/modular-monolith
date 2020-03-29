@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Source\Hexure.Results\Hexure.Results.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Dependencies\ModularMonolith.Dependencies.csproj" />
     <ProjectReference Include="..\ModularMonolith.Registrations.Contracts\ModularMonolith.Registrations.Contracts.csproj" />
     <ProjectReference Include="..\ModularMonolith.Registrations.Language\ModularMonolith.Registrations.Language.csproj" />
     <ProjectReference Include="..\ModularMonolith.Registrations.Queries\ModularMonolith.Registrations.Queries.csproj" />
