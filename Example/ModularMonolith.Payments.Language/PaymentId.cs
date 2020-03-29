@@ -1,7 +1,12 @@
-﻿namespace ModularMonolith.Payments.Language
+﻿using System;
+using Hexure.Identifiers.Guid;
+
+namespace ModularMonolith.Payments.Language
 {
-    public class PaymentId
+    public sealed class PaymentId : Identifier
     {
-        
+        private PaymentId(Guid value) : base(value)
+        {
+        }
     }
 }
