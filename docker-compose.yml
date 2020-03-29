@@ -1,6 +1,38 @@
 version: "3"
 services:
-  identity:
+  modular-monolith-database:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: P@ssword1
+    ports:
+      - 2000:1433
+    expose:
+      - 1433
+  modular-monolith-database-setup:
+    build:
+      context: "."
+      dockerfile: "./docker/configuration/dotnet/Dockerfile"
+      args:
+        PROJECT_PATH: Example/ModularMonolith.Database
+        ASSEMBLY_NAME: ModularMonolith.Database
+    restart: on-failure
+    depends_on:
+      - "modular-monolith-database"
+    environment:
+      - ConnectionStrings__Database=Data Source=modular-monolith-database;Initial Catalog=Hexure;Connection Timeout=30;User Id=sa;Password=P@ssword1;MultipleActiveResultSets=False;Timeout=30;
+  # availability-calendar-rabbitmq:
+  #   image: "rabbitmq:3-management"
+  #   volumes:
+  #     - ./docker/configuration/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config
+  #     - ./docker/configuration/rabbitmq/definitions.json:/etc/rabbitmq/definitions.json
+  #   ports:
+  #     - 2001:5672
+  #     - 2002:15672
+  #   expose:
+  #     - 5672
+  #     - 15672
+  modular-monolith-identity:
     build:
       context: "."
       dockerfile: "./docker/configuration/dotnet-api/Dockerfile"
@@ -10,8 +42,8 @@ services:
     restart: on-failure
     environment:
       - Issuer__Url=http://identity
-    ports: 
-      - 2000:80
+    ports:
+      - 2003:80
   modular-monolith-api:
     build:
       context: "."
@@ -22,5 +54,5 @@ services:
     restart: on-failure
     environment:
       - Authority__Url=http://identity
-    ports: 
-      - 2001:80
+    ports:
+      - 2004:80
