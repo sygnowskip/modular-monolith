@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using IdentityModel.Client;
 using Microsoft.Extensions.Configuration;
+using ModularMonolith.Configuration;
 using ModularMonolith.Tests.Common;
 using NUnit.Framework;
 
