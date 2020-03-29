@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Source\Hexure.EntityFrameworkCore\Hexure.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\ModularMonolith.Payments\ModularMonolith.Payments.csproj" />
     <ProjectReference Include="..\ModularMonolith.Registrations\ModularMonolith.Registrations.csproj" />
   </ItemGroup>

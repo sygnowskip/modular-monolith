@@ -1,23 +1,12 @@
 ﻿using System;
+using Hexure.Identifiers.Guid;
 
 namespace ModularMonolith.Registrations.Language
 {
-    public class RegistrationId
+    public sealed class RegistrationId : Identifier
     {
-        private RegistrationId(Guid identifier)
+        public RegistrationId(Guid value) : base(value)
         {
-            Identifier = identifier;
-        }
-
-        public Guid Identifier { get; private set; }
-
-        public static RegistrationId CreateFor(Guid id)
-        {
-            return new RegistrationId(id);
-        }
-        public static RegistrationId CreateNew()
-        {
-            return new RegistrationId(Guid.NewGuid());
         }
     }
 }

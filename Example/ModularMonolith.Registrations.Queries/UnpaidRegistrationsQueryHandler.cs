@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,10 +22,11 @@ namespace ModularMonolith.Registrations.Queries
 
         public async Task<IEnumerable<UnpaidRegistrationDto>> Handle(UnpaidRegistrations request, CancellationToken cancellationToken)
         {
-            return await _queryDbContext.Registrations
+            throw new NotImplementedException();
+            /*return await _queryDbContext.Registrations
                 .Where(r => r.Status == RegistrationStatus.AwaitingPayment || r.Status == RegistrationStatus.New)
                 .Select(r => new UnpaidRegistrationDto(r.Id, r.Status))
-                .ToListAsync(cancellationToken: cancellationToken);
+                .ToListAsync(cancellationToken: cancellationToken);*/
         }
     }
 }

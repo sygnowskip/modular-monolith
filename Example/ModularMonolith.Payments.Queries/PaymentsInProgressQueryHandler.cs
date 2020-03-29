@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,10 +23,11 @@ namespace ModularMonolith.Payments.Queries
 
         public async Task<IEnumerable<PaymentDto>> Handle(PaymentsInProgress request, CancellationToken cancellationToken)
         {
-            return await _queryDbContext.Payments
+            throw new NotImplementedException();
+            /*return await _queryDbContext.Payments
                 .Where(p => p.Status == PaymentStatus.New)
                 .Select(p => new PaymentDto(p.Id, p.CorrelationId, p.Status))
-                .ToListAsync(cancellationToken: cancellationToken);
+                .ToListAsync(cancellationToken: cancellationToken);*/
         }
     }
 }

@@ -7,7 +7,7 @@ namespace ModularMonolith.Persistence
 {
     internal class MonolithDbContext : DbContext
     {
-        public MonolithDbContext(DbContextOptions options) : base(options)
+        public MonolithDbContext(DbContextOptions<MonolithDbContext> options) : base(options)
         {
         }
 

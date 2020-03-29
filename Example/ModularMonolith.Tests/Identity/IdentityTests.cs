@@ -11,17 +11,10 @@ namespace ModularMonolith.Tests.Identity
     [TestFixture]
     public class IdentityTests : BaseHttpTests
     {
-        private readonly AuthoritySettings _settings;
-
-        public IdentityTests()
-        {
-            _settings = ApplicationSettingsConfigurationProvider.Get().GetSection("Authority").Get<AuthoritySettings>();
-        }
-        
         [Test]
         public async Task ShouldBeAbleToGetTokenForClient()
         {
-            var discoveryDocument = await GetDiscoveryDocumentAsync(_settings.Url);
+            var discoveryDocument = await GetDiscoveryDocumentAsync();
             var token = await HttpClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest()
             {
                 Address = discoveryDocument.TokenEndpoint,
@@ -36,7 +29,7 @@ namespace ModularMonolith.Tests.Identity
         [Test]
         public async Task ShouldNotGetTokenForNonExistingClient()
         {
-            var discoveryDocument = await GetDiscoveryDocumentAsync(_settings.Url);
+            var discoveryDocument = await GetDiscoveryDocumentAsync();
             var token = await HttpClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest()
             {
                 Address = discoveryDocument.TokenEndpoint,

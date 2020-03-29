@@ -5,7 +5,7 @@ namespace ModularMonolith.Persistence.Read
 {
     public class MonolithQueryDbContext : DbContext
     {
-        public MonolithQueryDbContext(DbContextOptions options) : base(options)
+        public MonolithQueryDbContext(DbContextOptions<MonolithQueryDbContext> options) : base(options)
         {
         }
 

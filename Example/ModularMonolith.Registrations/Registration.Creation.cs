@@ -1,4 +1,5 @@
-﻿using Hexure.Results;
+﻿using Hexure.Identifiers.Guid;
+using Hexure.Results;
 using ModularMonolith.Registrations.Language;
 using ModularMonolith.Registrations.ValueObjects;
 
@@ -8,7 +9,7 @@ namespace ModularMonolith.Registrations
     {
         public static Result<Registration> Create(Candidate candidate)
         {
-            return Result.Ok(new Registration(RegistrationId.CreateNew(), candidate));
+            return Result.Ok(new Registration(Identifier.New<RegistrationId>(), candidate));
         }
     }
 }

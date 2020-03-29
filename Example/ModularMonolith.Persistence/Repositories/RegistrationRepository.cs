@@ -8,9 +8,18 @@ namespace ModularMonolith.Persistence.Repositories
 {
     internal class RegistrationRepository : IRegistrationRepository
     {
-        public Task<Result<RegistrationId>> SaveAsync(Registration aggregate)
+        private readonly MonolithDbContext _dbContext;
+
+        public RegistrationRepository(MonolithDbContext dbContext)
         {
-            throw new NotImplementedException();
+            _dbContext = dbContext;
+        }
+
+        public async Task<Result<RegistrationId>> SaveAsync(Registration aggregate)
+        {
+            _dbContext.Registrations.Add(aggregate);
+            await _dbContext.SaveChangesAsync();
+            return Result.Ok(aggregate.Id);
         }
 
         public Task<Maybe<Registration>> GetAsync(RegistrationId identifier)

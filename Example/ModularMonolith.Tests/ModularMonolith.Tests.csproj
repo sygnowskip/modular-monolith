@@ -26,6 +26,7 @@
     <ProjectReference Include="..\..\Source\Hexure.Testing\Hexure.Testing.csproj" />
     <ProjectReference Include="..\..\Source\Hexure\Hexure.csproj" />
     <ProjectReference Include="..\ModularMonolith.Configuration\ModularMonolith.Configuration.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Registrations.Contracts\ModularMonolith.Registrations.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

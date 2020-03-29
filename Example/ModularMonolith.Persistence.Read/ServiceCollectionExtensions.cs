@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Hexure.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ModularMonolith.Persistence.Read
@@ -7,7 +8,11 @@ namespace ModularMonolith.Persistence.Read
     {
         public static IServiceCollection AddReadPersistence(this IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<MonolithQueryDbContext>(builder => builder.UseSqlServer(connectionString));
+            services.AddDbContext<MonolithQueryDbContext>(builder =>
+                builder
+                    .UseSqlServer(connectionString)
+                    .EnableIdentifiers()
+            );
             return services;
         }
     }

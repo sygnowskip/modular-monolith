@@ -12,6 +12,10 @@ namespace ModularMonolith.Registrations.ValueObjects
 
     public class Candidate : ValueObject
     {
+        private Candidate()
+        {
+        }
+
         private Candidate(string firstName, string lastName, DateOfBirth dateOfBirth)
         {
             FirstName = firstName;

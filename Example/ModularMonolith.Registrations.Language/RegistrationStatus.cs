@@ -1,6 +1,6 @@
 ﻿namespace ModularMonolith.Registrations.Language
 {
-    public enum RegistrationStatus
+    public enum RegistrationStatus : byte
     {
         New,
         AwaitingPayment,

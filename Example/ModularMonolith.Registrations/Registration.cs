@@ -13,6 +13,8 @@ namespace ModularMonolith.Registrations
 
     internal partial class Registration
     {
+        private Registration() { }
+
         private Registration(RegistrationId id, Candidate candidate)
         {
             Id = id;

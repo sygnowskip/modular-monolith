@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Hexure.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ModularMonolith.Payments;
 using ModularMonolith.Persistence.Repositories;
@@ -12,7 +13,11 @@ namespace ModularMonolith.Persistence
         {
             services.AddTransient<IRegistrationRepository, RegistrationRepository>();
             services.AddTransient<IPaymentRepository, PaymentRepository>();
-            services.AddDbContext<MonolithDbContext>(builder => builder.UseSqlServer(connectionString));
+            services.AddDbContext<MonolithDbContext>(builder => 
+                builder
+                    .UseSqlServer(connectionString)
+                    .EnableIdentifiers()
+                );
             return services;
         }
     }

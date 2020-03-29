@@ -35,7 +35,7 @@ namespace ModularMonolith.Registrations.ApplicationServices
 
         public async Task<Result> StartPaymentAsync(RegistrationId id)
         {
-            return await _paymentsApplicationService.StartPayment(id.Identifier)
+            return await _paymentsApplicationService.StartPayment(id.Value)
                 .OnSuccess(async paymentId => await _mediator.Send(new StartPaymentForRegistration(id, paymentId)));
         }
 

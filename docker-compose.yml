@@ -41,7 +41,7 @@ services:
         ASSEMBLY_NAME: IdentityServer
     restart: on-failure
     environment:
-      - Issuer__Url=http://identity
+      - Issuer__Url=http://modular-monolith-identity
     ports:
       - 2003:80
   modular-monolith-api:
@@ -52,7 +52,10 @@ services:
         PROJECT_PATH: Example/ModularMonolith.API
         ASSEMBLY_NAME: ModularMonolith.API
     restart: on-failure
+    depends_on:
+      - "modular-monolith-database"
     environment:
-      - Authority__Url=http://identity
+      - ConnectionStrings__Database=Data Source=modular-monolith-database;Initial Catalog=Hexure;Connection Timeout=30;User Id=sa;Password=P@ssword1;MultipleActiveResultSets=False;Timeout=30;
+      - Authority__Url=http://modular-monolith-identity
     ports:
       - 2004:80
