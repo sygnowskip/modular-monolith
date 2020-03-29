@@ -8,7 +8,7 @@ namespace ModularMonolith.Registrations
     {
         public static Result<Registration> Create(Candidate candidate)
         {
-            return Result.Ok(new Registration(new RegistrationId(), candidate));
+            return Result.Ok(new Registration(RegistrationId.CreateNew(), candidate));
         }
     }
 }

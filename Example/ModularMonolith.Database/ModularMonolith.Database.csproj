@@ -7,6 +7,8 @@
 
   <ItemGroup>
     <None Remove="appsettings.json" />
+    <None Remove="Scripts\001_Create_Registrations_Schema.sql" />
+    <None Remove="Scripts\002_Create_Registration.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,7 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Scripts\" />
+    <EmbeddedResource Include="Scripts\001_Create_Registrations_Schema.sql" />
+    <EmbeddedResource Include="Scripts\002_Create_Registration.sql" />
   </ItemGroup>
 
   <ItemGroup>

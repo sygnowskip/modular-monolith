@@ -4,11 +4,20 @@ namespace ModularMonolith.Registrations.Language
 {
     public class RegistrationId
     {
-        public RegistrationId()
+        private RegistrationId(Guid identifier)
         {
-            Identifier = Guid.NewGuid();
+            Identifier = identifier;
         }
 
-        public Guid Identifier { get; }
+        public Guid Identifier { get; private set; }
+
+        public static RegistrationId CreateFor(Guid id)
+        {
+            return new RegistrationId(id);
+        }
+        public static RegistrationId CreateNew()
+        {
+            return new RegistrationId(Guid.NewGuid());
+        }
     }
 }

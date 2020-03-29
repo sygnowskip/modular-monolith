@@ -21,10 +21,10 @@ namespace ModularMonolith.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var authoritySettings = Configuration.GetSection("Authority").Get<AuthoritySettings>();
-
             services.AddControllers();
 
+            /*var authoritySettings = Configuration.GetSection("Authority").Get<AuthoritySettings>();
+            
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
                 {
@@ -43,9 +43,10 @@ namespace ModularMonolith.API
                     policy => policy.RequireClaim("scope", "payments"));
             });
 
-            IdentityModelEventSource.ShowPII = true;
+            IdentityModelEventSource.ShowPII = true;*/
 
             services.AddRegistrations();
+            services.AddPayments();
             services.AddPersistence(Configuration.GetConnectionString("Database"),
                 Configuration.GetConnectionString("Database"));
         }

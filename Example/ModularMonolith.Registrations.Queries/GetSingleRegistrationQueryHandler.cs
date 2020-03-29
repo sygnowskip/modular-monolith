@@ -23,7 +23,7 @@ namespace ModularMonolith.Registrations.Queries
         {
             var registration = await _queryDbContext.Registrations
                 .Where(r => r.Id == request.Id)
-                .Select(r => new GetSingleRegistrationDto(r.Id, r.Status, r.FirstName, r.LastName, r.DateOfBirth))
+                .Select(r => new GetSingleRegistrationDto(r.Id, r.Status, r.CandidateFirstName, r.CandidateLastName, r.CandidateDateOfBirth))
                 .SingleOrDefaultAsync(cancellationToken);
 
             return Maybe<GetSingleRegistrationDto>.From(registration)

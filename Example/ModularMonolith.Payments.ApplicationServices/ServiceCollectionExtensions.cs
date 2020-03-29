@@ -1,12 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using ModularMonolith.Payments.Contracts;
 
 namespace ModularMonolith.Payments.ApplicationServices
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddPayments(this IServiceCollection services)
+        public static IServiceCollection AddPaymentsServices(this IServiceCollection services)
         {
-            //TODO: DI registration for domain components
+            services.AddTransient<IPaymentsApplicationService, PaymentsApplicationService>();
             return services;
         }
     }

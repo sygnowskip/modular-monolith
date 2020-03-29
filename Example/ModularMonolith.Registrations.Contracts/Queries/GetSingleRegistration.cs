@@ -12,20 +12,20 @@ namespace ModularMonolith.Registrations.Contracts.Queries
 
     public class GetSingleRegistrationDto
     {
-        public GetSingleRegistrationDto(RegistrationId id, RegistrationStatus status, string firstName, string lastName, DateTime dateOfBirth)
+        public GetSingleRegistrationDto(RegistrationId id, RegistrationStatus status, string candidateFirstName, string candidateLastName, DateTime candidateDateOfBirth)
         {
             Id = id;
             Status = status;
-            FirstName = firstName;
-            LastName = lastName;
-            DateOfBirth = dateOfBirth;
+            CandidateFirstName = candidateFirstName;
+            CandidateLastName = candidateLastName;
+            CandidateDateOfBirth = candidateDateOfBirth;
         }
 
         public RegistrationId Id { get; }
         public RegistrationStatus Status { get; }
-        public string FirstName { get; }
-        public string LastName { get; }
-        public DateTime DateOfBirth { get; }
+        public string CandidateFirstName { get; }
+        public string CandidateLastName { get; }
+        public DateTime CandidateDateOfBirth { get; }
 
     }
 

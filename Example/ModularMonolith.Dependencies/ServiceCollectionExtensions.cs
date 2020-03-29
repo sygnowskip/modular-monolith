@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using ModularMonolith.Payments.ApplicationServices;
 using ModularMonolith.Persistence;
 using ModularMonolith.Persistence.Read;
 using ModularMonolith.Registrations.ApplicationServices;
@@ -17,7 +18,8 @@ namespace ModularMonolith.Dependencies
 
         public static IServiceCollection AddPayments(this IServiceCollection serviceCollection)
         {
-            return serviceCollection;
+            return serviceCollection
+                .AddPaymentsServices();
         }
 
         public static IServiceCollection AddPersistence(this IServiceCollection serviceCollection,

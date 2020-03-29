@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ModularMonolith.Payments.ApplicationServices\ModularMonolith.Payments.ApplicationServices.csproj" />
     <ProjectReference Include="..\ModularMonolith.Persistence.Read\ModularMonolith.Persistence.Read.csproj" />
     <ProjectReference Include="..\ModularMonolith.Persistence\ModularMonolith.Persistence.csproj" />
     <ProjectReference Include="..\ModularMonolith.Registrations.ApplicationServices\ModularMonolith.Registrations.ApplicationServices.csproj" />

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +10,7 @@ using ModularMonolith.Registrations.Language;
 
 namespace ModularMonolith.API.Controllers
 {
-    [Authorize("Registrations")]
+    //[Authorize("Registrations")]
     [Route("api/[controller]")]
     [ApiController]
     public class RegistrationsController : ControllerBase
@@ -35,9 +36,9 @@ namespace ModularMonolith.API.Controllers
         }
 
         [Route("{id}")]
-        public async Task<IActionResult> Get(RegistrationId id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            var result = await _mediator.Send(new GetSingleRegistration(id));
+            var result = await _mediator.Send(new GetSingleRegistration(RegistrationId.CreateFor(id)));
 
             return result.IsSuccess ? Ok(result.Value) : NotFound() as IActionResult;
         }

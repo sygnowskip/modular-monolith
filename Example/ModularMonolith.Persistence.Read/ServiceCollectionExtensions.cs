@@ -1,12 +1,13 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ModularMonolith.Persistence.Read
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddReadModelsPersistence(this IServiceCollection services)
+        public static IServiceCollection AddReadPersistence(this IServiceCollection services, string connectionString)
         {
-            //TODO: DI registration for domain components
+            services.AddDbContext<MonolithQueryDbContext>(builder => builder.UseSqlServer(connectionString));
             return services;
         }
     }
