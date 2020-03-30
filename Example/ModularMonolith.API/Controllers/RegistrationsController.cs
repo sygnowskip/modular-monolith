@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Hexure.API;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,8 +13,7 @@ namespace ModularMonolith.API.Controllers
 {
     [Authorize("Registrations")]
     [Route("api/[controller]")]
-    [ApiController]
-    public class RegistrationsController : ControllerBase
+    public class RegistrationsController : RestfulController
     {
         private readonly IRegistrationApplicationService _registrationApplicationService;
         private readonly IMediator _mediator;
@@ -28,19 +28,14 @@ namespace ModularMonolith.API.Controllers
         public async Task<IActionResult> Save(RegistrationCreationRequest request)
         {
             var result = await _registrationApplicationService.Create(request);
-
-            //TODO: Validation errors standard
-            //TODO: Extensions to cast Result to Response (200 / 422)
-            //TODO: Id should be in Headers.Location with 201 HTTP
-            return result.IsSuccess ? Ok(result.Value) : UnprocessableEntity() as IActionResult;
+            return CreatedOrUnprocessableEntity(result, id => $"/api/registrations/{id}");
         }
 
         [Route("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
             var result = await _mediator.Send(new GetSingleRegistration(new RegistrationId(id)));
-
-            return result.IsSuccess ? Ok(result.Value) : NotFound() as IActionResult;
+            return OkOrNotFound(result);
         }
     }
 }

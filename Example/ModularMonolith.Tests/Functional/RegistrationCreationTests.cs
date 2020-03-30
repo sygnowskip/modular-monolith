@@ -27,11 +27,11 @@ namespace ModularMonolith.Tests.Functional
             var creationResult = await httpClient.PostAsync(new Uri(MonolithSettings.BaseUrl, "/api/registrations"),
                 creationRequestContent);
 
-            creationResult.StatusCode.Should().Be(HttpStatusCode.OK);
-            var registrationId = JsonConvert.DeserializeObject<RegistrationId>(await creationResult.Content.ReadAsStringAsync());
+            creationResult.StatusCode.Should().Be(HttpStatusCode.Created);
+            var createdResourceLocation = creationResult.Headers.Location;
 
             var getResult = await httpClient.GetAsync(new Uri(MonolithSettings.BaseUrl,
-                $"/api/registrations/{registrationId.Value}"));
+                createdResourceLocation));
             getResult.StatusCode.Should().Be(HttpStatusCode.OK);
         }
     }
