@@ -7,6 +7,7 @@ namespace ModularMonolith.Registrations
 {
     public static class RegistrationErrors
     {
+        public static Error.ErrorType CandidateCannotBeEmpty = new Error.ErrorType(nameof(CandidateCannotBeEmpty), "Candidate cannot be empty");
         public static Error.ErrorType PaymentInProgress = new Error.ErrorType(nameof(PaymentInProgress), "There is already a payment in progress");
         public static Error.ErrorType NoPayment = new Error.ErrorType(nameof(NoPayment), "There is no payment to complete");
     }

@@ -8,6 +8,7 @@ namespace ModularMonolith.Registrations.ValueObjects
     {
         public static Error.ErrorType FirstNameCannotBeEmpty = new Error.ErrorType(nameof(FirstNameCannotBeEmpty), "First name cannot be empty");
         public static Error.ErrorType LastNameCannotBeEmpty = new Error.ErrorType(nameof(LastNameCannotBeEmpty), "Last name cannot be empty");
+        public static Error.ErrorType DateOfBirthCannotBeEmpty = new Error.ErrorType(nameof(DateOfBirthCannotBeEmpty), "Date of birth cannot be empty");
     }
 
     public class Candidate : ValueObject
@@ -39,6 +40,7 @@ namespace ModularMonolith.Registrations.ValueObjects
             return Result.Create(!string.IsNullOrWhiteSpace(firstName), CandidateErrors.FirstNameCannotBeEmpty.Build())
                 .OnSuccess(() => Result.Create(!string.IsNullOrWhiteSpace(lastName),
                     CandidateErrors.LastNameCannotBeEmpty.Build()))
+                .OnSuccess(() => Result.Create(dateOfBirth != null, CandidateErrors.DateOfBirthCannotBeEmpty.Build()))
                 .OnSuccess(() => new Candidate(firstName, lastName, dateOfBirth));
         }
     }
