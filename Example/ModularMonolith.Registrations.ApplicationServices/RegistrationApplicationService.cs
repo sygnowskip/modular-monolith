@@ -7,7 +7,7 @@ using ModularMonolith.Registrations.Commands;
 using ModularMonolith.Registrations.Contracts;
 using ModularMonolith.Registrations.Contracts.Requests;
 using ModularMonolith.Registrations.Language;
-using ModularMonolith.Registrations.ValueObjects;
+using ModularMonolith.Registrations.Language.ValueObjects;
 using ModularMonolith.Time;
 
 namespace ModularMonolith.Registrations.ApplicationServices

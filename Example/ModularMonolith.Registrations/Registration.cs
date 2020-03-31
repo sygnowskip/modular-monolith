@@ -1,7 +1,11 @@
-﻿using Hexure.Results;
+﻿using Hexure;
+using Hexure.Events;
+using Hexure.Results;
+using Hexure.Results.Extensions;
 using ModularMonolith.Payments.Language;
+using ModularMonolith.Registrations.Contracts.Events;
 using ModularMonolith.Registrations.Language;
-using ModularMonolith.Registrations.ValueObjects;
+using ModularMonolith.Registrations.Language.ValueObjects;
 
 namespace ModularMonolith.Registrations
 {
@@ -12,7 +16,7 @@ namespace ModularMonolith.Registrations
         public static Error.ErrorType NoPayment = new Error.ErrorType(nameof(NoPayment), "There is no payment to complete");
     }
 
-    internal partial class Registration
+    internal partial class Registration : Entity, IAggregateRoot<RegistrationId>
     {
         private Registration() { }
 
@@ -30,13 +34,15 @@ namespace ModularMonolith.Registrations
 
         public Result PaymentStarted(PaymentId paymentId)
         {
-            return Payment.SetInProgressPayment(paymentId);
+            return Payment.SetInProgressPayment(paymentId)
+                .OnSuccess(() => RaiseEvent(new PaymentForRegistrationStarted(Id)));
         }
 
         public void MarkAsPaid()
         {
             Status = RegistrationStatus.Paid;
             Payment.CompletePayment();
+            RaiseEvent(new RegistrationPaid(Id));
         }
 
         public void MarkAsCompleted()

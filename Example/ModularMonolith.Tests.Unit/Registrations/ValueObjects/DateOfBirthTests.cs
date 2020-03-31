@@ -1,6 +1,6 @@
 ﻿using System;
 using FluentAssertions;
-using ModularMonolith.Registrations.ValueObjects;
+using ModularMonolith.Registrations.Language.ValueObjects;
 using ModularMonolith.Time;
 using Moq;
 using NUnit.Framework;

@@ -12,6 +12,7 @@
     <ProjectReference Include="..\..\Source\Hexure.Results\Hexure.Results.csproj" />
     <ProjectReference Include="..\..\Source\Hexure\Hexure.csproj" />
     <ProjectReference Include="..\ModularMonolith.Payments.Language\ModularMonolith.Payments.Language.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Registrations.Contracts\ModularMonolith.Registrations.Contracts.csproj" />
     <ProjectReference Include="..\ModularMonolith.Registrations.Language\ModularMonolith.Registrations.Language.csproj" />
     <ProjectReference Include="..\ModularMonolith.Time\ModularMonolith.Time.csproj" />
   </ItemGroup>

@@ -4,7 +4,7 @@ using Hexure.Results;
 using Hexure.Results.Extensions;
 using MediatR;
 using ModularMonolith.Registrations.Language;
-using ModularMonolith.Registrations.ValueObjects;
+using ModularMonolith.Registrations.Language.ValueObjects;
 
 namespace ModularMonolith.Registrations.Commands
 {

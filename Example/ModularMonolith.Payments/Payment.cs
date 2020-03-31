@@ -1,10 +1,11 @@
 ﻿using System;
+using Hexure;
 using Hexure.Results;
 using ModularMonolith.Payments.Language;
 
 namespace ModularMonolith.Payments
 {
-    internal class Payment
+    internal class Payment : IAggregateRoot<PaymentId>
     {
         private Payment(Guid correlationId)
         {

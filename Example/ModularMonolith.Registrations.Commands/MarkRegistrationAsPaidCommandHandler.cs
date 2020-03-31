@@ -33,14 +33,7 @@ namespace ModularMonolith.Registrations.Commands
         {
             return await _registrationRepository.GetAsync(request.Id)
                 .ToResult(RegistrationRepositoryErrors.UnableToFindRegistration.Build())
-                .OnSuccess(async registration =>
-                {
-
-                    registration.MarkAsPaid();
-
-                    //TODO: Event should be on aggregate
-                    await _mediator.Publish(new RegistrationPaid(registration.Id), cancellationToken);
-                });
+                .OnSuccess(registration => registration.MarkAsPaid());
         }
     }
 }

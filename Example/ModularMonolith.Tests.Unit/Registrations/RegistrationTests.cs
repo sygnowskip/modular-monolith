@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using Hexure.Results;
 using Hexure.Results.Extensions;
 using ModularMonolith.Registrations;
-using ModularMonolith.Registrations.ValueObjects;
+using ModularMonolith.Registrations.Language.ValueObjects;
 using ModularMonolith.Time;
 using Moq;
 using NUnit.Framework;
@@ -33,6 +34,20 @@ namespace ModularMonolith.Tests.Unit.Registrations
                 .OnSuccess(Registration.Create);
 
             registration.IsSuccess.Should().BeTrue();
+        }
+
+        [Test]
+        public void ShouldAddEventOnRegistrationCreation()
+        {
+            var registration = DateOfBirth.Create(new DateTime(1980, 01, 01), _systemTimeProviderMock.Object)
+                .OnSuccess(dob => Candidate.Create("John", "Smith", dob))
+                .OnSuccess(Registration.Create);
+
+            registration.IsSuccess.Should().BeTrue();
+            registration.Value.HasDomainEvents.Should().BeTrue();
+
+            var flushed = registration.Value.FlushDomainEvents();
+            flushed.Count().Should().Be(1);
         }
 
         [Test]
