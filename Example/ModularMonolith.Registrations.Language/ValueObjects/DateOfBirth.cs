@@ -4,7 +4,7 @@ using Hexure.Results;
 using Hexure.Results.Extensions;
 using ModularMonolith.Time;
 
-namespace ModularMonolith.Registrations.ValueObjects
+namespace ModularMonolith.Registrations.Language.ValueObjects
 {
     public static class DateOfBirthErrors
     {

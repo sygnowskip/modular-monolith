@@ -1,8 +1,9 @@
-﻿using ModularMonolith.Registrations.Language;
+﻿using MediatR;
+using ModularMonolith.Registrations.Language;
 
 namespace ModularMonolith.Registrations.Contracts.Events
 {
-    public class PaymentForRegistrationStarted
+    public class PaymentForRegistrationStarted : INotification
     {
         public PaymentForRegistrationStarted(RegistrationId id)
         {

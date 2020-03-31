@@ -2,7 +2,7 @@
 using Hexure.Results;
 using Hexure.Results.Extensions;
 
-namespace ModularMonolith.Registrations.ValueObjects
+namespace ModularMonolith.Registrations.Language.ValueObjects
 {
     public static class CandidateErrors
     {
