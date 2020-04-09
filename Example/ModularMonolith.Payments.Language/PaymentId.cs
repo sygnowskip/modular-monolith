@@ -5,7 +5,7 @@ namespace ModularMonolith.Payments.Language
 {
     public sealed class PaymentId : Identifier
     {
-        private PaymentId(Guid value) : base(value)
+        public PaymentId(Guid value) : base(value)
         {
         }
     }

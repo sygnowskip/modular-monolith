@@ -6,6 +6,7 @@ using ModularMonolith.Payments.Language;
 using ModularMonolith.Registrations.Contracts.Events;
 using ModularMonolith.Registrations.Language;
 using ModularMonolith.Registrations.Language.ValueObjects;
+using ModularMonolith.Time;
 
 namespace ModularMonolith.Registrations
 {
@@ -38,11 +39,11 @@ namespace ModularMonolith.Registrations
                 .OnSuccess(() => RaiseEvent(new PaymentForRegistrationStarted(Id)));
         }
 
-        public void MarkAsPaid()
+        public void MarkAsPaid(ISystemTimeProvider systemTimeProvider)
         {
             Status = RegistrationStatus.Paid;
             Payment.CompletePayment();
-            RaiseEvent(new RegistrationPaid(Id));
+            RaiseEvent(new RegistrationPaid(Id, systemTimeProvider.UtcNow));
         }
 
         public void MarkAsCompleted()

@@ -31,7 +31,7 @@ namespace ModularMonolith.Tests.Unit.Registrations
         {
             var registration = DateOfBirth.Create(new DateTime(1980, 01, 01), _systemTimeProviderMock.Object)
                 .OnSuccess(dob => Candidate.Create("John", "Smith", dob))
-                .OnSuccess(Registration.Create);
+                .OnSuccess(candidate => Registration.Create(candidate, _systemTimeProviderMock.Object));
 
             registration.IsSuccess.Should().BeTrue();
         }
@@ -41,7 +41,7 @@ namespace ModularMonolith.Tests.Unit.Registrations
         {
             var registration = DateOfBirth.Create(new DateTime(1980, 01, 01), _systemTimeProviderMock.Object)
                 .OnSuccess(dob => Candidate.Create("John", "Smith", dob))
-                .OnSuccess(Registration.Create);
+                .OnSuccess(candidate => Registration.Create(candidate, _systemTimeProviderMock.Object));
 
             registration.IsSuccess.Should().BeTrue();
             registration.Value.HasDomainEvents.Should().BeTrue();
@@ -53,7 +53,7 @@ namespace ModularMonolith.Tests.Unit.Registrations
         [Test]
         public void ShouldNotAllowToCreateRegistrationForNullCandidate()
         {
-            var registration = Registration.Create(null);
+            var registration = Registration.Create(null, _systemTimeProviderMock.Object);
 
             registration.IsSuccess.Should().BeFalse();
         }

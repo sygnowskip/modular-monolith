@@ -4,7 +4,7 @@ using ModularMonolith.Payments.Contracts.Events;
 using ModularMonolith.Registrations.Contracts.Events;
 using NUnit.Framework;
 
-namespace ModularMonolith.Tests.Unit
+namespace ModularMonolith.Tests.Unit.Events
 {
     [TestFixture]
     public class EventsNamespaceTests
