@@ -1,11 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Hexure.EntityFrameworkCore.Events;
+using Hexure.EntityFrameworkCore.Events.Entites;
+using Microsoft.EntityFrameworkCore;
 using ModularMonolith.Payments;
 using ModularMonolith.Persistence.Configurations;
 using ModularMonolith.Registrations;
 
 namespace ModularMonolith.Persistence
 {
-    internal class MonolithDbContext : DbContext
+    internal class MonolithDbContext : DbContext, ISerializedEventDbContext
     {
         public MonolithDbContext(DbContextOptions<MonolithDbContext> options) : base(options)
         {
@@ -20,5 +22,6 @@ namespace ModularMonolith.Persistence
 
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Registration> Registrations { get; set; }
+        public DbSet<SerializedEventEntity> SerializedEvents { get; set; }
     }
 }

@@ -87,6 +87,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexure.API", "Source\Hexure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexure.EntityFrameworkCore.SqlServer", "Source\Hexure.EntityFrameworkCore.SqlServer\Hexure.EntityFrameworkCore.SqlServer.csproj", "{724D8FC9-9A7A-4A47-B866-8AFB57B05E6D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.EventsPublisher", "Example\ModularMonolith.EventsPublisher\ModularMonolith.EventsPublisher.csproj", "{725AEBCC-52A8-450C-A8F8-29B7CA1B6463}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexure.EventsPublisher", "Source\Hexure.EventsPublisher\Hexure.EventsPublisher.csproj", "{436702EF-0077-4EFC-B4C6-C9BCE70B0141}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -209,6 +213,14 @@ Global
 		{724D8FC9-9A7A-4A47-B866-8AFB57B05E6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{724D8FC9-9A7A-4A47-B866-8AFB57B05E6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{724D8FC9-9A7A-4A47-B866-8AFB57B05E6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{725AEBCC-52A8-450C-A8F8-29B7CA1B6463}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{725AEBCC-52A8-450C-A8F8-29B7CA1B6463}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{725AEBCC-52A8-450C-A8F8-29B7CA1B6463}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{725AEBCC-52A8-450C-A8F8-29B7CA1B6463}.Release|Any CPU.Build.0 = Release|Any CPU
+		{436702EF-0077-4EFC-B4C6-C9BCE70B0141}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{436702EF-0077-4EFC-B4C6-C9BCE70B0141}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{436702EF-0077-4EFC-B4C6-C9BCE70B0141}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{436702EF-0077-4EFC-B4C6-C9BCE70B0141}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -254,6 +266,8 @@ Global
 		{7C107FA6-E189-43ED-A7F7-1F3A5A9E8AED} = {4352D366-EC5C-43F3-AD54-7A36A4BE0BA4}
 		{3FEB12BD-D245-4C57-83F5-7E0FC6313096} = {4352D366-EC5C-43F3-AD54-7A36A4BE0BA4}
 		{724D8FC9-9A7A-4A47-B866-8AFB57B05E6D} = {4352D366-EC5C-43F3-AD54-7A36A4BE0BA4}
+		{725AEBCC-52A8-450C-A8F8-29B7CA1B6463} = {3DA7069C-3B35-44A6-97E5-31C50B0F666D}
+		{436702EF-0077-4EFC-B4C6-C9BCE70B0141} = {4352D366-EC5C-43F3-AD54-7A36A4BE0BA4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {598A3A02-79C7-4D50-889E-D65594383E6D}

@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Source\Hexure.EventsPublisher\Hexure.EventsPublisher.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Configuration\ModularMonolith.Configuration.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Dependencies\ModularMonolith.Dependencies.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Payments.Contracts\ModularMonolith.Payments.Contracts.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Persistence\ModularMonolith.Persistence.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Registrations.Contracts\ModularMonolith.Registrations.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>
