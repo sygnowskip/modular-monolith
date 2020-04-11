@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using ModularMonolith.Registrations.Contracts.Requests;
-using ModularMonolith.Registrations.Language;
 using ModularMonolith.Tests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;

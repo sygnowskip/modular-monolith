@@ -1,6 +1,5 @@
 ﻿using System;
 using Hexure.Events;
-using MediatR;
 using ModularMonolith.Registrations.Language;
 using ModularMonolith.Registrations.Language.ValueObjects;
 

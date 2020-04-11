@@ -3,8 +3,6 @@ using FluentAssertions;
 using IdentityModel.Client;
 using ModularMonolith.Tests.Common;
 using NUnit.Framework;
-using Microsoft.Extensions.Configuration;
-using ModularMonolith.Configuration;
 
 namespace ModularMonolith.Tests.Identity
 {

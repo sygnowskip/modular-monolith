@@ -4,7 +4,6 @@ using Hexure.Results;
 using Hexure.Results.Extensions;
 using MediatR;
 using ModularMonolith.Payments.Language;
-using ModularMonolith.Registrations.Contracts.Events;
 using ModularMonolith.Registrations.Language;
 
 namespace ModularMonolith.Registrations.Commands

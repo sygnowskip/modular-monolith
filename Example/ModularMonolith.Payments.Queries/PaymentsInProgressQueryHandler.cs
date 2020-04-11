@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using ModularMonolith.Payments.Contracts.Queries;
-using ModularMonolith.Payments.Language;
 using ModularMonolith.Persistence.Read;
 
 namespace ModularMonolith.Payments.Queries
