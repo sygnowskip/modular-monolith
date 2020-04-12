@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
+using Hexure.EntityFrameworkCore;
 using Hexure.EntityFrameworkCore.Events;
+using Hexure.EntityFrameworkCore.Events.Repositories;
+using Hexure.EntityFrameworkCore.SqlServer.Events;
+using Hexure.EntityFrameworkCore.SqlServer.Hints;
 using Hexure.Events;
 using Hexure.Events.Namespace;
 using Hexure.Events.Serialization;
@@ -30,6 +35,17 @@ namespace Hexure.EventsPublisher
         {
             _serviceCollection.AddTransient<ISerializedEventDbContext>(provider =>
                 provider.GetRequiredService<TDbContext>());
+
+            DiagnosticListener.AllListeners.Subscribe(new EntityFrameworkHintListener());
+
+            return this;
+        }
+
+        public EventsPublisherBuilder WithTransactionProvider<TTransactionProvider>()
+            where TTransactionProvider : ITransactionProvider
+        {
+            _serviceCollection.AddTransient<ITransactionProvider>(provider =>
+                provider.GetRequiredService<TTransactionProvider>());
 
             return this;
         }
@@ -64,6 +80,7 @@ namespace Hexure.EventsPublisher
         private void RegisterCommonServices()
         {
             _serviceCollection.AddTransient<IEventSerializer, EventSerializer>();
+            _serviceCollection.AddTransient<ISerializedEventRepository, SerializedEventRepository>();
             _serviceCollection.AddSingleton<IEventTypeProvider>(new EventTypeProvider(_namespaces));
         }
     }

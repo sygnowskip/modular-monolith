@@ -1,10 +1,10 @@
 ﻿using Hexure.Identifiers.Guid;
 using Hexure.Results;
 using Hexure.Results.Extensions;
+using Hexure.Time;
 using ModularMonolith.Registrations.Contracts.Events;
 using ModularMonolith.Registrations.Language;
 using ModularMonolith.Registrations.Language.ValueObjects;
-using ModularMonolith.Time;
 
 namespace ModularMonolith.Registrations
 {

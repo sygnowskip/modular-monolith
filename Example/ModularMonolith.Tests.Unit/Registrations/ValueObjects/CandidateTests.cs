@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using FluentAssertions;
+using Hexure.Time;
 using ModularMonolith.Registrations.Language.ValueObjects;
-using ModularMonolith.Time;
 using Moq;
 using NUnit.Framework;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using FluentAssertions;
+using Hexure.Time;
 using ModularMonolith.Registrations.Language.ValueObjects;
-using ModularMonolith.Time;
 using Moq;
 using NUnit.Framework;
 

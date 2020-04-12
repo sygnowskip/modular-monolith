@@ -2,10 +2,10 @@
 using System.Threading.Tasks;
 using Hexure.Results;
 using Hexure.Results.Extensions;
+using Hexure.Time;
 using MediatR;
 using ModularMonolith.Registrations.Language;
 using ModularMonolith.Registrations.Language.ValueObjects;
-using ModularMonolith.Time;
 
 namespace ModularMonolith.Registrations.Commands
 {

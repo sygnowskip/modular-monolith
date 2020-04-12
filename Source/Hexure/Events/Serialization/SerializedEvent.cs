@@ -2,7 +2,8 @@
 {
     public class SerializedEvent
     {
-        public SerializedEvent(string @namespace, string type, string payload)
+        private SerializedEvent() { }
+        internal SerializedEvent(string @namespace, string type, string payload)
         {
             Payload = payload;
             Namespace = @namespace;

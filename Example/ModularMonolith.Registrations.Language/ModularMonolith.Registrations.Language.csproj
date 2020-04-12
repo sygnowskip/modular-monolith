@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Source\Hexure\Hexure.csproj" />
-    <ProjectReference Include="..\ModularMonolith.Time\ModularMonolith.Time.csproj" />
   </ItemGroup>
 
 </Project>

@@ -9,6 +9,8 @@
     <None Remove="appsettings.json" />
     <None Remove="Scripts\001_Create_Registrations_Schema.sql" />
     <None Remove="Scripts\002_Create_Registration.sql" />
+    <None Remove="Scripts\003_Create_Schema_For_Events.sql" />
+    <None Remove="Scripts\004_Create_SerializedEvent_Table.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +22,8 @@
   <ItemGroup>
     <EmbeddedResource Include="Scripts\001_Create_Registrations_Schema.sql" />
     <EmbeddedResource Include="Scripts\002_Create_Registration.sql" />
+    <EmbeddedResource Include="Scripts\003_Create_Schema_For_Events.sql" />
+    <EmbeddedResource Include="Scripts\004_Create_SerializedEvent_Table.sql" />
   </ItemGroup>
 
   <ItemGroup>

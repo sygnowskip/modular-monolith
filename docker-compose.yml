@@ -21,17 +21,17 @@ services:
       - "modular-monolith-database"
     environment:
       - ConnectionStrings__Database=Data Source=modular-monolith-database;Initial Catalog=Hexure;Connection Timeout=30;User Id=sa;Password=P@ssword1;MultipleActiveResultSets=False;Timeout=30;
-  # availability-calendar-rabbitmq:
-  #   image: "rabbitmq:3-management"
-  #   volumes:
-  #     - ./docker/configuration/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config
-  #     - ./docker/configuration/rabbitmq/definitions.json:/etc/rabbitmq/definitions.json
-  #   ports:
-  #     - 2001:5672
-  #     - 2002:15672
-  #   expose:
-  #     - 5672
-  #     - 15672
+  availability-calendar-rabbitmq:
+    image: "rabbitmq:3-management"
+    volumes:
+      - ./docker/configuration/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config
+      - ./docker/configuration/rabbitmq/definitions.json:/etc/rabbitmq/definitions.json
+    ports:
+      - 2001:5672
+      - 2002:15672
+    expose:
+      - 5672
+      - 15672
   modular-monolith-identity:
     build:
       context: "."
@@ -44,6 +44,18 @@ services:
       - Issuer__Url=http://modular-monolith-identity
     ports:
       - 2003:80
+  modular-monolith-events-publisher:
+    build:
+      context: "."
+      dockerfile: "./docker/configuration/dotnet/Dockerfile"
+      args:
+        PROJECT_PATH: Example/ModularMonolith.EventsPublisher
+        ASSEMBLY_NAME: ModularMonolith.EventsPublisher
+    restart: on-failure
+    depends_on:
+      - "modular-monolith-database"
+    environment:
+      - ConnectionStrings__Database=Data Source=modular-monolith-database;Initial Catalog=Hexure;Connection Timeout=30;User Id=sa;Password=P@ssword1;MultipleActiveResultSets=False;Timeout=30;
   modular-monolith-api:
     build:
       context: "."

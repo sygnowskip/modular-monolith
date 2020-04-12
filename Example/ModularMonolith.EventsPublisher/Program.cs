@@ -4,7 +4,6 @@ using Hexure.EventsPublisher;
 using Microsoft.Extensions.Configuration;
 using ModularMonolith.Configuration;
 using ModularMonolith.Dependencies;
-using ModularMonolith.Payments.Contracts.Events;
 using ModularMonolith.Persistence;
 using ModularMonolith.Registrations.Contracts.Events;
 
@@ -21,6 +20,7 @@ namespace ModularMonolith.EventsPublisher
             await EventsPublisherFactory
                 .CreatePublisher(batchSize, delay)
                 .WithDbContext<MonolithDbContext>()
+                .WithTransactionProvider<MonolithDbContext>()
                 .WithEventsFromAssemblyOfType<RegistrationPaid>()
                 .WithDomain(services =>
                 {

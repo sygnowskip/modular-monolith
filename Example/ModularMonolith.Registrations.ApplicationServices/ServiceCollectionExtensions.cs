@@ -1,9 +1,9 @@
-﻿using MediatR;
+﻿using Hexure.Time;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ModularMonolith.Registrations.Commands;
 using ModularMonolith.Registrations.Contracts;
-using ModularMonolith.Time;
 
 namespace ModularMonolith.Registrations.ApplicationServices
 {

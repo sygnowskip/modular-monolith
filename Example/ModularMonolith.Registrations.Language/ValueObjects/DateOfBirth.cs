@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Hexure.Results;
 using Hexure.Results.Extensions;
-using ModularMonolith.Time;
+using Hexure.Time;
 
 namespace ModularMonolith.Registrations.Language.ValueObjects
 {

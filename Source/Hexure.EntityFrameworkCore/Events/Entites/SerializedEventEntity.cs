@@ -9,10 +9,15 @@ namespace Hexure.EntityFrameworkCore.Events.Entites
     {
         public static readonly Error.ErrorType UnableToCreateEntityForEmptyEvent =
             new Error.ErrorType(nameof(UnableToCreateEntityForEmptyEvent), "Unable to create entity for empty event");
+
+
+        public static readonly Error.ErrorType EventAlreadyProcessed =
+            new Error.ErrorType(nameof(EventAlreadyProcessed), "Event has been already processed");
     }
 
     public class SerializedEventEntity
     {
+        private SerializedEventEntity() { }
         private SerializedEventEntity(SerializedEvent serializedEvent)
         {
             SerializedEvent = serializedEvent;
@@ -21,6 +26,15 @@ namespace Hexure.EntityFrameworkCore.Events.Entites
         public long Id { get; private set; }
         public DateTime? ProcessedOn { get; private set; }
         public SerializedEvent SerializedEvent { get; private set; }
+
+        public Result MarkAsProcessed(DateTime processedOn)
+        {
+            if (ProcessedOn.HasValue)
+                return Result.Fail(SerializedEventEntityErrors.EventAlreadyProcessed.Build());
+
+            ProcessedOn = processedOn;
+            return Result.Ok();
+        }
 
         public static Result<SerializedEventEntity> Create(SerializedEvent serializedEvent)
         {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ModularMonolith.Time
+namespace Hexure.Time
 {
     public interface ISystemTimeProvider
     {

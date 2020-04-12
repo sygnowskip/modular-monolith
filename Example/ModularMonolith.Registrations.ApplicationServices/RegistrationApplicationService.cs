@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Hexure.Results;
 using Hexure.Results.Extensions;
+using Hexure.Time;
 using MediatR;
 using ModularMonolith.Payments.Contracts;
 using ModularMonolith.Registrations.Commands;
@@ -8,7 +9,6 @@ using ModularMonolith.Registrations.Contracts;
 using ModularMonolith.Registrations.Contracts.Requests;
 using ModularMonolith.Registrations.Language;
 using ModularMonolith.Registrations.Language.ValueObjects;
-using ModularMonolith.Time;
 
 namespace ModularMonolith.Registrations.ApplicationServices
 {
