@@ -28,11 +28,11 @@ namespace ModularMonolith.Tests.Unit.Events
     [TestFixture]
     public class EventSerializationTests
     {
-        private readonly IEventSerializer _eventSerializer = new EventSerializer(new EventNamespaceReader(),
-            new EventTypeProvider(new Dictionary<string, Assembly>()
-            {
-                {"Registrations", typeof(RegistrationPaid).Assembly}
-            }));
+        private readonly IEventSerializer _eventSerializer = new EventSerializer(new EventNamespaceReader());
+        private readonly IEventDeserializer _eventDeserializer = new EventDeserializer(new EventTypeProvider(new Dictionary<string, Assembly>()
+        {
+            {"Registrations", typeof(RegistrationPaid).Assembly}
+        }));
 
         [Test]
         public void ShouldSerializeDomainEvent()
@@ -78,7 +78,7 @@ namespace ModularMonolith.Tests.Unit.Events
 
             var serialized = _eventSerializer.Serialize(domainEvent);
 
-            var deserialized = _eventSerializer.Deserialize(serialized.Value);
+            var deserialized = _eventDeserializer.Deserialize(serialized.Value);
 
             deserialized.IsSuccess.Should().BeTrue();
             deserialized.Value.GetType().Should().Be<RegistrationPaid>();
@@ -92,19 +92,19 @@ namespace ModularMonolith.Tests.Unit.Events
 
             var serialized = _eventSerializer.Serialize(domainEvent);
 
-            var deserialized = _eventSerializer.Deserialize(serialized.Value);
+            var deserialized = _eventDeserializer.Deserialize(serialized.Value);
 
             deserialized.IsSuccess.Should().BeFalse();
-            deserialized.ViolatesOnly(EventSerializerErrors.UnableToFindTypeForEvent).Should().BeTrue();
+            deserialized.ViolatesOnly(EventDeserializerErrors.UnableToFindTypeForEvent).Should().BeTrue();
         }
         
         [Test]
         public void ShouldNotDeserializeNullEvent()
         {
-            var deserialized = _eventSerializer.Deserialize(null);
+            var deserialized = _eventDeserializer.Deserialize(null);
 
             deserialized.IsSuccess.Should().BeFalse();
-            deserialized.ViolatesOnly(EventSerializerErrors.UnableToDeserializeNullEvent).Should().BeTrue();
+            deserialized.ViolatesOnly(EventDeserializerErrors.UnableToDeserializeNullEvent).Should().BeTrue();
         }
     }
 }

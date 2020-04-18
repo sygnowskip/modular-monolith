@@ -12,61 +12,34 @@ namespace Hexure.Events.Serialization
 
         public static Error.ErrorType UnableToSerializeNullEvent = new Error.ErrorType(nameof(UnableToSerializeNullEvent),
              $"Unable to serialize null event");
-        
-        public static Error.ErrorType UnableToFindTypeForEvent = new Error.ErrorType(nameof(UnableToFindTypeForEvent),
-             "Unable to find type for event {0} from namespace {1}");
-
-        public static Error.ErrorType UnableToDeserializeNullEvent = new Error.ErrorType(nameof(UnableToDeserializeNullEvent),
-            $"Unable to deserialize null event");
-
-        public static Error.ErrorType UnableToDeserializeEvent = new Error.ErrorType(nameof(UnableToDeserializeEvent),
-            $"Unable to deserialize event");
     }
 
     public interface IEventSerializer
     {
-        Result<IEvent> Deserialize(SerializedEvent @event);
-        Result<SerializedEvent> Serialize<TEvent>(TEvent @event)
-            where TEvent : IEvent;
+        Result<SerializedEvent> Serialize(IEvent @event);
     }
 
     public class EventSerializer : IEventSerializer
     {
         private readonly IEventNamespaceReader _eventNamespaceReader;
-        private readonly IEventTypeProvider _eventTypeProvider;
 
-        public EventSerializer(IEventNamespaceReader eventNamespaceReader, IEventTypeProvider eventTypeProvider)
+        public EventSerializer(IEventNamespaceReader eventNamespaceReader)
         {
             _eventNamespaceReader = eventNamespaceReader;
-            _eventTypeProvider = eventTypeProvider;
         }
 
-        public Result<IEvent> Deserialize(SerializedEvent @event)
-        {
-            if (@event == null)
-                return Result.Fail<IEvent>(EventSerializerErrors.UnableToDeserializeNullEvent.Build());
-
-            var eventType = _eventTypeProvider.GetType(@event.Namespace, @event.Type);
-            if (eventType.HasNoValue)
-                return Result.Fail<IEvent>(
-                    EventSerializerErrors.UnableToFindTypeForEvent.Build(@event.Type, @event.Namespace));
-
-            return Maybe<IEvent>.From(JsonConvert.DeserializeObject(@event.Payload, eventType.Value) as IEvent)
-                .ToResult(EventSerializerErrors.UnableToDeserializeEvent.Build());
-        }
-
-        public Result<SerializedEvent> Serialize<TEvent>(TEvent @event)
-            where TEvent : IEvent
+        public Result<SerializedEvent> Serialize(IEvent @event)
         {
             if (@event == null)
                 return Result.Fail<SerializedEvent>(EventSerializerErrors.UnableToSerializeNullEvent.Build());
 
-            var @namespace = _eventNamespaceReader.GetFromAssemblyOfType<TEvent>();
+            var eventType = @event.GetType();
+            var @namespace = _eventNamespaceReader.GetFromAssemblyOfType(eventType);
             if (@namespace.HasNoValue)
                 return Result.Fail<SerializedEvent>(EventSerializerErrors
                     .UnableToSerializeEventFromAssemblyWithoutDefinedNamespace.Build());
 
-            return Result.Ok(new SerializedEvent(@namespace.Value.Name, typeof(TEvent).Name,
+            return Result.Ok(new SerializedEvent(@namespace.Value.Name, eventType.Name,
                 JsonConvert.SerializeObject(@event)));
         }
     }
