@@ -27,5 +27,30 @@ namespace ModularMonolith.Tests.Unit.Events
 
             eventsNamespace.HasValue.Should().BeFalse();
         }
+
+        [Test]
+        public void ShouldReturnEventNamespaceValueBasedOnContractsRuntimeType()
+        {
+            var eventsNamespace = _eventNamespaceReader.GetFromAssemblyOfType(typeof(RegistrationCreated));
+
+            eventsNamespace.HasValue.Should().BeTrue();
+            eventsNamespace.Value.Name.Should().Be("Registrations");
+        }
+
+        [Test]
+        public void ShouldReturnEmptyValueForAssemblyWithoutAttributeOnRuntimeType()
+        {
+            var eventsNamespace = _eventNamespaceReader.GetFromAssemblyOfType(typeof(PaymentCompleted));
+
+            eventsNamespace.HasValue.Should().BeFalse();
+        }
+
+        [Test]
+        public void ShouldReturnEmptyValueForEventsThatDoesNotImplementIEventOnRuntimeType()
+        {
+            var eventsNamespace = _eventNamespaceReader.GetFromAssemblyOfType(typeof(int));
+
+            eventsNamespace.HasValue.Should().BeFalse();
+        }
     }
 }
