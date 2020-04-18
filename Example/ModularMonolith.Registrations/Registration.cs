@@ -33,10 +33,10 @@ namespace ModularMonolith.Registrations
         public Candidate Candidate { get; private set; }
         public RegistrationPayment Payment { get; private set; }
 
-        public Result PaymentStarted(PaymentId paymentId)
+        public Result PaymentStarted(PaymentId paymentId, ISystemTimeProvider systemTimeProvider)
         {
             return Payment.SetInProgressPayment(paymentId)
-                .OnSuccess(() => RaiseEvent(new PaymentForRegistrationStarted(Id)));
+                .OnSuccess(() => RaiseEvent(new PaymentForRegistrationStarted(Id, systemTimeProvider.UtcNow)));
         }
 
         public void MarkAsPaid(ISystemTimeProvider systemTimeProvider)

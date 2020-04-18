@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Hexure.EntityFrameworkCore;
 using Hexure.EntityFrameworkCore.Events.Repositories;
+using Hexure.Events.Serialization;
 using Hexure.Results.Extensions;
 using Hexure.Time;
 using MediatR;
@@ -18,6 +19,7 @@ namespace Hexure.EventsPublisher
         private readonly ISerializedEventRepository _serializedEventRepository;
         private readonly ISystemTimeProvider _systemTimeProvider;
         private readonly ITransactionProvider _transactionProvider;
+        private readonly IEventDeserializer _eventDeserializer;
 
         public EventsPublisher(int defaultBatchSize, TimeSpan defaultDelay, IServiceProvider serviceProvider)
         {
@@ -25,6 +27,7 @@ namespace Hexure.EventsPublisher
             _mediator = serviceProvider.GetRequiredService<IMediator>();
             _systemTimeProvider = serviceProvider.GetRequiredService<ISystemTimeProvider>();
             _transactionProvider = serviceProvider.GetRequiredService<ITransactionProvider>();
+            _eventDeserializer = serviceProvider.GetRequiredService<IEventDeserializer>();
             _defaultBatchSize = defaultBatchSize;
             _defaultDelay = defaultDelay;
         }
@@ -41,10 +44,11 @@ namespace Hexure.EventsPublisher
                 {
                     try
                     {
-                        await _mediator.Publish(serializedEventEntity);
+                        await _eventDeserializer.Deserialize(serializedEventEntity.SerializedEvent)
+                            .OnSuccess(async @event => await _mediator.Publish(@event));
 
                         await serializedEventEntity.MarkAsProcessed(_systemTimeProvider.UtcNow)
-                            .OnSuccess(() => _serializedEventRepository.SaveChangesASync())
+                            .OnSuccess(() => _serializedEventRepository.SaveChangesAsync())
                             .OnFailure(errors =>
                                 throw new InvalidOperationException(JsonConvert.SerializeObject(errors)));
                     }

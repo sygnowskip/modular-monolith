@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Hexure.Results;
 using Hexure.Results.Extensions;
+using Hexure.Time;
 using MediatR;
 using ModularMonolith.Payments.Language;
 using ModularMonolith.Registrations.Language;
@@ -23,19 +24,19 @@ namespace ModularMonolith.Registrations.Commands
     internal class StartPaymentForRegistrationCommandHandler : IRequestHandler<StartPaymentForRegistration, Result>
     {
         private readonly IRegistrationRepository _registrationRepository;
-        private readonly IMediator _mediator;
+        private readonly ISystemTimeProvider _systemTimeProvider;
 
-        public StartPaymentForRegistrationCommandHandler(IRegistrationRepository registrationRepository, IMediator mediator)
+        public StartPaymentForRegistrationCommandHandler(IRegistrationRepository registrationRepository, ISystemTimeProvider systemTimeProvider)
         {
             _registrationRepository = registrationRepository;
-            _mediator = mediator;
+            _systemTimeProvider = systemTimeProvider;
         }
 
         public async Task<Result> Handle(StartPaymentForRegistration request, CancellationToken cancellationToken)
         {
             return await _registrationRepository.GetAsync(request.Id)
                 .ToResult(RegistrationRepositoryErrors.UnableToFindRegistration.Build())
-                .OnSuccess(registration => registration.PaymentStarted(request.PaymentId));
+                .OnSuccess(registration => registration.PaymentStarted(request.PaymentId, _systemTimeProvider));
 
         }
     }

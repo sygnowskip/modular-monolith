@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Reflection;
 using Hexure.EntityFrameworkCore;
 using Hexure.EntityFrameworkCore.Events;
+using Hexure.EntityFrameworkCore.Events.Collecting;
 using Hexure.EntityFrameworkCore.Events.Repositories;
 using Hexure.EntityFrameworkCore.SqlServer.Events;
 using Hexure.EntityFrameworkCore.SqlServer.Hints;
@@ -79,8 +80,7 @@ namespace Hexure.EventsPublisher
 
         private void RegisterCommonServices()
         {
-            _serviceCollection.AddTransient<IEventSerializer, EventSerializer>();
-            _serviceCollection.AddTransient<ISerializedEventRepository, SerializedEventRepository>();
+            _serviceCollection.AddTransient<IEventDeserializer, EventDeserializer>();
             _serviceCollection.AddSingleton<IEventTypeProvider>(new EventTypeProvider(_namespaces));
         }
     }

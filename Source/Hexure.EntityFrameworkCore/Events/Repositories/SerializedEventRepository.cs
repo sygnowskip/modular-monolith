@@ -7,8 +7,7 @@ namespace Hexure.EntityFrameworkCore.Events.Repositories
     public interface ISerializedEventRepository
     {
         Task<IReadOnlyCollection<SerializedEventEntity>> GetUnpublishedEventsAsync(int batchSize);
-        Task AddAsync(SerializedEventEntity entity);
-        Task SaveChangesASync();
+        Task SaveChangesAsync();
     }
 
     public abstract class AbstractSerializedEventRepository : ISerializedEventRepository
@@ -21,12 +20,8 @@ namespace Hexure.EntityFrameworkCore.Events.Repositories
         }
 
         public abstract Task<IReadOnlyCollection<SerializedEventEntity>> GetUnpublishedEventsAsync(int batchSize);
-        public async Task AddAsync(SerializedEventEntity entity)
-        {
-            await DbContext.SerializedEvents.AddAsync(entity);
-        }
 
-        public Task SaveChangesASync()
+        public Task SaveChangesAsync()
         {
             return DbContext.SaveChangesAsync();
         }
