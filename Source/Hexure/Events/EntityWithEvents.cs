@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using MediatR;
 
 namespace Hexure.Events
 {
@@ -7,6 +6,6 @@ namespace Hexure.Events
     {
         bool HasDomainEvents { get; }
 
-        IEnumerable<INotification> FlushDomainEvents();
+        IEnumerable<IEvent> FlushDomainEvents();
     }
 }

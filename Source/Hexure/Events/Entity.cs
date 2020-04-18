@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using MediatR;
 
 namespace Hexure.Events
 {
     public abstract class Entity : IEntityWithDomainEvents
     {
-        private readonly Queue<INotification> _domainEvents = new Queue<INotification>();
+        private readonly Queue<IEvent> _domainEvents = new Queue<IEvent>();
         public bool HasDomainEvents => _domainEvents.Any();
 
-        public IEnumerable<INotification> FlushDomainEvents()
+        public IEnumerable<IEvent> FlushDomainEvents()
         {
             while (_domainEvents.Count > 0)
             {
@@ -17,7 +16,7 @@ namespace Hexure.Events
             }
         }
 
-        protected void RaiseEvent(INotification domainEvent)
+        protected void RaiseEvent(IEvent domainEvent)
         {
             _domainEvents.Enqueue(domainEvent);
         }
