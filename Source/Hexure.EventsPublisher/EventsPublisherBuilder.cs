@@ -4,13 +4,11 @@ using System.Diagnostics;
 using System.Reflection;
 using Hexure.EntityFrameworkCore;
 using Hexure.EntityFrameworkCore.Events;
-using Hexure.EntityFrameworkCore.Events.Collecting;
-using Hexure.EntityFrameworkCore.Events.Repositories;
-using Hexure.EntityFrameworkCore.SqlServer.Events;
 using Hexure.EntityFrameworkCore.SqlServer.Hints;
 using Hexure.Events;
 using Hexure.Events.Namespace;
 using Hexure.Events.Serialization;
+using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Hexure.EventsPublisher
@@ -42,6 +40,28 @@ namespace Hexure.EventsPublisher
             return this;
         }
 
+        public EventsPublisherBuilder ToRabbitMqWithBaseInterface<TDefaultEventType>(EventsPublisherRabbitMqSettings rabbitMqSettings)
+        {
+            _serviceCollection.AddMassTransit(configurator =>
+            {
+                configurator.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(factoryConfigurator =>
+                {
+                    factoryConfigurator.Host(rabbitMqSettings.Host, hostConfigurator =>
+                    {
+                        hostConfigurator.Username(rabbitMqSettings.Username);
+                        hostConfigurator.Password(rabbitMqSettings.Password);
+                    });
+
+                    factoryConfigurator.MessageTopology.SetEntityNameFormatter(
+                        new EventNamespaceNameFormatter<TDefaultEventType>(
+                            factoryConfigurator.MessageTopology.EntityNameFormatter,
+                            provider.GetRequiredService<IEventNamespaceReader>()));
+                }));
+            });
+
+            return this;
+        }
+
         public EventsPublisherBuilder WithTransactionProvider<TTransactionProvider>()
             where TTransactionProvider : ITransactionProvider
         {
@@ -50,12 +70,7 @@ namespace Hexure.EventsPublisher
 
             return this;
         }
-
-        public EventsPublisherBuilder WithDomain(Action<IServiceCollection> registerDomainAction)
-        {
-            registerDomainAction(_serviceCollection);
-            return this;
-        }
+        
         public EventsPublisherBuilder WithEventsFromAssemblyOfType<TType>()
             where TType : IEvent
         {
@@ -68,6 +83,12 @@ namespace Hexure.EventsPublisher
 
             _namespaces.Add(ns.Value.Name, typeof(TType).Assembly);
 
+            return this;
+        }
+
+        public EventsPublisherBuilder WithPersistence(Action<IServiceCollection> services)
+        {
+            services(_serviceCollection);
             return this;
         }
 

@@ -5,6 +5,11 @@
             "name": "admin",
             "password": "qwerty123",
             "tags": "administrator"
+        },        
+        {
+            "name": "example-events-publisher",
+            "password": "qwerty123",
+            "tags": "administrator"
         }
     ],
     "vhosts": [
@@ -15,6 +20,13 @@
     "permissions": [
         {
             "user": "admin",
+            "vhost": "\/",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        },
+        {
+            "user": "example-events-publisher",
             "vhost": "\/",
             "configure": ".*",
             "write": ".*",

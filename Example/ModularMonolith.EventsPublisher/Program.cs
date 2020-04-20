@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Hexure.Events;
 using Hexure.EventsPublisher;
+using Hexure.Time;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using ModularMonolith.Configuration;
 using ModularMonolith.Dependencies;
 using ModularMonolith.Persistence;
@@ -19,15 +22,16 @@ namespace ModularMonolith.EventsPublisher
 
             await EventsPublisherFactory
                 .CreatePublisher(batchSize, delay)
+                .ToRabbitMqWithBaseInterface<IEvent>(configuration.GetSection("Bus").Get<EventsPublisherRabbitMqSettings>())
                 .WithDbContext<MonolithDbContext>()
                 .WithTransactionProvider<MonolithDbContext>()
                 .WithEventsFromAssemblyOfType<RegistrationPaid>()
-                .WithDomain(services =>
+                .WithPersistence(services =>
                 {
-                    services.AddRegistrations();
-                    services.AddPayments();
                     services.AddPersistence(configuration.GetConnectionString("Database"),
                         configuration.GetConnectionString("Database"));
+
+                    services.TryAddTransient<ISystemTimeProvider, SystemTimeProvider>();
                 })
                 .Build()
                 .RunAsync();
