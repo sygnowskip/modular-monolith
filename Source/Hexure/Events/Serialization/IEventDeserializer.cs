@@ -18,7 +18,7 @@ namespace Hexure.Events.Serialization
 
     public interface IEventDeserializer
     {
-        Result<IEvent> Deserialize(SerializedEvent @event);
+        Result<object> Deserialize(SerializedEvent @event);
     }
 
     public class EventDeserializer : IEventDeserializer
@@ -30,17 +30,17 @@ namespace Hexure.Events.Serialization
             _eventTypeProvider = eventTypeProvider;
         }
 
-        public Result<IEvent> Deserialize(SerializedEvent @event)
+        public Result<object> Deserialize(SerializedEvent @event)
         {
             if (@event == null)
-                return Result.Fail<IEvent>(EventDeserializerErrors.UnableToDeserializeNullEvent.Build());
+                return Result.Fail<object>(EventDeserializerErrors.UnableToDeserializeNullEvent.Build());
 
             var eventType = _eventTypeProvider.GetType(@event.Namespace, @event.Type);
             if (eventType.HasNoValue)
-                return Result.Fail<IEvent>(
+                return Result.Fail<object>(
                     EventDeserializerErrors.UnableToFindTypeForEvent.Build(@event.Type, @event.Namespace));
 
-            return Maybe<IEvent>.From(JsonConvert.DeserializeObject(@event.Payload, eventType.Value) as IEvent)
+            return Maybe<object>.From(JsonConvert.DeserializeObject(@event.Payload, eventType.Value))
                 .ToResult(EventDeserializerErrors.UnableToDeserializeEvent.Build());
         }
     }
