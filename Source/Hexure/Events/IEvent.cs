@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Hexure.Events
 {
-    public interface IEvent : INotification
+    public interface IEvent
     {
         DateTime PublishedOn { get; }
     }

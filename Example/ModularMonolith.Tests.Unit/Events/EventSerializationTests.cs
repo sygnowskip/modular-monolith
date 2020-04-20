@@ -51,7 +51,7 @@ namespace ModularMonolith.Tests.Unit.Events
         [Test]
         public void ShouldNotSerializeNullableEvents()
         {
-            var serialized = _eventSerializer.Serialize<RegistrationPaid>(null);
+            var serialized = _eventSerializer.Serialize(null);
 
             serialized.IsSuccess.Should().BeFalse();
             serialized.ViolatesOnly(EventSerializerErrors.UnableToSerializeNullEvent).Should().BeTrue();
@@ -81,8 +81,11 @@ namespace ModularMonolith.Tests.Unit.Events
             var deserialized = _eventDeserializer.Deserialize(serialized.Value);
 
             deserialized.IsSuccess.Should().BeTrue();
-            deserialized.Value.GetType().Should().Be<RegistrationPaid>();
-            deserialized.Value.PublishedOn.Should().Be(publishedOn);
+
+            var deserializedEvent = deserialized.Value as IEvent;
+            deserializedEvent.Should().NotBeNull();
+            deserializedEvent.GetType().Should().Be<RegistrationPaid>();
+            deserializedEvent.PublishedOn.Should().Be(publishedOn);
         }
 
         [Test]

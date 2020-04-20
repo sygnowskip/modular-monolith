@@ -7,7 +7,7 @@ using ModularMonolith.Registrations.Contracts;
 
 namespace ModularMonolith.Registrations.EventHandlers
 {
-    internal class OnPaymentCompleted : INotificationHandler<PaymentCompleted>
+    /*internal class OnPaymentCompleted : INotificationHandler<PaymentCompleted>
     {
         private readonly IRegistrationRepository _registrationRepository;
         private readonly IRegistrationApplicationService _registrationApplicationService;
@@ -23,5 +23,5 @@ namespace ModularMonolith.Registrations.EventHandlers
             var identifierResult = _registrationRepository.GetIdentifierForCorrelation(notification.CorrelationId)
                 .OnSuccess(async registrationId => await _registrationApplicationService.MarkAsPaid(registrationId));
         }
-    }
+    }*/
 }
