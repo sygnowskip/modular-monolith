@@ -8,7 +8,8 @@ using Hexure.EntityFrameworkCore.SqlServer.Hints;
 using Hexure.Events;
 using Hexure.Events.Namespace;
 using Hexure.Events.Serialization;
-using MassTransit;
+using Hexure.RabbitMQ;
+using Hexure.RabbitMQ.Settings;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Hexure.EventsPublisher
@@ -40,25 +41,9 @@ namespace Hexure.EventsPublisher
             return this;
         }
 
-        public EventsPublisherBuilder ToRabbitMqWithBaseInterface<TDefaultEventType>(EventsPublisherRabbitMqSettings rabbitMqSettings)
+        public EventsPublisherBuilder ToRabbitMq(PublisherRabbitMqSettings rabbitMqSettings)
         {
-            _serviceCollection.AddMassTransit(configurator =>
-            {
-                configurator.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(factoryConfigurator =>
-                {
-                    factoryConfigurator.Host(rabbitMqSettings.Host, hostConfigurator =>
-                    {
-                        hostConfigurator.Username(rabbitMqSettings.Username);
-                        hostConfigurator.Password(rabbitMqSettings.Password);
-                    });
-
-                    factoryConfigurator.MessageTopology.SetEntityNameFormatter(
-                        new EventNamespaceNameFormatter<TDefaultEventType>(
-                            factoryConfigurator.MessageTopology.EntityNameFormatter,
-                            provider.GetRequiredService<IEventNamespaceReader>()));
-                }));
-            });
-
+            RabbitConnector.RegisterRabbitMqPublisher(_serviceCollection, rabbitMqSettings);
             return this;
         }
 

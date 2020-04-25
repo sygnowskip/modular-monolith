@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Hexure.Events;
 using Hexure.EventsPublisher;
+using Hexure.RabbitMQ.Settings;
 using Hexure.Time;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -22,7 +23,7 @@ namespace ModularMonolith.EventsPublisher
 
             await EventsPublisherFactory
                 .CreatePublisher(batchSize, delay)
-                .ToRabbitMqWithBaseInterface<IEvent>(configuration.GetSection("Bus").Get<EventsPublisherRabbitMqSettings>())
+                .ToRabbitMq(configuration.GetSection("Bus").Get<PublisherRabbitMqSettings>())
                 .WithDbContext<MonolithDbContext>()
                 .WithTransactionProvider<MonolithDbContext>()
                 .WithEventsFromAssemblyOfType<RegistrationPaid>()

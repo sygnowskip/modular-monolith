@@ -1,6 +1,6 @@
-﻿namespace Hexure.EventsPublisher
+﻿namespace Hexure.RabbitMQ.Settings
 {
-    public class EventsPublisherRabbitMqSettings
+    public class PublisherRabbitMqSettings
     {
         public string Host { get; set; }
         public string Username { get; set; }
