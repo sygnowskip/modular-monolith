@@ -10,6 +10,11 @@
             "name": "example-events-publisher",
             "password": "qwerty123",
             "tags": "administrator"
+        },        
+        {
+            "name": "example-events-consumer",
+            "password": "qwerty123",
+            "tags": "administrator"
         }
     ],
     "vhosts": [
@@ -27,6 +32,13 @@
         },
         {
             "user": "example-events-publisher",
+            "vhost": "\/",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        },
+        {
+            "user": "example-events-consumer",
             "vhost": "\/",
             "configure": ".*",
             "write": ".*",
