@@ -11,10 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Hexure.EntityFrameworkCore.SqlServer\Hexure.EntityFrameworkCore.SqlServer.csproj" />
-    <ProjectReference Include="..\Hexure.EntityFrameworkCore\Hexure.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Hexure.MassTransit\Hexure.MassTransit.csproj" />
-    <ProjectReference Include="..\Hexure\Hexure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -18,11 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Source\Hexure.EventsPublisher\Hexure.EventsPublisher.csproj" />
+    <ProjectReference Include="..\..\Source\Hexure.EventsConsumer\Hexure.EventsConsumer.csproj" />
     <ProjectReference Include="..\ModularMonolith.Configuration\ModularMonolith.Configuration.csproj" />
     <ProjectReference Include="..\ModularMonolith.Dependencies\ModularMonolith.Dependencies.csproj" />
-    <ProjectReference Include="..\ModularMonolith.Persistence\ModularMonolith.Persistence.csproj" />
-    <ProjectReference Include="..\ModularMonolith.Registrations.Contracts\ModularMonolith.Registrations.Contracts.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Registrations.EventHandlers\ModularMonolith.Registrations.EventHandlers.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,5 @@
 ﻿using Hexure.Events.Namespace;
 using Hexure.Results;
-using Hexure.Results.Extensions;
 using Newtonsoft.Json;
 
 namespace Hexure.Events.Serialization

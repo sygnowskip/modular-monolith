@@ -1,28 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Reflection;
 using Hexure.EntityFrameworkCore;
 using Hexure.EntityFrameworkCore.Events;
-using Hexure.EntityFrameworkCore.Events.Collecting;
-using Hexure.EntityFrameworkCore.Events.Repositories;
-using Hexure.EntityFrameworkCore.SqlServer.Events;
 using Hexure.EntityFrameworkCore.SqlServer.Hints;
 using Hexure.Events;
 using Hexure.Events.Namespace;
 using Hexure.Events.Serialization;
+using Hexure.MassTransit.RabbitMq;
+using Hexure.MassTransit.RabbitMq.Settings;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Hexure.EventsPublisher
 {
     public class EventsPublisherBuilder
     {
-        private readonly IEventNamespaceReader _eventNamespaceReader = new EventNamespaceReader(); 
-        private readonly Dictionary<string, Assembly> _namespaces = new Dictionary<string, Assembly>();
+        private readonly EventTypeProviderBuilder _eventTypeProviderBuilder = new EventTypeProviderBuilder(new EventNamespaceReader());
         private readonly int _defaultBatchSize;
         private readonly TimeSpan _defaultDelay;
 
         private readonly IServiceCollection _serviceCollection;
+
+        private PublisherRabbitMqSettings _publisherRabbitMqSettings;
 
         internal EventsPublisherBuilder(int defaultBatchSize, TimeSpan defaultDelay)
         {
@@ -42,6 +40,12 @@ namespace Hexure.EventsPublisher
             return this;
         }
 
+        public EventsPublisherBuilder ToRabbitMq(PublisherRabbitMqSettings rabbitMqSettings)
+        {
+            _publisherRabbitMqSettings = rabbitMqSettings;
+            return this;
+        }
+
         public EventsPublisherBuilder WithTransactionProvider<TTransactionProvider>()
             where TTransactionProvider : ITransactionProvider
         {
@@ -50,38 +54,25 @@ namespace Hexure.EventsPublisher
 
             return this;
         }
-
-        public EventsPublisherBuilder WithDomain(Action<IServiceCollection> registerDomainAction)
-        {
-            registerDomainAction(_serviceCollection);
-            return this;
-        }
+        
         public EventsPublisherBuilder WithEventsFromAssemblyOfType<TType>()
             where TType : IEvent
         {
-            var ns = _eventNamespaceReader.GetFromAssemblyOfType<TType>();
-            if (ns.HasNoValue)
-                throw new InvalidOperationException("Unable to publish events from assembly without [EventNamespace] attribute");
+            _eventTypeProviderBuilder.AddEventsFromAssemblyOfType<TType>();
+            return this;
+        }
 
-            if (_namespaces.ContainsKey(ns.Value.Name))
-                throw new InvalidOperationException("Unable to publish events from assemblies with duplicated values of [EventNamespace] attribute");
-
-            _namespaces.Add(ns.Value.Name, typeof(TType).Assembly);
-
+        public EventsPublisherBuilder WithPersistence(Action<IServiceCollection> services)
+        {
+            services(_serviceCollection);
             return this;
         }
 
         public EventsPublisher Build()
         {
-            RegisterCommonServices();
-
+            _serviceCollection.AddEventTypeProvider(_eventTypeProviderBuilder.Build());
+            _serviceCollection.RegisterRabbitMqPublisher(_publisherRabbitMqSettings);
             return new EventsPublisher(_defaultBatchSize, _defaultDelay, _serviceCollection.BuildServiceProvider());
-        }
-
-        private void RegisterCommonServices()
-        {
-            _serviceCollection.AddTransient<IEventDeserializer, EventDeserializer>();
-            _serviceCollection.AddSingleton<IEventTypeProvider>(new EventTypeProvider(_namespaces));
         }
     }
 }

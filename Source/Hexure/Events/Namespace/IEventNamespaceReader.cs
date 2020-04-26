@@ -7,8 +7,7 @@ namespace Hexure.Events.Namespace
 {
     public interface IEventNamespaceReader
     {
-        Maybe<EventNamespace> GetFromAssemblyOfType<TType>()
-            where TType : IEvent;
+        Maybe<EventNamespace> GetFromAssemblyOfType<TType>();
 
         Maybe<EventNamespace> GetFromAssemblyOfType(Type type);
     }
@@ -16,7 +15,6 @@ namespace Hexure.Events.Namespace
     public class EventNamespaceReader : IEventNamespaceReader
     {
         public Maybe<EventNamespace> GetFromAssemblyOfType<TType>()
-            where TType : IEvent
         {
             return GetFromAssemblyOfType(typeof(TType));
         }

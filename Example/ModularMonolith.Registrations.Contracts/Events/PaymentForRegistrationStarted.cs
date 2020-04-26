@@ -1,6 +1,5 @@
 ﻿using System;
 using Hexure.Events;
-using MediatR;
 using ModularMonolith.Registrations.Language;
 
 namespace ModularMonolith.Registrations.Contracts.Events

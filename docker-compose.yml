@@ -21,7 +21,7 @@ services:
       - "modular-monolith-database"
     environment:
       - ConnectionStrings__Database=Data Source=modular-monolith-database;Initial Catalog=Hexure;Connection Timeout=30;User Id=sa;Password=P@ssword1;MultipleActiveResultSets=False;Timeout=30;
-  availability-calendar-rabbitmq:
+  modular-monolith-rabbitmq:
     image: "rabbitmq:3-management"
     volumes:
       - ./docker/configuration/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config
@@ -54,8 +54,24 @@ services:
     restart: on-failure
     depends_on:
       - "modular-monolith-database"
+      - "modular-monolith-rabbitmq"
     environment:
       - ConnectionStrings__Database=Data Source=modular-monolith-database;Initial Catalog=Hexure;Connection Timeout=30;User Id=sa;Password=P@ssword1;MultipleActiveResultSets=False;Timeout=30;
+      - Bus__Host=rabbitmq://modular-monolith-rabbitmq
+  modular-monolith-events-consumer:
+    build:
+      context: "."
+      dockerfile: "./docker/configuration/dotnet/Dockerfile"
+      args:
+        PROJECT_PATH: Example/ModularMonolith.EventsConsumer
+        ASSEMBLY_NAME: ModularMonolith.EventsConsumer
+    restart: on-failure
+    depends_on:
+      - "modular-monolith-database"
+      - "modular-monolith-rabbitmq"
+    environment:
+      - ConnectionStrings__Database=Data Source=modular-monolith-database;Initial Catalog=Hexure;Connection Timeout=30;User Id=sa;Password=P@ssword1;MultipleActiveResultSets=False;Timeout=30;
+      - Bus__Host=rabbitmq://modular-monolith-rabbitmq
   modular-monolith-api:
     build:
       context: "."
