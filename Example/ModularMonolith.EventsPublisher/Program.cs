@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Hexure.Events;
 using Hexure.EventsPublisher;
-using Hexure.RabbitMQ.Settings;
+using Hexure.MassTransit.RabbitMq.Settings;
 using Hexure.Time;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;

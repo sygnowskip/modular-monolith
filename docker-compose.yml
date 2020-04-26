@@ -1,26 +1,26 @@
 version: "3"
 services:
-  # modular-monolith-database:
-  #   image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
-  #   environment:
-  #     ACCEPT_EULA: Y
-  #     SA_PASSWORD: P@ssword1
-  #   ports:
-  #     - 2000:1433
-  #   expose:
-  #     - 1433
-  # modular-monolith-database-setup:
-  #   build:
-  #     context: "."
-  #     dockerfile: "./docker/configuration/dotnet/Dockerfile"
-  #     args:
-  #       PROJECT_PATH: Example/ModularMonolith.Database
-  #       ASSEMBLY_NAME: ModularMonolith.Database
-  #   restart: on-failure
-  #   depends_on:
-  #     - "modular-monolith-database"
-  #   environment:
-  #     - ConnectionStrings__Database=Data Source=modular-monolith-database;Initial Catalog=Hexure;Connection Timeout=30;User Id=sa;Password=P@ssword1;MultipleActiveResultSets=False;Timeout=30;
+  modular-monolith-database:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: P@ssword1
+    ports:
+      - 2000:1433
+    expose:
+      - 1433
+  modular-monolith-database-setup:
+    build:
+      context: "."
+      dockerfile: "./docker/configuration/dotnet/Dockerfile"
+      args:
+        PROJECT_PATH: Example/ModularMonolith.Database
+        ASSEMBLY_NAME: ModularMonolith.Database
+    restart: on-failure
+    depends_on:
+      - "modular-monolith-database"
+    environment:
+      - ConnectionStrings__Database=Data Source=modular-monolith-database;Initial Catalog=Hexure;Connection Timeout=30;User Id=sa;Password=P@ssword1;MultipleActiveResultSets=False;Timeout=30;
   modular-monolith-rabbitmq:
     image: "rabbitmq:3-management"
     volumes:
@@ -32,42 +32,58 @@ services:
     expose:
       - 5672
       - 15672
-  # modular-monolith-identity:
-  #   build:
-  #     context: "."
-  #     dockerfile: "./docker/configuration/dotnet-api/Dockerfile"
-  #     args:
-  #       PROJECT_PATH: Example/IdentityServer
-  #       ASSEMBLY_NAME: IdentityServer
-  #   restart: on-failure
-  #   environment:
-  #     - Issuer__Url=http://modular-monolith-identity
-  #   ports:
-  #     - 2003:80
-  # modular-monolith-events-publisher:
-  #   build:
-  #     context: "."
-  #     dockerfile: "./docker/configuration/dotnet/Dockerfile"
-  #     args:
-  #       PROJECT_PATH: Example/ModularMonolith.EventsPublisher
-  #       ASSEMBLY_NAME: ModularMonolith.EventsPublisher
-  #   restart: on-failure
-  #   depends_on:
-  #     - "modular-monolith-database"
-  #   environment:
-  #     - ConnectionStrings__Database=Data Source=modular-monolith-database;Initial Catalog=Hexure;Connection Timeout=30;User Id=sa;Password=P@ssword1;MultipleActiveResultSets=False;Timeout=30;
-  # modular-monolith-api:
-  #   build:
-  #     context: "."
-  #     dockerfile: "./docker/configuration/dotnet-api/Dockerfile"
-  #     args:
-  #       PROJECT_PATH: Example/ModularMonolith.API
-  #       ASSEMBLY_NAME: ModularMonolith.API
-  #   restart: on-failure
-  #   depends_on:
-  #     - "modular-monolith-database"
-  #   environment:
-  #     - ConnectionStrings__Database=Data Source=modular-monolith-database;Initial Catalog=Hexure;Connection Timeout=30;User Id=sa;Password=P@ssword1;MultipleActiveResultSets=False;Timeout=30;
-  #     - Authority__Url=http://modular-monolith-identity
-  #   ports:
-  #     - 2004:80
+  modular-monolith-identity:
+    build:
+      context: "."
+      dockerfile: "./docker/configuration/dotnet-api/Dockerfile"
+      args:
+        PROJECT_PATH: Example/IdentityServer
+        ASSEMBLY_NAME: IdentityServer
+    restart: on-failure
+    environment:
+      - Issuer__Url=http://modular-monolith-identity
+    ports:
+      - 2003:80
+  modular-monolith-events-publisher:
+    build:
+      context: "."
+      dockerfile: "./docker/configuration/dotnet/Dockerfile"
+      args:
+        PROJECT_PATH: Example/ModularMonolith.EventsPublisher
+        ASSEMBLY_NAME: ModularMonolith.EventsPublisher
+    restart: on-failure
+    depends_on:
+      - "modular-monolith-database"
+      - "modular-monolith-rabbitmq"
+    environment:
+      - ConnectionStrings__Database=Data Source=modular-monolith-database;Initial Catalog=Hexure;Connection Timeout=30;User Id=sa;Password=P@ssword1;MultipleActiveResultSets=False;Timeout=30;
+      - Bus__Host=rabbitmq://modular-monolith-rabbitmq
+  modular-monolith-events-consumer:
+    build:
+      context: "."
+      dockerfile: "./docker/configuration/dotnet/Dockerfile"
+      args:
+        PROJECT_PATH: Example/ModularMonolith.EventsConsumer
+        ASSEMBLY_NAME: ModularMonolith.EventsConsumer
+    restart: on-failure
+    depends_on:
+      - "modular-monolith-database"
+      - "modular-monolith-rabbitmq"
+    environment:
+      - ConnectionStrings__Database=Data Source=modular-monolith-database;Initial Catalog=Hexure;Connection Timeout=30;User Id=sa;Password=P@ssword1;MultipleActiveResultSets=False;Timeout=30;
+      - Bus__Host=rabbitmq://modular-monolith-rabbitmq
+  modular-monolith-api:
+    build:
+      context: "."
+      dockerfile: "./docker/configuration/dotnet-api/Dockerfile"
+      args:
+        PROJECT_PATH: Example/ModularMonolith.API
+        ASSEMBLY_NAME: ModularMonolith.API
+    restart: on-failure
+    depends_on:
+      - "modular-monolith-database"
+    environment:
+      - ConnectionStrings__Database=Data Source=modular-monolith-database;Initial Catalog=Hexure;Connection Timeout=30;User Id=sa;Password=P@ssword1;MultipleActiveResultSets=False;Timeout=30;
+      - Authority__Url=http://modular-monolith-identity
+    ports:
+      - 2004:80

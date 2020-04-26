@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Reflection;
 using Hexure.EntityFrameworkCore;
 using Hexure.EntityFrameworkCore.Events;
 using Hexure.EntityFrameworkCore.SqlServer.Hints;
 using Hexure.Events;
 using Hexure.Events.Namespace;
 using Hexure.Events.Serialization;
-using Hexure.RabbitMQ;
-using Hexure.RabbitMQ.Settings;
+using Hexure.MassTransit.RabbitMq;
+using Hexure.MassTransit.RabbitMq.Settings;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Hexure.EventsPublisher
@@ -21,6 +19,8 @@ namespace Hexure.EventsPublisher
         private readonly TimeSpan _defaultDelay;
 
         private readonly IServiceCollection _serviceCollection;
+
+        private PublisherRabbitMqSettings _publisherRabbitMqSettings;
 
         internal EventsPublisherBuilder(int defaultBatchSize, TimeSpan defaultDelay)
         {
@@ -42,7 +42,7 @@ namespace Hexure.EventsPublisher
 
         public EventsPublisherBuilder ToRabbitMq(PublisherRabbitMqSettings rabbitMqSettings)
         {
-            RabbitConnector.RegisterRabbitMqPublisher(_serviceCollection, rabbitMqSettings);
+            _publisherRabbitMqSettings = rabbitMqSettings;
             return this;
         }
 
@@ -70,15 +70,9 @@ namespace Hexure.EventsPublisher
 
         public EventsPublisher Build()
         {
-            RegisterCommonServices();
-
+            _serviceCollection.AddEventTypeProvider(_eventTypeProviderBuilder.Build());
+            _serviceCollection.RegisterRabbitMqPublisher(_publisherRabbitMqSettings);
             return new EventsPublisher(_defaultBatchSize, _defaultDelay, _serviceCollection.BuildServiceProvider());
-        }
-
-        private void RegisterCommonServices()
-        {
-            _serviceCollection.AddTransient<IEventDeserializer, EventDeserializer>();
-            _serviceCollection.AddSingleton<IEventTypeProvider>(_eventTypeProviderBuilder.Build());
         }
     }
 }

@@ -89,11 +89,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith.EventsPubli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexure.EventsPublisher", "Source\Hexure.EventsPublisher\Hexure.EventsPublisher.csproj", "{436702EF-0077-4EFC-B4C6-C9BCE70B0141}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexure.RabbitMQ", "Source\Hexure.RabbitMQ\Hexure.RabbitMQ.csproj", "{AC618133-B05D-42B0-9E76-76036BB06B34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexure.EventsConsumer", "Source\Hexure.EventsConsumer\Hexure.EventsConsumer.csproj", "{797673F6-9205-413F-9613-0E98F64FB58C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexure.EventsConsumer", "Source\Hexure.EventsConsumer\Hexure.EventsConsumer.csproj", "{797673F6-9205-413F-9613-0E98F64FB58C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith.EventsConsumer", "Example\ModularMonolith.EventsConsumer\ModularMonolith.EventsConsumer.csproj", "{5C0A0A02-97A6-4599-A6F3-2709B672849C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.EventsConsumer", "Example\ModularMonolith.EventsConsumer\ModularMonolith.EventsConsumer.csproj", "{5C0A0A02-97A6-4599-A6F3-2709B672849C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexure.MassTransit", "Source\Hexure.MassTransit\Hexure.MassTransit.csproj", "{69559E5D-4C43-453C-92BC-CEE127F74133}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -221,10 +221,6 @@ Global
 		{436702EF-0077-4EFC-B4C6-C9BCE70B0141}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{436702EF-0077-4EFC-B4C6-C9BCE70B0141}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{436702EF-0077-4EFC-B4C6-C9BCE70B0141}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AC618133-B05D-42B0-9E76-76036BB06B34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AC618133-B05D-42B0-9E76-76036BB06B34}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AC618133-B05D-42B0-9E76-76036BB06B34}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AC618133-B05D-42B0-9E76-76036BB06B34}.Release|Any CPU.Build.0 = Release|Any CPU
 		{797673F6-9205-413F-9613-0E98F64FB58C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{797673F6-9205-413F-9613-0E98F64FB58C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{797673F6-9205-413F-9613-0E98F64FB58C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -233,6 +229,10 @@ Global
 		{5C0A0A02-97A6-4599-A6F3-2709B672849C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C0A0A02-97A6-4599-A6F3-2709B672849C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C0A0A02-97A6-4599-A6F3-2709B672849C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69559E5D-4C43-453C-92BC-CEE127F74133}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69559E5D-4C43-453C-92BC-CEE127F74133}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69559E5D-4C43-453C-92BC-CEE127F74133}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69559E5D-4C43-453C-92BC-CEE127F74133}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -279,9 +279,9 @@ Global
 		{724D8FC9-9A7A-4A47-B866-8AFB57B05E6D} = {4352D366-EC5C-43F3-AD54-7A36A4BE0BA4}
 		{725AEBCC-52A8-450C-A8F8-29B7CA1B6463} = {3DA7069C-3B35-44A6-97E5-31C50B0F666D}
 		{436702EF-0077-4EFC-B4C6-C9BCE70B0141} = {4352D366-EC5C-43F3-AD54-7A36A4BE0BA4}
-		{AC618133-B05D-42B0-9E76-76036BB06B34} = {4352D366-EC5C-43F3-AD54-7A36A4BE0BA4}
 		{797673F6-9205-413F-9613-0E98F64FB58C} = {4352D366-EC5C-43F3-AD54-7A36A4BE0BA4}
 		{5C0A0A02-97A6-4599-A6F3-2709B672849C} = {3DA7069C-3B35-44A6-97E5-31C50B0F666D}
+		{69559E5D-4C43-453C-92BC-CEE127F74133} = {4352D366-EC5C-43F3-AD54-7A36A4BE0BA4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {598A3A02-79C7-4D50-889E-D65594383E6D}

@@ -1,4 +1,4 @@
-﻿namespace Hexure.RabbitMQ.Settings
+﻿namespace Hexure.MassTransit.RabbitMq.Settings
 {
     public class ConsumerRabbitMqSettings : PublisherRabbitMqSettings
     {

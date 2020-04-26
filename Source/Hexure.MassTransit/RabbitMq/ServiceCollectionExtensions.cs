@@ -3,29 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using GreenPipes;
+using Hexure.Events;
 using Hexure.Events.Namespace;
 using Hexure.Events.Serialization;
-using Hexure.RabbitMQ.Serialization;
-using Hexure.RabbitMQ.Settings;
+using Hexure.MassTransit.Events;
+using Hexure.MassTransit.Events.Serialization;
+using Hexure.MassTransit.RabbitMq.Settings;
 using MassTransit;
 using MassTransit.ExtensionsDependencyInjectionIntegration;
 using MassTransit.RabbitMqTransport;
 using MassTransit.Serialization;
-using MassTransit.Topology;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Hexure.RabbitMQ
+namespace Hexure.MassTransit.RabbitMq
 {
-    public static class RabbitConnector
+    public static class ServiceCollectionExtensions
     {
-        public static void RegisterRabbitMqPublisher(IServiceCollection serviceCollection, PublisherRabbitMqSettings rabbitMqSettings)
+        public static void RegisterRabbitMqPublisher(this IServiceCollection serviceCollection, PublisherRabbitMqSettings rabbitMqSettings)
         {
             RegisterRabbitMq(serviceCollection, rabbitMqSettings);
         }
 
-        public static void RegisterRabbitMqConsumer(IServiceCollection serviceCollection, ConsumerRabbitMqSettings rabbitMqSettings, IEnumerable<Assembly> withConsumersFromAssemblies)
+        public static void RegisterRabbitMqConsumer(this IServiceCollection serviceCollection, ConsumerRabbitMqSettings rabbitMqSettings, ICollection<Assembly> withConsumersFromAssemblies)
         {
+            serviceCollection.AddEventTypeProvider(new ConsumersEventTypeProviderBuilder(new EventNamespaceReader())
+                .AddEventsFromAssemblies(withConsumersFromAssemblies)
+                .Build());
+
             RegisterRabbitMq(serviceCollection, rabbitMqSettings, (busConfigurator, provider) =>
                 {
                     busConfigurator.ReceiveEndpoint(rabbitMqSettings.Queue, endpointConfigurator =>
@@ -44,7 +48,7 @@ namespace Hexure.RabbitMQ
             Action<IRabbitMqBusFactoryConfigurator, IServiceProvider> rabbitMqBusConfiguratorAction = null,
             Action<IServiceCollectionConfigurator> configuratorAction = null)
         {
-            RegisterCommonServices(serviceCollection);
+            serviceCollection.AddEventsMassTransitSerializers();
 
             serviceCollection.AddMassTransit(configurator =>
             {
@@ -62,26 +66,14 @@ namespace Hexure.RabbitMQ
                             provider.GetRequiredService<IEventNameProvider>()));
                     
                     factoryConfigurator.SetMessageSerializer(provider.GetRequiredService<EventNamespaceMessageSerializer>);
-                    factoryConfigurator.AddMessageDeserializer(JsonMessageSerializer.JsonContentType, () =>
-                        new EventNamespaceMessageDeserializer(JsonMessageSerializer.Deserializer,
-                            provider.GetRequiredService<IEventTypeProvider>(),
-                            provider.GetRequiredService<IMessageTypeParser>()));
+                    factoryConfigurator.AddMessageDeserializer(JsonMessageSerializer.JsonContentType,
+                        provider.GetRequiredService<EventNamespaceMessageDeserializer>);
 
                     rabbitMqBusConfiguratorAction?.Invoke(factoryConfigurator, provider);
                 }));
 
                 configuratorAction?.Invoke(configurator);
             });
-        }
-
-        private static void RegisterCommonServices(IServiceCollection serviceCollection)
-        {
-            serviceCollection.TryAddTransient<IEventNamespaceReader, EventNamespaceReader>();
-            serviceCollection.TryAddTransient<IEventNameProvider, EventNamespaceNameProvider>();
-            serviceCollection.TryAddTransient<IMessageTypeProvider, EventNamespaceNameProvider>();
-            serviceCollection.TryAddTransient<IEventNamespaceTypeMetadataService, EventNamespaceTypeMetadataService>();
-            serviceCollection.TryAddTransient<EventNamespaceMessageSerializer>();
-            serviceCollection.TryAddTransient<IMessageTypeParser, EventNamespaceNameProvider>();
         }
     }
 }

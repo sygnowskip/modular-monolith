@@ -5,7 +5,7 @@ using Hexure.Events.Serialization;
 using MassTransit;
 using MassTransit.Serialization;
 
-namespace Hexure.RabbitMQ.Serialization
+namespace Hexure.MassTransit.Events.Serialization
 {
     public class EventNamespaceMessageEnvelope : MessageEnvelope
     {

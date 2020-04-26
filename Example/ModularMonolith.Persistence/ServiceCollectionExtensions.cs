@@ -1,10 +1,6 @@
 ﻿using Hexure.EntityFrameworkCore;
-using Hexure.EntityFrameworkCore.Events.Collecting;
-using Hexure.EntityFrameworkCore.Events.Repositories;
 using Hexure.EntityFrameworkCore.SqlServer.Events;
 using Hexure.Events;
-using Hexure.Events.Namespace;
-using Hexure.Events.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ModularMonolith.Payments;

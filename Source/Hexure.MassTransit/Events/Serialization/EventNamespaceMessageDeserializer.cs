@@ -7,10 +7,9 @@ using GreenPipes;
 using Hexure.Events.Serialization;
 using MassTransit;
 using MassTransit.Serialization;
-using MassTransit.Util;
 using Newtonsoft.Json;
 
-namespace Hexure.RabbitMQ.Serialization
+namespace Hexure.MassTransit.Events.Serialization
 {
     public class EventNamespaceMessageDeserializer : IMessageDeserializer
     {

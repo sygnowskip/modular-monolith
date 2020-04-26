@@ -1,6 +1,6 @@
 ﻿using MassTransit.Topology;
 
-namespace Hexure.RabbitMQ
+namespace Hexure.MassTransit.Events
 {
     public class EventNamespaceNameFormatter : IEntityNameFormatter
     {

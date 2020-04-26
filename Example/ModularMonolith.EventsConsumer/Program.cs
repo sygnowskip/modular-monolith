@@ -1,8 +1,6 @@
-﻿using System;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection.Extensions;
+﻿using Microsoft.Extensions.Configuration;
 using Hexure.EventsConsumer;
-using Hexure.RabbitMQ.Settings;
+using Hexure.MassTransit.RabbitMq.Settings;
 using ModularMonolith.Configuration;
 using ModularMonolith.Dependencies;
 using ModularMonolith.Registrations.EventHandlers.SendEmails;

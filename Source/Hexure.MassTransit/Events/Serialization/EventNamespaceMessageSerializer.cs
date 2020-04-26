@@ -8,7 +8,7 @@ using MassTransit;
 using MassTransit.Serialization;
 using Newtonsoft.Json;
 
-namespace Hexure.RabbitMQ.Serialization
+namespace Hexure.MassTransit.Events.Serialization
 {
     public class EventNamespaceMessageSerializer : IMessageSerializer
     {
@@ -21,12 +21,13 @@ namespace Hexure.RabbitMQ.Serialization
             Serializer = new Lazy<JsonSerializer>(() => JsonSerializer.Create(JsonMessageSerializer.SerializerSettings));
         }
 
-        private readonly IEventNamespaceTypeMetadataService _eventNamespaceTypeMetadataService;
+        private readonly IMessageTypeProvider _messageTypeProvider;
 
-        public EventNamespaceMessageSerializer(IEventNamespaceTypeMetadataService eventNamespaceTypeMetadataService)
+        public EventNamespaceMessageSerializer(IMessageTypeProvider messageTypeProvider)
         {
-            _eventNamespaceTypeMetadataService = eventNamespaceTypeMetadataService;
+            _messageTypeProvider = messageTypeProvider;
         }
+
 
         public void Serialize<T>(Stream stream, SendContext<T> context) where T : class
         {
@@ -34,7 +35,7 @@ namespace Hexure.RabbitMQ.Serialization
             {
                 context.ContentType = ContentType;
 
-                var envelope = new JsonMessageEnvelope(context, context.Message, _eventNamespaceTypeMetadataService.GetMessageTypes<T>());
+                var envelope = new JsonMessageEnvelope(context, context.Message, EventNamespaceTypeMetadataCache.GetMessageTypes<T>(_messageTypeProvider));
 
                 using (var writer = new StreamWriter(stream, Encoding.Value, 1024, true))
                 using (var jsonWriter = new JsonTextWriter(writer))
