@@ -1,32 +1,28 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using Hexure.Events.Serialization;
 
 namespace Hexure.RabbitMQ.Serialization
 {
     internal static class EventNamespaceTypeMetadataCache
     {
-        private static readonly ConcurrentDictionary<Type, string> _typesMessageNameCache;
+        private static readonly ConcurrentDictionary<Type, string> TypesMessageNameCache;
 
         static EventNamespaceTypeMetadataCache()
         {
-            _typesMessageNameCache = new ConcurrentDictionary<Type, string>();
+            TypesMessageNameCache = new ConcurrentDictionary<Type, string>();
         }
 
-        public static string GetMessageType<TType>(IEventNameProvider eventNameProvider)
+        public static string GetMessageType<TType>(IMessageTypeProvider messageTypeProvider)
         {
-            if (_typesMessageNameCache.TryGetValue(typeof(TType), out var type))
+            if (TypesMessageNameCache.TryGetValue(typeof(TType), out var type))
                 return type;
 
-            var typeName = CreateTypeName<TType>(eventNameProvider);
-            if (_typesMessageNameCache.TryAdd(typeof(TType), typeName))
+            var typeName = messageTypeProvider.GetEventMessageType<TType>();
+            if (TypesMessageNameCache.TryAdd(typeof(TType), typeName))
                 return typeName;
 
             return typeName;
-        }
-
-        private static string CreateTypeName<TType>(IEventNameProvider eventNameProvider)
-        {
-            return $"urn:message:{eventNameProvider.GetEventName<TType>()}";
         }
     }
 }

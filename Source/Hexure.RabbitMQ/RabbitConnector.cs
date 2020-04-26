@@ -4,11 +4,13 @@ using System.Linq;
 using System.Reflection;
 using GreenPipes;
 using Hexure.Events.Namespace;
+using Hexure.Events.Serialization;
 using Hexure.RabbitMQ.Serialization;
 using Hexure.RabbitMQ.Settings;
 using MassTransit;
 using MassTransit.ExtensionsDependencyInjectionIntegration;
 using MassTransit.RabbitMqTransport;
+using MassTransit.Serialization;
 using MassTransit.Topology;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -19,11 +21,6 @@ namespace Hexure.RabbitMQ
     {
         public static void RegisterRabbitMqPublisher(IServiceCollection serviceCollection, PublisherRabbitMqSettings rabbitMqSettings)
         {
-            serviceCollection.TryAddTransient<IEventNamespaceReader, EventNamespaceReader>();
-            serviceCollection.TryAddTransient<IEventNameProvider, EventNamespaceEventNameProvider>();
-            serviceCollection.TryAddTransient<IEventNamespaceTypeMetadataService, EventNamespaceTypeMetadataService>();
-            serviceCollection.TryAddTransient<EventNamespaceMessageSerializer>();
-
             RegisterRabbitMq(serviceCollection, rabbitMqSettings);
         }
 
@@ -47,6 +44,8 @@ namespace Hexure.RabbitMQ
             Action<IRabbitMqBusFactoryConfigurator, IServiceProvider> rabbitMqBusConfiguratorAction = null,
             Action<IServiceCollectionConfigurator> configuratorAction = null)
         {
+            RegisterCommonServices(serviceCollection);
+
             serviceCollection.AddMassTransit(configurator =>
             {
                 configurator.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(factoryConfigurator =>
@@ -63,12 +62,26 @@ namespace Hexure.RabbitMQ
                             provider.GetRequiredService<IEventNameProvider>()));
                     
                     factoryConfigurator.SetMessageSerializer(provider.GetRequiredService<EventNamespaceMessageSerializer>);
+                    factoryConfigurator.AddMessageDeserializer(JsonMessageSerializer.JsonContentType, () =>
+                        new EventNamespaceMessageDeserializer(JsonMessageSerializer.Deserializer,
+                            provider.GetRequiredService<IEventTypeProvider>(),
+                            provider.GetRequiredService<IMessageTypeParser>()));
 
                     rabbitMqBusConfiguratorAction?.Invoke(factoryConfigurator, provider);
                 }));
 
                 configuratorAction?.Invoke(configurator);
             });
+        }
+
+        private static void RegisterCommonServices(IServiceCollection serviceCollection)
+        {
+            serviceCollection.TryAddTransient<IEventNamespaceReader, EventNamespaceReader>();
+            serviceCollection.TryAddTransient<IEventNameProvider, EventNamespaceNameProvider>();
+            serviceCollection.TryAddTransient<IMessageTypeProvider, EventNamespaceNameProvider>();
+            serviceCollection.TryAddTransient<IEventNamespaceTypeMetadataService, EventNamespaceTypeMetadataService>();
+            serviceCollection.TryAddTransient<EventNamespaceMessageSerializer>();
+            serviceCollection.TryAddTransient<IMessageTypeParser, EventNamespaceNameProvider>();
         }
     }
 }

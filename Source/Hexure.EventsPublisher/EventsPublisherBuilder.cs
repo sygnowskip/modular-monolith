@@ -16,8 +16,7 @@ namespace Hexure.EventsPublisher
 {
     public class EventsPublisherBuilder
     {
-        private readonly IEventNamespaceReader _eventNamespaceReader = new EventNamespaceReader(); 
-        private readonly Dictionary<string, Assembly> _namespaces = new Dictionary<string, Assembly>();
+        private readonly EventTypeProviderBuilder _eventTypeProviderBuilder = new EventTypeProviderBuilder(new EventNamespaceReader());
         private readonly int _defaultBatchSize;
         private readonly TimeSpan _defaultDelay;
 
@@ -59,15 +58,7 @@ namespace Hexure.EventsPublisher
         public EventsPublisherBuilder WithEventsFromAssemblyOfType<TType>()
             where TType : IEvent
         {
-            var ns = _eventNamespaceReader.GetFromAssemblyOfType<TType>();
-            if (ns.HasNoValue)
-                throw new InvalidOperationException("Unable to publish events from assembly without [EventNamespace] attribute");
-
-            if (_namespaces.ContainsKey(ns.Value.Name))
-                throw new InvalidOperationException("Unable to publish events from assemblies with duplicated values of [EventNamespace] attribute");
-
-            _namespaces.Add(ns.Value.Name, typeof(TType).Assembly);
-
+            _eventTypeProviderBuilder.AddEventsFromAssemblyOfType<TType>();
             return this;
         }
 
@@ -87,7 +78,7 @@ namespace Hexure.EventsPublisher
         private void RegisterCommonServices()
         {
             _serviceCollection.AddTransient<IEventDeserializer, EventDeserializer>();
-            _serviceCollection.AddSingleton<IEventTypeProvider>(new EventTypeProvider(_namespaces));
+            _serviceCollection.AddSingleton<IEventTypeProvider>(_eventTypeProviderBuilder.Build());
         }
     }
 }

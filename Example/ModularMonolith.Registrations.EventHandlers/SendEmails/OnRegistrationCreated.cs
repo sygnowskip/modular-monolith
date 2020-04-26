@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using MassTransit;
 using ModularMonolith.Registrations.Contracts.Events;
-using ModularMonolith.Registrations.Contracts.Events.Different;
 using Newtonsoft.Json;
 
 namespace ModularMonolith.Registrations.EventHandlers.SendEmails

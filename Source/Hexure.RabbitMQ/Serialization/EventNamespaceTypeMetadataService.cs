@@ -10,11 +10,11 @@ namespace Hexure.RabbitMQ.Serialization
 
     public class EventNamespaceTypeMetadataService : IEventNamespaceTypeMetadataService
     {
-        private readonly IEventNameProvider _eventNameProvider;
+        private readonly IMessageTypeProvider _messageTypeProvider;
 
-        public EventNamespaceTypeMetadataService(IEventNameProvider eventNameProvider)
+        public EventNamespaceTypeMetadataService(IMessageTypeProvider messageTypeProvider)
         {
-            _eventNameProvider = eventNameProvider;
+            _messageTypeProvider = messageTypeProvider;
         }
 
 
@@ -22,7 +22,7 @@ namespace Hexure.RabbitMQ.Serialization
         {
             return TypeMetadataCache<TType>.MessageTypeNames.Concat(new[]
                 {
-                    EventNamespaceTypeMetadataCache.GetMessageType<TType>(_eventNameProvider)
+                    EventNamespaceTypeMetadataCache.GetMessageType<TType>(_messageTypeProvider)
                 })
                 .ToArray();
         }

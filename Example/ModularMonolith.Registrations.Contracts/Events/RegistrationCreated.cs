@@ -3,7 +3,7 @@ using Hexure.Events;
 using ModularMonolith.Registrations.Language;
 using ModularMonolith.Registrations.Language.ValueObjects;
 
-namespace ModularMonolith.Registrations.Contracts.Events.Different
+namespace ModularMonolith.Registrations.Contracts.Events
 {
     public class RegistrationCreated : IEvent
     {

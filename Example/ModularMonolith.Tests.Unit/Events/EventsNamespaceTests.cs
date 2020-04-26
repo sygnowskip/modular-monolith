@@ -2,7 +2,6 @@
 using Hexure.Events.Namespace;
 using ModularMonolith.Payments.Contracts.Events;
 using ModularMonolith.Registrations.Contracts.Events;
-using ModularMonolith.Registrations.Contracts.Events.Different;
 using NUnit.Framework;
 
 namespace ModularMonolith.Tests.Unit.Events
