@@ -4,8 +4,8 @@ namespace Hexure.EntityFrameworkCore
 {
     public interface ITransactionProvider
     {
-        Task BeginTransaction();
-        Task CommitTransaction();
-        Task RollbackTransaction();
+        Task BeginTransactionAsync();
+        Task CommitTransactionAsync();
+        Task RollbackTransactionAsync();
     }
 }

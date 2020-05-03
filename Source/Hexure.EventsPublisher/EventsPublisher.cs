@@ -42,7 +42,7 @@ namespace Hexure.EventsPublisher
             {
                 while (true)
                 {
-                    await _transactionProvider.BeginTransaction();
+                    await _transactionProvider.BeginTransactionAsync();
                     Console.WriteLine($"{DateTime.UtcNow} Publishing (batch size: {_defaultBatchSize})...");
                     var eventsToPublish = await _serializedEventRepository.GetUnpublishedEventsAsync(_defaultBatchSize);
 
@@ -67,7 +67,7 @@ namespace Hexure.EventsPublisher
                         }
                     }
 
-                    await _transactionProvider.CommitTransaction();
+                    await _transactionProvider.CommitTransactionAsync();
                     await Task.Delay(_defaultDelay);
                 }
             }
