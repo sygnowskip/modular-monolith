@@ -93,7 +93,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexure.EventsConsumer", "So
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith.EventsConsumer", "Example\ModularMonolith.EventsConsumer\ModularMonolith.EventsConsumer.csproj", "{5C0A0A02-97A6-4599-A6F3-2709B672849C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexure.MassTransit", "Source\Hexure.MassTransit\Hexure.MassTransit.csproj", "{69559E5D-4C43-453C-92BC-CEE127F74133}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexure.MassTransit", "Source\Hexure.MassTransit\Hexure.MassTransit.csproj", "{69559E5D-4C43-453C-92BC-CEE127F74133}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexure.MediatR", "Source\Hexure.MediatR\Hexure.MediatR.csproj", "{0AEB3A28-5B40-41EE-862F-744F28A95932}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{98F41D58-E06A-4AB5-AC80-13E8D13B1D3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexure.Tests.Unit", "Source\Hexure.Tests.Unit\Hexure.Tests.Unit.csproj", "{ABA448FF-8F06-42AB-A43D-FB50AEEFA9E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -233,6 +239,14 @@ Global
 		{69559E5D-4C43-453C-92BC-CEE127F74133}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69559E5D-4C43-453C-92BC-CEE127F74133}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69559E5D-4C43-453C-92BC-CEE127F74133}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AEB3A28-5B40-41EE-862F-744F28A95932}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AEB3A28-5B40-41EE-862F-744F28A95932}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AEB3A28-5B40-41EE-862F-744F28A95932}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AEB3A28-5B40-41EE-862F-744F28A95932}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABA448FF-8F06-42AB-A43D-FB50AEEFA9E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABA448FF-8F06-42AB-A43D-FB50AEEFA9E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABA448FF-8F06-42AB-A43D-FB50AEEFA9E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABA448FF-8F06-42AB-A43D-FB50AEEFA9E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -282,6 +296,9 @@ Global
 		{797673F6-9205-413F-9613-0E98F64FB58C} = {4352D366-EC5C-43F3-AD54-7A36A4BE0BA4}
 		{5C0A0A02-97A6-4599-A6F3-2709B672849C} = {3DA7069C-3B35-44A6-97E5-31C50B0F666D}
 		{69559E5D-4C43-453C-92BC-CEE127F74133} = {4352D366-EC5C-43F3-AD54-7A36A4BE0BA4}
+		{0AEB3A28-5B40-41EE-862F-744F28A95932} = {4352D366-EC5C-43F3-AD54-7A36A4BE0BA4}
+		{98F41D58-E06A-4AB5-AC80-13E8D13B1D3D} = {4352D366-EC5C-43F3-AD54-7A36A4BE0BA4}
+		{ABA448FF-8F06-42AB-A43D-FB50AEEFA9E2} = {98F41D58-E06A-4AB5-AC80-13E8D13B1D3D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {598A3A02-79C7-4D50-889E-D65594383E6D}

@@ -37,18 +37,18 @@ namespace ModularMonolith.Persistence
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Registration> Registrations { get; set; }
         public DbSet<SerializedEventEntity> SerializedEvents { get; set; }
-        public Task BeginTransaction()
+        public Task BeginTransactionAsync()
         {
             return Database.BeginTransactionAsync();
         }
 
-        public Task CommitTransaction()
+        public Task CommitTransactionAsync()
         {
             Database.CommitTransaction();
             return Task.CompletedTask;
         }
 
-        public Task RollbackTransaction()
+        public Task RollbackTransactionAsync()
         {
             Database.RollbackTransaction();
             return Task.CompletedTask;

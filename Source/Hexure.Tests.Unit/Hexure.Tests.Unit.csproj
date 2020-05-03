@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="5.10.3" />
     <PackageReference Include="Moq" Version="4.14.1" />
     <PackageReference Include="nunit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.16.1">
@@ -14,13 +15,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
-    <PackageReference Include="FluentAssertions" Version="5.10.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ModularMonolith.Payments.Contracts\ModularMonolith.Payments.Contracts.csproj" />
-    <ProjectReference Include="..\ModularMonolith.Payments\ModularMonolith.Payments.csproj" />
-    <ProjectReference Include="..\ModularMonolith.Registrations\ModularMonolith.Registrations.csproj" />
+    <ProjectReference Include="..\Hexure.MediatR\Hexure.MediatR.csproj" />
   </ItemGroup>
 
 </Project>

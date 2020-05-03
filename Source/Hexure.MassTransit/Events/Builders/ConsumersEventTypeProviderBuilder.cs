@@ -4,7 +4,7 @@ using System.Reflection;
 using Hexure.Events.Namespace;
 using MassTransit;
 
-namespace Hexure.MassTransit.Events
+namespace Hexure.MassTransit.Events.Builders
 {
     public class ConsumersEventTypeProviderBuilder : Hexure.Events.Serialization.EventTypeProviderBuilder
     {
