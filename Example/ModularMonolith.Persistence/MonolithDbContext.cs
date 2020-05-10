@@ -1,10 +1,14 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Hexure.EntityFrameworkCore;
 using Hexure.EntityFrameworkCore.Events;
 using Hexure.EntityFrameworkCore.Events.Collecting;
 using Hexure.EntityFrameworkCore.Events.Entites;
+using Hexure.EntityFrameworkCore.Events.Publishing;
+using Hexure.Events.Publishing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using ModularMonolith.Payments;
 using ModularMonolith.Persistence.Configurations;
 using ModularMonolith.Registrations;
@@ -14,9 +18,11 @@ namespace ModularMonolith.Persistence
     internal class MonolithDbContext : DbContext, ISerializedEventDbContext, ITransactionProvider
     {
         private readonly IEventCollector _eventCollector;
-        public MonolithDbContext(DbContextOptions<MonolithDbContext> options, IEventCollector eventCollector) : base(options)
+        private readonly IServiceProvider _serviceProvider;
+        public MonolithDbContext(DbContextOptions<MonolithDbContext> options, IEventCollector eventCollector, IServiceProvider serviceProvider) : base(options)
         {
             _eventCollector = eventCollector;
+            _serviceProvider = serviceProvider;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -29,9 +35,15 @@ namespace ModularMonolith.Persistence
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            await SerializedEvents.AddRangeAsync(_eventCollector.Collect(ChangeTracker), cancellationToken);
+            await PublishDomainEvents();
 
             return await base.SaveChangesAsync(cancellationToken);
+        }
+
+        private Task PublishDomainEvents()
+        {
+            return _serviceProvider.GetRequiredService<IEventPublisher>()
+                .Publish(_eventCollector.Collect(ChangeTracker));
         }
 
         public DbSet<Payment> Payments { get; set; }
