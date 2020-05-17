@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Hexure.EntityFrameworkCore;
@@ -35,21 +36,24 @@ namespace ModularMonolith.Persistence
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            PublishDomainEvents();
+            await PublishDomainEventsAsync();
 
             return await base.SaveChangesAsync(cancellationToken);
         }
 
-        private void PublishDomainEvents()
+        private async Task PublishDomainEventsAsync()
         {
             var events = _eventCollector.Collect(ChangeTracker.Entries<IEntityWithDomainEvents>()
                 .Select(entry => entry.Entity).ToList());
 
             foreach (var @event in events)
             {
-                _eventSerializer.Serialize(@event)
+                await _eventSerializer.Serialize(@event)
                     .OnSuccess(SerializedEventEntity.Create)
-                    .OnSuccess(serializedEvent => SerializedEvents.Add(serializedEvent));
+                    .OnSuccess(serializedEvent => SerializedEvents.Add(serializedEvent))
+                    .OnFailure(errors =>
+                        throw new InvalidOperationException(
+                            $"Unable to publish domain event due to: {string.Join(", ", errors.Select(e => e.Message))}"));
             }
         }
 
