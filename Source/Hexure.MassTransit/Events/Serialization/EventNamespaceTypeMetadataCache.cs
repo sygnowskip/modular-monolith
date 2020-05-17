@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Linq;
+using Hexure.Results;
+using Hexure.Results.Extensions;
 using MassTransit.Metadata;
 
 namespace Hexure.MassTransit.Events.Serialization
@@ -16,23 +18,25 @@ namespace Hexure.MassTransit.Events.Serialization
 
         public static string[] GetMessageTypes<TType>(IMessageTypeProvider messageTypeProvider)
         {
-            return TypeMetadataCache<TType>.MessageTypeNames.Concat(new[]
-                {
-                    GetMessageType<TType>(messageTypeProvider)
-                })
-                .ToArray();
+            var messageType = GetMessageType<TType>(messageTypeProvider);
+
+            if (messageType.IsSuccess)
+                return TypeMetadataCache<TType>.MessageTypeNames.Concat(new[]
+                    {
+                        messageType.Value
+                    })
+                    .ToArray();
+
+            return TypeMetadataCache<TType>.MessageTypeNames;
         }
 
-        private static string GetMessageType<TType>(IMessageTypeProvider messageTypeProvider)
+        private static Result<string> GetMessageType<TType>(IMessageTypeProvider messageTypeProvider)
         {
             if (TypesMessageNameCache.TryGetValue(typeof(TType), out var type))
-                return type;
+                return Result.Ok(type);
 
-            var typeName = messageTypeProvider.GetMessageType<TType>();
-            if (TypesMessageNameCache.TryAdd(typeof(TType), typeName))
-                return typeName;
-
-            return typeName;
+            return messageTypeProvider.GetMessageType<TType>()
+                .OnSuccess(messageType => { TypesMessageNameCache.TryAdd(typeof(TType), messageType); });
         }
     }
 }

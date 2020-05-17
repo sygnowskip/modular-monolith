@@ -1,5 +1,7 @@
-﻿using Hexure.MassTransit.Events;
+﻿using System;
+using Hexure.MassTransit.Events;
 using MassTransit.Topology;
+using Newtonsoft.Json;
 
 namespace Hexure.MassTransit.RabbitMq.Formatters
 {
@@ -19,7 +21,11 @@ namespace Hexure.MassTransit.RabbitMq.Formatters
             if (typeof(T).IsInterface)
                 return _defaultEntityNameFormatter.FormatEntityName<T>();
 
-            return _eventNameProvider.GetEventName<T>();
+            var eventName = _eventNameProvider.GetEventName<T>();
+
+            return eventName.IsSuccess
+                ? eventName.Value
+                : throw new InvalidOperationException(JsonConvert.SerializeObject(eventName.Error));
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Hexure.MediatR;
 using Hexure.Results;
 using Hexure.Results.Extensions;
 using Hexure.Time;
@@ -9,7 +10,7 @@ using ModularMonolith.Registrations.Language;
 
 namespace ModularMonolith.Registrations.Commands
 {
-    internal class StartPaymentForRegistration : IRequest<Result>
+    internal class StartPaymentForRegistration : ICommandRequest
     {
         public StartPaymentForRegistration(RegistrationId id, PaymentId paymentId)
         {

@@ -1,11 +1,17 @@
-﻿using System;
-using Hexure.Events.Namespace;
+﻿using Hexure.Events.Namespace;
+using Hexure.Results;
 
 namespace Hexure.MassTransit.Events
 {
+    public static class EventNameProviderErrors
+    {
+        public static Error.ErrorType UnableToCreateName => new Error.ErrorType(nameof(UnableToCreateName),
+            "Unable to create name for {0} message due to missing {1} attribute");
+    }
+
     public interface IEventNameProvider
     {
-        string GetEventName<T>();
+        Result<string> GetEventName<T>();
     }
 
     public class EventNamespaceNameProvider : IEventNameProvider
@@ -17,13 +23,14 @@ namespace Hexure.MassTransit.Events
             _eventNamespaceReader = eventNamespaceReader;
         }
 
-        public string GetEventName<T>()
+        public Result<string> GetEventName<T>()
         {
             var ns = _eventNamespaceReader.GetFromAssemblyOfType<T>();
             if (ns.HasNoValue)
-                throw new InvalidOperationException($"Unable to create name for {typeof(T).FullName} message due to missing {nameof(EventNamespace)} attribute");
+                return Result.Fail<string>(
+                    EventNameProviderErrors.UnableToCreateName.Build(typeof(T).FullName, nameof(EventNamespace)));
 
-            return $"{ns.Value.Name}:{typeof(T).Name}";
+            return Result.Ok($"{ns.Value.Name}:{typeof(T).Name}");
         }
     }
 }

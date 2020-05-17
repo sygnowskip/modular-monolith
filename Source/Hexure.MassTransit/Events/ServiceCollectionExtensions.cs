@@ -1,5 +1,4 @@
-﻿using Hexure.Events;
-using Hexure.Events.Serialization;
+﻿using Hexure.Events.Serialization;
 using Hexure.MassTransit.Events.Serialization;
 using MassTransit.Serialization;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,9 +8,8 @@ namespace Hexure.MassTransit.Events
 {
     public static class ServiceCollectionExtensions
     {
-        public static void AddEventsMassTransitSerializers(this IServiceCollection services)
+        public static IServiceCollection AddEventsMassTransitSerializers(this IServiceCollection services)
         {
-            services.AddDomainEvents();
             services.TryAddTransient<IEventDeserializer, EventDeserializer>();
             services.TryAddTransient<IEventNameProvider, EventNamespaceNameProvider>();
             services.TryAddTransient<IMessageTypeProvider, EventNamespaceMessageTypeProvider>();
@@ -20,6 +18,8 @@ namespace Hexure.MassTransit.Events
             services.TryAddTransient<EventNamespaceMessageDeserializer>(provider => new EventNamespaceMessageDeserializer(JsonMessageSerializer.Deserializer,
                 provider.GetRequiredService<IEventTypeProvider>(),
                 provider.GetRequiredService<IMessageTypeParser>()));
+
+            return services;
         }
     }
 }

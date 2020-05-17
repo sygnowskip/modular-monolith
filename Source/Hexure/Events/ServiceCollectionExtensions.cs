@@ -1,4 +1,5 @@
-﻿using Hexure.Events.Namespace;
+﻿using Hexure.Events.Collecting;
+using Hexure.Events.Namespace;
 using Hexure.Events.Serialization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -11,6 +12,7 @@ namespace Hexure.Events
         {
             services.TryAddTransient<IEventSerializer, EventSerializer>();
             services.TryAddTransient<IEventNamespaceReader, EventNamespaceReader>();
+            services.TryAddTransient<IEventCollector, EventCollector>();
             return services;
         }
 

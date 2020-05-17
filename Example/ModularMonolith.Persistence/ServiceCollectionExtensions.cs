@@ -27,6 +27,7 @@ namespace ModularMonolith.Persistence
 
             services.AddDomainEvents()
                 .WithPersistence<MonolithDbContext>();
+
             return services;
         }
     }

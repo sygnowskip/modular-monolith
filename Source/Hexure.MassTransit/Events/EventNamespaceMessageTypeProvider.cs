@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using Hexure.Results;
+using Hexure.Results.Extensions;
 
 namespace Hexure.MassTransit.Events
 {
     public interface IMessageTypeProvider
     {
-        string GetMessageType<TType>();
+        Result<string> GetMessageType<TType>();
     }
 
     public interface IMessageTypeParser
@@ -24,9 +26,10 @@ namespace Hexure.MassTransit.Events
             _eventNameProvider = eventNameProvider;
         }
 
-        public string GetMessageType<TType>()
+        public Result<string> GetMessageType<TType>()
         {
-            return $"event-namespace:message:{_eventNameProvider.GetEventName<TType>()}";
+            return _eventNameProvider.GetEventName<TType>()
+                .OnSuccess(eventName => $"event-namespace:message:{eventName}");
         }
 
         public bool IsEventNamespaceType(string messageType)

@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Source\Hexure.MediatR\Hexure.MediatR.csproj" />
     <ProjectReference Include="..\ModularMonolith.Payments.Contracts\ModularMonolith.Payments.Contracts.csproj" />
     <ProjectReference Include="..\ModularMonolith.Registrations.Contracts\ModularMonolith.Registrations.Contracts.csproj" />
     <ProjectReference Include="..\ModularMonolith.Registrations\ModularMonolith.Registrations.csproj" />
