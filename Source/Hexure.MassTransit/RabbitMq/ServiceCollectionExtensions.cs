@@ -41,7 +41,10 @@ namespace Hexure.MassTransit.RabbitMq
                         endpointConfigurator.ConfigureConsumers(provider);
                     });
                 },
-                configurator => configurator.AddConsumers(withConsumersFromAssemblies.ToArray()));
+                configurator =>
+                {
+                    configurator.AddConsumers(withConsumersFromAssemblies.ToArray());
+                });
         }
 
         private static void RegisterRabbitMq(IServiceCollection serviceCollection,

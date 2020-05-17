@@ -26,6 +26,7 @@ namespace ModularMonolith.Registrations
             Id = id;
             Status = RegistrationStatus.New;
             Candidate = candidate;
+            Payment = new RegistrationPayment(100, "EUR");
         }
 
         public RegistrationId Id { get; private set; }
@@ -35,8 +36,9 @@ namespace ModularMonolith.Registrations
 
         public Result PaymentStarted(PaymentId paymentId, ISystemTimeProvider systemTimeProvider)
         {
-            return Payment.SetInProgressPayment(paymentId)
-                .OnSuccess(() => RaiseEvent(new PaymentForRegistrationStarted(Id, systemTimeProvider.UtcNow)));
+            return Result.Ok()
+                .OnSuccess(() => Status = RegistrationStatus.AwaitingPayment)
+                .OnSuccess(_ => RaiseEvent(new PaymentForRegistrationStarted(Id, systemTimeProvider.UtcNow)));
         }
 
         public void MarkAsPaid(ISystemTimeProvider systemTimeProvider)
@@ -54,7 +56,7 @@ namespace ModularMonolith.Registrations
 
     internal class RegistrationPayment
     {
-        private RegistrationPayment(decimal fee, string currency)
+        internal RegistrationPayment(decimal fee, string currency)
         {
             Fee = fee;
             Currency = currency;

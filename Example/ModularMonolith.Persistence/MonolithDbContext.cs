@@ -1,14 +1,14 @@
-﻿using System;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Hexure.EntityFrameworkCore;
 using Hexure.EntityFrameworkCore.Events;
-using Hexure.EntityFrameworkCore.Events.Collecting;
 using Hexure.EntityFrameworkCore.Events.Entites;
-using Hexure.EntityFrameworkCore.Events.Publishing;
-using Hexure.Events.Publishing;
+using Hexure.Events;
+using Hexure.Events.Collecting;
+using Hexure.Events.Serialization;
+using Hexure.Results.Extensions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using ModularMonolith.Payments;
 using ModularMonolith.Persistence.Configurations;
 using ModularMonolith.Registrations;
@@ -18,11 +18,11 @@ namespace ModularMonolith.Persistence
     internal class MonolithDbContext : DbContext, ISerializedEventDbContext, ITransactionProvider
     {
         private readonly IEventCollector _eventCollector;
-        private readonly IServiceProvider _serviceProvider;
-        public MonolithDbContext(DbContextOptions<MonolithDbContext> options, IEventCollector eventCollector, IServiceProvider serviceProvider) : base(options)
+        private readonly IEventSerializer _eventSerializer;
+        public MonolithDbContext(DbContextOptions<MonolithDbContext> options, IEventCollector eventCollector, IEventSerializer eventSerializer) : base(options)
         {
             _eventCollector = eventCollector;
-            _serviceProvider = serviceProvider;
+            _eventSerializer = eventSerializer;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -35,15 +35,22 @@ namespace ModularMonolith.Persistence
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            await PublishDomainEvents();
+            PublishDomainEvents();
 
             return await base.SaveChangesAsync(cancellationToken);
         }
 
-        private Task PublishDomainEvents()
+        private void PublishDomainEvents()
         {
-            return _serviceProvider.GetRequiredService<IEventPublisher>()
-                .Publish(_eventCollector.Collect(ChangeTracker));
+            var events = _eventCollector.Collect(ChangeTracker.Entries<IEntityWithDomainEvents>()
+                .Select(entry => entry.Entity).ToList());
+
+            foreach (var @event in events)
+            {
+                _eventSerializer.Serialize(@event)
+                    .OnSuccess(SerializedEventEntity.Create)
+                    .OnSuccess(serializedEvent => SerializedEvents.Add(serializedEvent));
+            }
         }
 
         public DbSet<Payment> Payments { get; set; }
@@ -54,10 +61,10 @@ namespace ModularMonolith.Persistence
             return Database.BeginTransactionAsync();
         }
 
-        public Task CommitTransactionAsync()
+        public async Task CommitTransactionAsync()
         {
+            await SaveChangesAsync();
             Database.CommitTransaction();
-            return Task.CompletedTask;
         }
 
         public Task RollbackTransactionAsync()

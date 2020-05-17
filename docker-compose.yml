@@ -26,6 +26,7 @@ services:
     volumes:
       - ./docker/configuration/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config
       - ./docker/configuration/rabbitmq/definitions.json:/etc/rabbitmq/definitions.json
+      - ./docker/configuration/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
     ports:
       - 2001:5672
       - 2002:15672
