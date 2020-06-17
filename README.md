@@ -32,21 +32,21 @@ We will use asynchronous communications with RabbitMQ as our base communication 
 
 ### Read information
 
-UI -> API -> Queries -> Read only database (No lock / No tracking, Eventual consistency)
+![Read information](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/sygnowskip/modular-monolith/feature/docs/Docs/read-information.puml?token=ACHEMPIPTFEFZDJAUTSYKIC65JZVI)
 
 ### Update information
 
-UI -> API -> Command -> Aggregate -> Domain Events (Single transaction)
+![Update information](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/sygnowskip/modular-monolith/feature/docs/Docs/update-information.puml?token=ACHEMPP57YWBJ36ENSBNSR265JZ6U)
 
 ### Outbox processor
 
-Domain Events -> RabbitMQ (At least one times published)
+![Outbox processor](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/sygnowskip/modular-monolith/feature/docs/Docs/outbox-processor.puml?token=ACHEMPNMMC3KR2I7WAF3SIS65JZ46)
 
 ### Asynchronous processing 
 
-RabbitMQ -> Event Handlers (At least one delivery)
-Event Handlers -> Commands (Reaction in the same or different domain to some events)
-Event Handlers -> Updating read only database
+![Asynchronous processing - react for domain events and execute action on different aggregate](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/sygnowskip/modular-monolith/feature/docs/Docs/asynchronous-processing-command.puml?token=ACHEMPOU2DLBIEEKYM63GTS65J2CA)
+
+![Asynchronous processing - update read models based on domain events](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/sygnowskip/modular-monolith/feature/docs/Docs/asynchronous-processing-read-model.puml?token=ACHEMPL5PFGKZ6H7TMUCDAS65JZNS)
 
 ## Known issues
 
