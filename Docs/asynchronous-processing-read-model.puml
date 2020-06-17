@@ -1,0 +1,12 @@
+@startuml
+
+Title "Asynchronous processing - update read models based on domain events"
+
+queue RabbitMQ
+participant "Event handlers" as EventHandler
+database "Read-only database" as ReadOnlyDatabase
+
+EventHandler -> RabbitMQ : Reacts on event from
+EventHandler -> ReadOnlyDatabase : Update read model on
+
+@enduml

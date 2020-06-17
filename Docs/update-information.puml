@@ -1,0 +1,22 @@
+@startuml
+
+Title "Update information"
+
+actor User
+participant API
+participant Command
+participant Aggregate
+database Database
+
+User -> API : Wants to change something
+API -> Command : Executes
+== Transaction boundary ==
+Command -> Aggregate : Apply change on
+Aggregate -> Database : Update state
+Aggregate -> Database : Publish domain events to Outbox
+Aggregate -> Command : Returns result
+== Transaction boundary ==
+Command -> API : Returns result
+API -> User : Display result of the action
+
+@enduml

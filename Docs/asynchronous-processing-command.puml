@@ -1,0 +1,21 @@
+@startuml
+
+Title "Asynchronous processing - react for domain events and execute action on different aggregate"
+
+queue RabbitMQ
+participant "Event handlers" as EventHandler
+participant Command
+participant Aggregate
+database Database
+
+
+EventHandler -> RabbitMQ : Reacts on event
+EventHandler -> Command : Executes
+== Transaction boundary ==
+Command -> Aggregate : Apply change on
+Aggregate -> Database : Update state
+Aggregate -> Database : Publish domain events to Outbox
+Aggregate -> Command : Returns result
+== Transaction boundary ==
+
+@enduml
