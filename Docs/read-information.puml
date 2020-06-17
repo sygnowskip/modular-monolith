@@ -1,0 +1,17 @@
+@startuml
+
+Title "Read information"
+
+actor User
+participant API
+participant Query
+database "Read-only database" as ReadOnlyDatabase
+
+User -> API : Wants to get some information
+API -> Query : Executes
+Query -> ReadOnlyDatabase : On read only database
+ReadOnlyDatabase -> Query : Returns data
+Query -> API : Returns data
+API -> User : Display information on UI
+
+@enduml

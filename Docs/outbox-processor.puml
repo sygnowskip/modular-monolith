@@ -1,0 +1,15 @@
+@startuml
+
+Title "Outbox processor"
+
+database Database
+participant  "Outbox processor" as OutboxProcessor
+queue RabbitMQ
+
+== Transaction boundary ==
+OutboxProcessor -> Database : Get unpublished events
+OutboxProcessor -> RabbitMQ : Publish events
+OutboxProcessor -> Database : Mark events as published
+== Transaction boundary ==
+
+@enduml
