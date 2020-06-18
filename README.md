@@ -32,21 +32,21 @@ We will use asynchronous communications with RabbitMQ as our base communication 
 
 ### Read information
 
-![Read information](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/sygnowskip/modular-monolith/feature/docs/Docs/read-information.puml?token=ACHEMPIPTFEFZDJAUTSYKIC65JZVI)
+![Read information](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/sygnowskip/modular-monolith/master/Docs/read-information.puml?token=ACHEMPNMCX3B2YQ57HMS7H265OS2I)
 
 ### Update information
 
-![Update information](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/sygnowskip/modular-monolith/feature/docs/Docs/update-information.puml?token=ACHEMPP57YWBJ36ENSBNSR265JZ6U)
+![Update information](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/sygnowskip/modular-monolith/master/Docs/update-information.puml?token=ACHEMPKGT5NXU5SY7IU33AC65OS3U)
 
 ### Outbox processor
 
-![Outbox processor](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/sygnowskip/modular-monolith/feature/docs/Docs/outbox-processor.puml?token=ACHEMPNMMC3KR2I7WAF3SIS65JZ46)
+![Outbox processor](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/sygnowskip/modular-monolith/master/Docs/outbox-processor.puml?token=ACHEMPJCQH4UN6QRZ3OUQ5265OSYI)
 
 ### Asynchronous processing 
 
-![Asynchronous processing - react for domain events and execute action on different aggregate](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/sygnowskip/modular-monolith/feature/docs/Docs/asynchronous-processing-command.puml?token=ACHEMPOU2DLBIEEKYM63GTS65J2CA)
+![Asynchronous processing - react for domain events and execute action on different aggregate](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/sygnowskip/modular-monolith/master/Docs/asynchronous-processing-command.puml?token=ACHEMPM5CFHZAV23RWKWIJK65OSUU)
 
-![Asynchronous processing - update read models based on domain events](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/sygnowskip/modular-monolith/feature/docs/Docs/asynchronous-processing-read-model.puml?token=ACHEMPL5PFGKZ6H7TMUCDAS65JZNS)
+![Asynchronous processing - update read models based on domain events](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/sygnowskip/modular-monolith/master/Docs/asynchronous-processing-read-model.puml?token=ACHEMPK3VKDTNKZXWFTN3U265OSWS)
 
 ## Known issues
 
