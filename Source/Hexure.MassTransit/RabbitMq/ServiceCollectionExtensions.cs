@@ -68,13 +68,13 @@ namespace Hexure.MassTransit.RabbitMq
                     factoryConfigurator.MessageTopology.SetEntityNameFormatter(
                         new EventNamespaceNameFormatter(
                             factoryConfigurator.MessageTopology.EntityNameFormatter,
-                            provider.GetRequiredService<IEventNameProvider>()));
+                            provider.Container.GetRequiredService<IEventNameProvider>()));
                     
-                    factoryConfigurator.SetMessageSerializer(provider.GetRequiredService<EventNamespaceMessageSerializer>);
+                    factoryConfigurator.SetMessageSerializer(provider.Container.GetRequiredService<EventNamespaceMessageSerializer>);
                     factoryConfigurator.AddMessageDeserializer(JsonMessageSerializer.JsonContentType,
-                        provider.GetRequiredService<EventNamespaceMessageDeserializer>);
+                        provider.Container.GetRequiredService<EventNamespaceMessageDeserializer>);
 
-                    rabbitMqBusConfiguratorAction?.Invoke(factoryConfigurator, provider);
+                    rabbitMqBusConfiguratorAction?.Invoke(factoryConfigurator, provider.Container);
                 }));
 
                 configuratorAction?.Invoke(configurator);
