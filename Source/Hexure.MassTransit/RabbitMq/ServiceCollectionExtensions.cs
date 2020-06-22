@@ -34,7 +34,7 @@ namespace Hexure.MassTransit.RabbitMq
 
             RegisterRabbitMq(serviceCollection, rabbitMqSettings, (busConfigurator, provider) =>
                 {
-                    busConfigurator.ReceiveEndpointForEachConsumer(provider, rabbitMqSettings.Queue, withConsumersFromAssemblies,
+                    busConfigurator.ReceiveEndpointForEachConsumer(provider, rabbitMqSettings.QueuePrefix, withConsumersFromAssemblies,
                         configurator =>
                         {
                             configurator.PrefetchCount = 3;
