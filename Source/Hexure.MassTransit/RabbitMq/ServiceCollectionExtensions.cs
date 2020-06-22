@@ -8,6 +8,7 @@ using Hexure.Events.Namespace;
 using Hexure.MassTransit.Events;
 using Hexure.MassTransit.Events.Builders;
 using Hexure.MassTransit.Events.Serialization;
+using Hexure.MassTransit.RabbitMq.Consumers;
 using Hexure.MassTransit.RabbitMq.Formatters;
 using Hexure.MassTransit.RabbitMq.Settings;
 using MassTransit;
@@ -33,13 +34,13 @@ namespace Hexure.MassTransit.RabbitMq
 
             RegisterRabbitMq(serviceCollection, rabbitMqSettings, (busConfigurator, provider) =>
                 {
-                    busConfigurator.ReceiveEndpoint(rabbitMqSettings.Queue, endpointConfigurator =>
-                    {
-                        endpointConfigurator.PrefetchCount = 10;
-                        endpointConfigurator.UseMessageRetry(x =>
-                            x.Incremental(2, TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(12)));
-                        endpointConfigurator.ConfigureConsumers(provider);
-                    });
+                    busConfigurator.ReceiveEndpointForEachConsumer(provider, rabbitMqSettings.QueuePrefix, withConsumersFromAssemblies,
+                        configurator =>
+                        {
+                            configurator.PrefetchCount = 3;
+                            configurator.UseMessageRetry(x =>
+                                x.Incremental(2, TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(12)));
+                        });
                 },
                 configurator =>
                 {

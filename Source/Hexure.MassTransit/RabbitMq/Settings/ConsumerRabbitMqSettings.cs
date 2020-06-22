@@ -2,6 +2,6 @@
 {
     public class ConsumerRabbitMqSettings : PublisherRabbitMqSettings
     {
-        public string Queue { get; set; }
+        public string QueuePrefix { get; set; }
     }
 }
