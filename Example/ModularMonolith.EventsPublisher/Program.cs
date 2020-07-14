@@ -12,9 +12,9 @@ using ModularMonolith.Registrations.Contracts.Events;
 
 namespace ModularMonolith.EventsPublisher
 {
-    class Program
+    public class Program
     {
-        static async Task Main()
+        public static async Task Main()
         {
             var batchSize = 20;
             var delay = TimeSpan.FromSeconds(10);
