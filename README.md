@@ -32,21 +32,21 @@ We will use asynchronous communications with RabbitMQ as our base communication 
 
 ### Read information
 
-![Read information](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/sygnowskip/modular-monolith/master/Docs/read-information.puml?token=ACHEMPNMCX3B2YQ57HMS7H265OS2I)
+![Read information](http://www.plantuml.com/plantuml/png/NP31IiGm48RlynG_lUyBU90LriEULXSNpsCxIY1DIcO2zksTk1NRGYxvv-ERFpcgSR4wHgAtO57GNOK7XFIPoyWMSkg8kBTSS5CfD3aT-Z1nCZozd3Vtrofbfe6DFrWNqo6dEEClwy2A5byyFIqXKJFZyDY4UC2xknIMyIK6pQEisv0pZjvtEVpyBNqrKRe7Fjdh7Rea54-nwK9xSAszYjMIz1V-L_lk_MofqrxWerFGAVAyBWm_jpFHKTBWt_m3)
 
 ### Update information
 
-![Update information](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/sygnowskip/modular-monolith/master/Docs/update-information.puml?token=ACHEMPKGT5NXU5SY7IU33AC65OS3U)
+![Update information](http://www.plantuml.com/plantuml/png/ZP31QiD034Jl-WgHUt-Wu9BGzD1JGqdeMROLUs5NQrRQalnzPMeJV2ZqOcpcpNWqUpKgLbC4E0UBZBlBr9Cn1hdcaiX2bXq0TPOBNfGBJCw7BamaXeVJ--RxDQT4qc-POIWyU2HuBhMaZCVb1M1EnAUNEGYVySjvHSlOZIG3e-R4DWOPm7N7rdn7tsxSLME5fi5p8L7gvghOvYezbJis3Ioq6nybt7gOfdXVVv457fg3QpNdbY7K_FadTAfj33fYdnC5GVxcvOIFQcs-FNpR-fzijOXYOQtH_dV4CjBMkYup3-dYCUWKwRw8cAze8-DlBC2UfQyf_W00)
 
 ### Outbox processor
 
-![Outbox processor](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/sygnowskip/modular-monolith/master/Docs/outbox-processor.puml?token=ACHEMPJCQH4UN6QRZ3OUQ5265OSYI)
+![Outbox processor](http://www.plantuml.com/plantuml/png/VP11IiOm44RtSugFV-y5X4WNWgjYbLvWqWmOh4dCJ4HlRw4r2odTXO_tU646DQxMFbQYETegk3qty_aRfUP5L7Ez4GKszgo2n-D1PPFY4Widmua2LkpZzBVHPvCcU6NleuqlHCvXhfoK5uivmUUM0jSVE4V_LDmzz3BkyII6bahpQzGt2P0lIQOdKezjqhJZ7RuiZ5pV3nAiwAchFzCWAMnt_0K0)
 
 ### Asynchronous processing 
 
-![Asynchronous processing - react for domain events and execute action on different aggregate](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/sygnowskip/modular-monolith/master/Docs/asynchronous-processing-command.puml?token=ACHEMPM5CFHZAV23RWKWIJK65OSUU)
+![Asynchronous processing - react for domain events and execute action on different aggregate](http://www.plantuml.com/plantuml/png/VP5XQkim48J_wnI3_-S23_n8U2_GFwLjI0-mjZQEG9PSxQeaj--cSPecq88nOlJjpWnQYbBHEaRdja4Zerd9CVNxabEkWgdadaL26h10OUeLkrpWyqWXWTyvgO2I1n-uhyem8kG4-tpOxRWO01g6mWCfDywzLQwC3NLTqCSNDvbvwCD4XZNhqphiRLta8Wr8y2azd9KR-5yUHvDljDN5ntbIwaWO_-U3S-xxAYp-VcN07snEnGHvRdIFNioCN9zhYcjRR0ibcVjskIPFvOYsTJDjWzT4DhgQfdX4R_K6DYjtlJFmajEurycVH57x_mWzrou6sTyzX6OyLUtouJft6t_3MaiI59OQzRSIRid9rp5-0000)
 
-![Asynchronous processing - update read models based on domain events](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/sygnowskip/modular-monolith/master/Docs/asynchronous-processing-read-model.puml?token=ACHEMPK3VKDTNKZXWFTN3U265OSWS)
+![Asynchronous processing - update read models based on domain events](http://www.plantuml.com/plantuml/png/POz1IWGn44NtTOfFzdq15pA2WXiH1pr0TQTq0abLcqg4kRtfSHIPsJvU_PVil75jlMIYrzIo8DpvKPT3DRNkMAijufxq0nFw6ha9gd14iIZPCRDBX2cY5KuA-H9j7eW-ktJ1dkSvjQSNMaSaBMbbRGWFcuG3QynIFO0T9_JuGsXKU1j6s8_KP9gF-6KdUyFFWzwV8T7_UqotVs7SRFBI77P-7DwhbKl_Qd7SlLt-5gP4Ez7OI_u6)
 
 ## Known issues
 
