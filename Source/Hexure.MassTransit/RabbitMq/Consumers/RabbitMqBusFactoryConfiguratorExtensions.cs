@@ -15,18 +15,15 @@ namespace Hexure.MassTransit.RabbitMq.Consumers
             IServiceProvider provider, string queuePrefix, ICollection<Assembly> fromAssemblies,
             Action<IRabbitMqReceiveEndpointConfigurator> endpointConfiguration = null)
         {
-            for (var i = 0; i < 100; i++)
+            foreach (var consumer in GetConsumers(fromAssemblies))
             {
-                foreach (var consumer in GetConsumers(fromAssemblies))
+                configurator.ReceiveEndpoint($"{queuePrefix}:{consumer.FullName}", endpointConfigurator =>
                 {
-                    configurator.ReceiveEndpoint($"{queuePrefix}:{consumer.FullName}:{i}", endpointConfigurator =>
-                    {
-                        endpointConfigurator.Consumer(consumer, provider.GetRequiredService);
-                        endpointConfiguration?.Invoke(endpointConfigurator);
-                    });
-                }
+                    endpointConfigurator.Consumer(consumer, provider.GetRequiredService);
+                    
+                    endpointConfiguration?.Invoke(endpointConfigurator);
+                });
             }
-            
         }
 
         private static ICollection<Type> GetConsumers(ICollection<Assembly> fromAssemblies)
