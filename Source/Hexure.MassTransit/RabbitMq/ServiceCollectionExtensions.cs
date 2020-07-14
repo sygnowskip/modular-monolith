@@ -51,7 +51,7 @@ namespace Hexure.MassTransit.RabbitMq
         private static void RegisterRabbitMq(IServiceCollection serviceCollection,
             PublisherRabbitMqSettings rabbitMqSettings,
             Action<IRabbitMqBusFactoryConfigurator, IServiceProvider> rabbitMqBusConfiguratorAction = null,
-            Action<IServiceCollectionConfigurator> configuratorAction = null)
+            Action<IServiceCollectionBusConfigurator> configuratorAction = null)
         {
             serviceCollection.AddEventsMassTransitSerializers();
 

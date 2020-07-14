@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Hexure.EventsConsumer;
 using Hexure.MassTransit.RabbitMq.Settings;
 using ModularMonolith.Configuration;
@@ -7,13 +8,13 @@ using ModularMonolith.Registrations.EventHandlers.SendEmails;
 
 namespace ModularMonolith.EventsConsumer
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static async Task Main()
         {
             var configuration = ApplicationSettingsConfigurationProvider.Get();
 
-            EventsConsumerFactory
+            await EventsConsumerFactory
                 .Create()
                 .WithHandlersFromAssemblyOfType<OnRegistrationPaid>()
                 .WithDomain(services =>
@@ -25,7 +26,7 @@ namespace ModularMonolith.EventsConsumer
                 })
                 .ToRabbitMq(configuration.GetSection("Bus").Get<ConsumerRabbitMqSettings>())
                 .Build()
-                .Run();
+                .RunAsync();
         }
     }
 }

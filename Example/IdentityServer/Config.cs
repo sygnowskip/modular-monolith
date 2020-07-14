@@ -20,10 +20,10 @@ namespace IdentityServer
             {
                 new ApiResource("modular-monolith")
                 {
-                    Scopes = new List<Scope>()
+                    Scopes = new List<string>()
                     {
-                        new Scope("registrations"),
-                        new Scope("payments")
+                        "registrations",
+                        "payments"
                     }
                 }, 
             };

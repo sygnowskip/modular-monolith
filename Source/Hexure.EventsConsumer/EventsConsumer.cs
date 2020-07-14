@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Threading;
+using System.Threading.Tasks;
 using MassTransit;
-using MassTransit.Util;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Hexure.EventsConsumer
@@ -15,10 +14,20 @@ namespace Hexure.EventsConsumer
             _busControl = serviceProvider.GetRequiredService<IBusControl>();
         }
 
-        public void Run()
+        public async Task RunAsync()
         {
-            Console.WriteLine($"{DateTime.UtcNow} Started...");
-            TaskUtil.Await(() => _busControl.StartAsync(CancellationToken.None));
+            await _busControl.StartAsync();
+            try
+            {
+                Console.WriteLine($"{DateTime.UtcNow} Started...");
+                Console.WriteLine("Press enter to exit");
+
+                await Task.Run(Console.ReadLine);
+            }
+            finally
+            {
+                await _busControl.StopAsync();
+            }
         }
     }
 }

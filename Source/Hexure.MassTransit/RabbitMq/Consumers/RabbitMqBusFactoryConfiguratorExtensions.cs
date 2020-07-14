@@ -20,6 +20,7 @@ namespace Hexure.MassTransit.RabbitMq.Consumers
                 configurator.ReceiveEndpoint($"{queuePrefix}:{consumer.FullName}", endpointConfigurator =>
                 {
                     endpointConfigurator.Consumer(consumer, provider.GetRequiredService);
+                    
                     endpointConfiguration?.Invoke(endpointConfigurator);
                 });
             }
