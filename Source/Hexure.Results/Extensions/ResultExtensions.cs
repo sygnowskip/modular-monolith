@@ -248,6 +248,9 @@ namespace Hexure.Results.Extensions
 
         public static Result AndEnsure(this Result result, Func<bool> predicate, Error errorMessage)
         {
+            if (result.IsFailure)
+                return result;
+
             if (!predicate())
                 return Result.Combine(result, Result.Fail(errorMessage));
 
@@ -256,6 +259,9 @@ namespace Hexure.Results.Extensions
 
         public static Result AndEnsure(this Result result, bool condition, Error errorMessage)
         {
+            if (result.IsFailure)
+                return result;
+            
             if (!condition)
                 return Result.Combine(result, Result.Fail(errorMessage));
 
