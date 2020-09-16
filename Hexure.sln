@@ -105,6 +105,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.CommandServ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.QueryServices", "Example\ModularMonolith.QueryServices\ModularMonolith.QueryServices.csproj", "{F8341092-6C4A-400E-B20E-14E3A81BFBF5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Exams", "Exams", "{5FBB51F6-F5E8-436D-A0D9-3A4AFAFE59F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Exams.Language", "Example\ModularMonolith.Exams.Language\ModularMonolith.Exams.Language.csproj", "{1B3C702E-671F-4B21-AA99-D199BB5F1E5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Exams.Events", "Example\ModularMonolith.Exams.Events\ModularMonolith.Exams.Events.csproj", "{A5CA203B-B0DF-4F87-851F-DD44F91C9F4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Exams.Persistence", "Example\ModularMonolith.Exams.Persistence\ModularMonolith.Exams.Persistence.csproj", "{A05E8D01-2988-4427-BAE9-6EEDBCC17144}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Exams.Domain", "Example\ModularMonolith.Exams.Domain\ModularMonolith.Exams.Domain.csproj", "{B8ED6D41-0957-4EEA-B098-ACB64D4A2556}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -259,6 +269,22 @@ Global
 		{F8341092-6C4A-400E-B20E-14E3A81BFBF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8341092-6C4A-400E-B20E-14E3A81BFBF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8341092-6C4A-400E-B20E-14E3A81BFBF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B3C702E-671F-4B21-AA99-D199BB5F1E5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B3C702E-671F-4B21-AA99-D199BB5F1E5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B3C702E-671F-4B21-AA99-D199BB5F1E5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B3C702E-671F-4B21-AA99-D199BB5F1E5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5CA203B-B0DF-4F87-851F-DD44F91C9F4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5CA203B-B0DF-4F87-851F-DD44F91C9F4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5CA203B-B0DF-4F87-851F-DD44F91C9F4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5CA203B-B0DF-4F87-851F-DD44F91C9F4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A05E8D01-2988-4427-BAE9-6EEDBCC17144}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A05E8D01-2988-4427-BAE9-6EEDBCC17144}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A05E8D01-2988-4427-BAE9-6EEDBCC17144}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A05E8D01-2988-4427-BAE9-6EEDBCC17144}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8ED6D41-0957-4EEA-B098-ACB64D4A2556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8ED6D41-0957-4EEA-B098-ACB64D4A2556}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8ED6D41-0957-4EEA-B098-ACB64D4A2556}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8ED6D41-0957-4EEA-B098-ACB64D4A2556}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -313,6 +339,11 @@ Global
 		{ABA448FF-8F06-42AB-A43D-FB50AEEFA9E2} = {98F41D58-E06A-4AB5-AC80-13E8D13B1D3D}
 		{4C8E6750-97D4-4604-AA90-C263C5557B8E} = {68B2FD7E-BE5C-4B57-A6FA-BDC77362B4CC}
 		{F8341092-6C4A-400E-B20E-14E3A81BFBF5} = {68B2FD7E-BE5C-4B57-A6FA-BDC77362B4CC}
+		{5FBB51F6-F5E8-436D-A0D9-3A4AFAFE59F6} = {68B2FD7E-BE5C-4B57-A6FA-BDC77362B4CC}
+		{1B3C702E-671F-4B21-AA99-D199BB5F1E5A} = {5FBB51F6-F5E8-436D-A0D9-3A4AFAFE59F6}
+		{A5CA203B-B0DF-4F87-851F-DD44F91C9F4D} = {5FBB51F6-F5E8-436D-A0D9-3A4AFAFE59F6}
+		{A05E8D01-2988-4427-BAE9-6EEDBCC17144} = {5FBB51F6-F5E8-436D-A0D9-3A4AFAFE59F6}
+		{B8ED6D41-0957-4EEA-B098-ACB64D4A2556} = {5FBB51F6-F5E8-436D-A0D9-3A4AFAFE59F6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {598A3A02-79C7-4D50-889E-D65594383E6D}
