@@ -16,11 +16,11 @@ namespace ModularMonolith.Persistence.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<Result<RegistrationId>> SaveAsync(Registration aggregate)
+        public async Task<Result<Registration>> SaveAsync(Registration aggregate)
         {
             _dbContext.Registrations.Add(aggregate);
             await _dbContext.SaveChangesAsync();
-            return Result.Ok(aggregate.Id);
+            return Result.Ok(aggregate);
         }
 
         public async Task<Maybe<Registration>> GetAsync(RegistrationId identifier)

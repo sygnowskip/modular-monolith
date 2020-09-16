@@ -33,7 +33,8 @@ namespace ModularMonolith.Registrations.Commands
         public async Task<Result<RegistrationId>> Handle(CreateRegistrationCommand request, CancellationToken cancellationToken)
         {
             return await Registration.Create(request.Candidate, _systemTimeProvider)
-                .OnSuccess(async registration => await _registrationRepository.SaveAsync(registration));
+                .OnSuccess(async registration => await _registrationRepository.SaveAsync(registration))
+                .OnSuccess(registration => registration.Id);
         }
     }
 }

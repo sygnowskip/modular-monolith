@@ -14,12 +14,7 @@ namespace ModularMonolith.Tests.Unit.Exams
         [SetUp]
         public void SetUp()
         {
-            var countryExistenceValidatorMock = new Mock<ICountryExistenceValidator>();
-            countryExistenceValidatorMock
-                .Setup(validator => validator.Exist(It.IsAny<long>()))
-                .Returns(true);
-
-            CountryId = CountryId.Create(10, countryExistenceValidatorMock.Object).Value;
+            CountryId = ValueObjectProvider.GetCountryId(10);
         }
         
         [TestCase(-10, false, false)]
