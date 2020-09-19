@@ -1,18 +1,17 @@
 ﻿using System.Collections.Generic;
+using Hexure.Identifiers.Numeric;
 using Hexure.Results;
 using Hexure.Results.Extensions;
 using ModularMonolith.Exams.Domain.Dependencies;
 
 namespace ModularMonolith.Exams.Domain.ValueObjects
 {
-    public class SubjectId : ValueObject
+    public class SubjectId : Identifier
     {
-        private SubjectId(long value)
+        private SubjectId(long value) : base(value)
         {
-            Value = value;
         }
-
-        public long Value { get; }
+        
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Value;

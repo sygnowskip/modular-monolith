@@ -3,6 +3,7 @@ using Hexure.Results;
 
 namespace Hexure
 {
+    //TODO: Value tasks?
     public interface IAggregateRootRepository<TAggregate, TIdentifier>
         where TAggregate : IAggregateRoot<TIdentifier>
     {

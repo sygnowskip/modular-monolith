@@ -1,27 +1,57 @@
-﻿using System.Threading.Tasks;
-using Hexure;
+﻿using Hexure;
 using Hexure.Events;
 using Hexure.Results;
-using Hexure.Results.Extensions;
 using Hexure.Time;
 using ModularMonolith.Exams.Domain.ValueObjects;
 using ModularMonolith.Exams.Events;
 using ModularMonolith.Exams.Language;
+using Stateless;
 
 namespace ModularMonolith.Exams.Domain
 {
-    public class Exam : Entity, IAggregateRoot<ExamId>
+    public partial class Exam : Entity, IAggregateRoot<ExamId>
     {
-        public Exam(SubjectId subjectId, LocationId locationId, UtcDateTime examDateTime, Capacity capacity,
-            UtcDate registrationStartDate, UtcDate registrationEndDate)
+        private readonly ISystemTimeProvider _systemTimeProvider;
+
+        private readonly StateMachine<ExamStatus, ExamActions> _stateMachine;
+        
+
+        protected Exam(ISystemTimeProvider systemTimeProvider)
+        {
+            _systemTimeProvider = systemTimeProvider;
+        }
+        
+        private Exam(SubjectId subjectId, LocationId locationId, UtcDateTime examDateTime, Capacity capacity,
+            UtcDate registrationStartDate, UtcDate registrationEndDate, ISystemTimeProvider systemTimeProvider)
         {
             LocationId = locationId;
             Capacity = capacity;
             SubjectId = subjectId;
             RegistrationStartDate = registrationStartDate;
             RegistrationEndDate = registrationEndDate;
+            _systemTimeProvider = systemTimeProvider;
             ExamDateTime = examDateTime;
             Status = ExamStatus.Planned;
+
+            _stateMachine = new StateMachine<ExamStatus, ExamActions>(() => Status, status => Status = status);
+            ConfigureStateMachine();
+        }
+
+        private void ConfigureStateMachine()
+        {
+            _stateMachine.Configure(ExamStatus.Planned)
+                .Permit(ExamActions.OpenForRegistration, ExamStatus.AvailableForRegistration);
+
+            _stateMachine.Configure(ExamStatus.AvailableForRegistration)
+                .OnEntry(() => RaiseEvent(new ExamAvailable(Id, _systemTimeProvider.UtcNow)))
+                .Permit(ExamActions.CloseRegistration, ExamStatus.ClosedForRegistration);
+
+            _stateMachine.Configure(ExamStatus.ClosedForRegistration)
+                .OnEntry(() => RaiseEvent(new ExamClosed(Id, _systemTimeProvider.UtcNow)))
+                .Permit(ExamActions.MarkAsDone, ExamStatus.TookPlace);
+
+            _stateMachine.Configure(ExamStatus.TookPlace)
+                .OnEntry(() => RaiseEvent(new ExamTookPlace(Id, _systemTimeProvider.UtcNow)));
         }
 
         public ExamId Id { get; }
@@ -34,34 +64,45 @@ namespace ModularMonolith.Exams.Domain
 
         public UtcDateTime ExamDateTime { get; }
 
-        public ExamStatus Status { get; }
+        public ExamStatus Status { get; private set; }
 
-        public static Task<Result<Exam>> CreateAsync(SubjectId subjectId, LocationId locationId, UtcDateTime examDateTime,
-            Capacity capacity, UtcDate registrationStartDate, UtcDate registrationEndDate, 
-            ISystemTimeProvider systemTimeProvider, IExamRepository examRepository)
+        public Result OpenForRegistration(ISystemTimeProvider systemTimeProvider)
         {
-            return Result.Create(() => systemTimeProvider.UtcNow < registrationStartDate.Value,
-                    ExamErrors.RegistrationStartDateHasToBeInTheFuture.Build())
-                .AndEnsure(() => registrationStartDate.Value < registrationEndDate.Value,
-                    ExamErrors.RegistrationEndDateHasToBeAfterRegistrationStartDate.Build())
-                .AndEnsure(() => registrationEndDate.Value < examDateTime.Value.Date,
-                    ExamErrors.RegistrationEndDateHasToBeBeforeExamDate.Build())
-                .OnSuccess(() => new Exam(subjectId, locationId, examDateTime, capacity, registrationStartDate,
-                    registrationEndDate))
-                .OnSuccess(examRepository.SaveAsync)
-                .OnSuccess(exam => exam.RaiseEvent(new ExamPlanned(exam.Id, systemTimeProvider.UtcNow)));
+            if (!_stateMachine.CanFire(ExamActions.OpenForRegistration) || RegistrationStartDate.Value >= systemTimeProvider.UtcNow)
+                return Result.Fail(ExamErrors.UnableToOpenForRegistration.Build());
+            
+            _stateMachine.Fire(ExamActions.OpenForRegistration);
+            return Result.Ok();
+        }
+
+        public Result CloseRegistration(ISystemTimeProvider systemTimeProvider)
+        {
+            if (!_stateMachine.CanFire(ExamActions.CloseRegistration) || RegistrationEndDate.Value >= systemTimeProvider.UtcNow)
+                return Result.Fail(ExamErrors.UnableToCloseRegistration.Build());
+            
+            _stateMachine.Fire(ExamActions.CloseRegistration);
+            return Result.Ok();
+        }
+
+        public Result MarkAsDone(ISystemTimeProvider systemTimeProvider)
+        {
+            if (!_stateMachine.CanFire(ExamActions.MarkAsDone) || ExamDateTime.Value >= systemTimeProvider.UtcNow)
+                return Result.Fail(ExamErrors.UnableToCloseRegistration.Build());
+            
+            _stateMachine.Fire(ExamActions.MarkAsDone);
+            return Result.Ok();
         }
     }
 
-    public class ExamErrors
+    public static class ExamErrors
     {
-        public static readonly Error.ErrorType RegistrationStartDateHasToBeInTheFuture =
-            new Error.ErrorType(nameof(RegistrationStartDateHasToBeInTheFuture), "Registration start date has to be in the future");
+        public static readonly Error.ErrorType UnableToOpenForRegistration =
+            new Error.ErrorType(nameof(UnableToOpenForRegistration), "Unable to open for registration");
         
-        public static readonly Error.ErrorType RegistrationEndDateHasToBeAfterRegistrationStartDate =
-            new Error.ErrorType(nameof(RegistrationEndDateHasToBeAfterRegistrationStartDate), "Registration end date has to be after registration start date");
+        public static readonly Error.ErrorType UnableToCloseRegistration =
+            new Error.ErrorType(nameof(UnableToCloseRegistration), "Unable to close registration");
         
-        public static readonly Error.ErrorType RegistrationEndDateHasToBeBeforeExamDate =
-            new Error.ErrorType(nameof(RegistrationEndDateHasToBeBeforeExamDate), "Registration end date has to be before exam date"); 
+        public static readonly Error.ErrorType UnableToMarkAsDone =
+            new Error.ErrorType(nameof(UnableToMarkAsDone), "Unable to mark as done");
     }
 }

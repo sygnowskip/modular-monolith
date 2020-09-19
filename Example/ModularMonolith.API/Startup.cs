@@ -47,6 +47,8 @@ namespace ModularMonolith.API
 
             IdentityModelEventSource.ShowPII = true;
 
+            services.AddCommandServices();
+            services.AddQueryServices();
             services.AddRegistrations();
             services.AddPayments();
             services.AddPersistence(Configuration.GetConnectionString("Database"),

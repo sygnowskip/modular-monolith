@@ -10,17 +10,22 @@ using Hexure.Events.Collecting;
 using Hexure.Events.Serialization;
 using Hexure.Results.Extensions;
 using Microsoft.EntityFrameworkCore;
+using ModularMonolith.Exams.Domain;
+using ModularMonolith.Exams.Persistence;
+using ModularMonolith.Exams.Persistence.Configurations;
 using ModularMonolith.Payments;
 using ModularMonolith.Persistence.Configurations;
 using ModularMonolith.Registrations;
 
 namespace ModularMonolith.Persistence
 {
-    internal class MonolithDbContext : DbContext, ISerializedEventDbContext, ITransactionProvider
+    internal class MonolithDbContext : DbContext, IExamDbContext, ISerializedEventDbContext, ITransactionProvider
     {
         private readonly IEventCollector _eventCollector;
         private readonly IEventSerializer _eventSerializer;
-        public MonolithDbContext(DbContextOptions<MonolithDbContext> options, IEventCollector eventCollector, IEventSerializer eventSerializer) : base(options)
+
+        public MonolithDbContext(DbContextOptions<MonolithDbContext> options, IEventCollector eventCollector,
+            IEventSerializer eventSerializer) : base(options)
         {
             _eventCollector = eventCollector;
             _eventSerializer = eventSerializer;
@@ -30,6 +35,7 @@ namespace ModularMonolith.Persistence
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ExamEntityConfiguration).Assembly);
             modelBuilder.ApplyConfiguration(new RegistrationEntityConfiguration());
             modelBuilder.ApplyConfiguration(new SerializedEventEntityConfig());
         }
@@ -43,8 +49,10 @@ namespace ModularMonolith.Persistence
 
         private async Task PublishDomainEventsAsync()
         {
-            var events = _eventCollector.Collect(ChangeTracker.Entries<IEntityWithDomainEvents>()
-                .Select(entry => entry.Entity).ToList());
+            var events = _eventCollector
+                .Collect(ChangeTracker.Entries<IEntityWithDomainEvents>()
+                    .Select(entry => entry.Entity)
+                    .ToList());
 
             foreach (var @event in events)
             {
@@ -60,6 +68,8 @@ namespace ModularMonolith.Persistence
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Registration> Registrations { get; set; }
         public DbSet<SerializedEventEntity> SerializedEvents { get; set; }
+        public DbSet<Exam> Exams { get; set; }
+
         public Task BeginTransactionAsync()
         {
             return Database.BeginTransactionAsync();

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -9,9 +9,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ModularMonolith.CommandServices\ModularMonolith.CommandServices.csproj" />
     <ProjectReference Include="..\ModularMonolith.Payments.ApplicationServices\ModularMonolith.Payments.ApplicationServices.csproj" />
     <ProjectReference Include="..\ModularMonolith.Persistence.Read\ModularMonolith.Persistence.Read.csproj" />
     <ProjectReference Include="..\ModularMonolith.Persistence\ModularMonolith.Persistence.csproj" />
+    <ProjectReference Include="..\ModularMonolith.QueryServices\ModularMonolith.QueryServices.csproj" />
     <ProjectReference Include="..\ModularMonolith.Registrations.ApplicationServices\ModularMonolith.Registrations.ApplicationServices.csproj" />
     <ProjectReference Include="..\ModularMonolith.Registrations.Queries\ModularMonolith.Registrations.Queries.csproj" />
   </ItemGroup>

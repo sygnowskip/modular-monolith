@@ -1,32 +1,27 @@
 ﻿using System.Collections.Generic;
+using Hexure.Identifiers.Numeric;
 using Hexure.Results;
 using Hexure.Results.Extensions;
 using ModularMonolith.Exams.Domain.Dependencies;
 
 namespace ModularMonolith.Exams.Domain.ValueObjects
 {
-    public class LocationId : ValueObject
+    public class LocationId : Identifier
     {
-        private LocationId(CountryId countryId, long value)
+        private LocationId(long value) : base(value)
         {
-            CountryId = countryId;
-            Value = value;
         }
-
-        public CountryId CountryId { get; }
-        public long Value { get; }
         
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Value;
-            yield return CountryId;
         }
 
-        public static Result<LocationId> Create(long locationId, CountryId countryId, ILocationExistenceValidator locationExistenceValidator)
+        public static Result<LocationId> Create(long locationId, ILocationExistenceValidator locationExistenceValidator)
         {
             return Result.Create(locationId > 0, LocationIdErrors.LocationDoesNotExist.Build())
-                .AndEnsure(() => locationExistenceValidator.Exist(locationId, countryId), LocationIdErrors.LocationDoesNotExist.Build())
-                .OnSuccess(() => new LocationId(countryId, locationId));
+                .AndEnsure(() => locationExistenceValidator.Exist(locationId), LocationIdErrors.LocationDoesNotExist.Build())
+                .OnSuccess(() => new LocationId(locationId));
         }
     }
 

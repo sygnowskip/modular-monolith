@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using ModularMonolith.CommandServices;
 using ModularMonolith.Payments.ApplicationServices;
 using ModularMonolith.Persistence;
 using ModularMonolith.Persistence.Read;
@@ -9,6 +11,16 @@ namespace ModularMonolith.Dependencies
 {
     public static class ServiceCollectionExtensions
     {
+        public static IServiceCollection AddCommandServices(this IServiceCollection services)
+        {
+            return services.AddMediatR(typeof(CreateExamCommand).Assembly);
+        }
+        
+        public static IServiceCollection AddQueryServices(this IServiceCollection services)
+        {
+            return services.AddMediatR(typeof(CreateExamCommand).Assembly);
+        }
+        
         public static IServiceCollection AddRegistrations(this IServiceCollection serviceCollection)
         {
             return serviceCollection
