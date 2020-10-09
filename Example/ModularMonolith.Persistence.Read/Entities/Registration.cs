@@ -29,8 +29,8 @@ namespace ModularMonolith.Persistence.Read.Entities
     {
         public void Configure(EntityTypeBuilder<Registration> builder)
         {
-            builder.ToTable(nameof(Registration), Schemas.Registrations);
-            builder.HasKey(registration => registration.Id);
+            /*builder.ToTable(nameof(Registration), Schemas.Registrations);
+            builder.HasKey(registration => registration.Id);*/
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using ModularMonolith.Exams.Domain.Dependencies;
-using ModularMonolith.Exams.Domain.ValueObjects;
+﻿using ModularMonolith.Language.Locations;
+using ModularMonolith.Language.Subjects;
 using Moq;
 
 namespace ModularMonolith.Tests.Unit
@@ -15,22 +15,13 @@ namespace ModularMonolith.Tests.Unit
             return SubjectId.Create(subjectId, subjectExistenceValidatorMock.Object).Value;
         }
         
-        public static CountryId GetCountryId(long countryId)
-        {
-            var countryExistenceValidatorMock = new Mock<ICountryExistenceValidator>();
-            countryExistenceValidatorMock
-                .Setup(validator => validator.Exist(It.IsAny<long>()))
-                .Returns(true);
-            return CountryId.Create(countryId, countryExistenceValidatorMock.Object).Value;
-        }
-        
         public static LocationId GetLocationId(long locationId)
         {
             var locationExistenceValidatorMock = new Mock<ILocationExistenceValidator>();
             locationExistenceValidatorMock
-                .Setup(validator => validator.Exist(It.IsAny<long>(), It.IsAny<CountryId>()))
+                .Setup(validator => validator.Exist(It.IsAny<long>()))
                 .Returns(true);
-            return LocationId.Create(locationId, GetCountryId(locationId), locationExistenceValidatorMock.Object).Value;
+            return LocationId.Create(locationId, locationExistenceValidatorMock.Object).Value;
         }
     }
 }

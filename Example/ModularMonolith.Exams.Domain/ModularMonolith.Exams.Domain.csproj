@@ -8,6 +8,7 @@
       <ProjectReference Include="..\..\Source\Hexure\Hexure.csproj" />
       <ProjectReference Include="..\ModularMonolith.Exams.Events\ModularMonolith.Exams.Events.csproj" />
       <ProjectReference Include="..\ModularMonolith.Exams.Language\ModularMonolith.Exams.Language.csproj" />
+      <ProjectReference Include="..\ModularMonolith.Language\ModularMonolith.Language.csproj" />
     </ItemGroup>
 
     <ItemGroup>

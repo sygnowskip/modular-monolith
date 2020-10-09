@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
-using ModularMonolith.Exams.Domain.Dependencies;
-using ModularMonolith.Exams.Domain.ValueObjects;
+using ModularMonolith.Language.Subjects;
 using Moq;
 using NUnit.Framework;
 

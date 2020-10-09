@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ModularMonolith.Persistence.Read.Entities;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using ModularMonolith.Persistence.Read.Configurations;
+using ModularMonolith.ReadModels;
 
 namespace ModularMonolith.Persistence.Read
 {
-    public class MonolithQueryDbContext : DbContext
+    public class MonolithQueryDbContext : DbContext, IMonolithQueryDbContext
     {
         public MonolithQueryDbContext(DbContextOptions<MonolithQueryDbContext> options) : base(options)
         {
@@ -13,7 +15,8 @@ namespace ModularMonolith.Persistence.Read
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfiguration(new RegistrationEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new LocationConfiguration());
+            modelBuilder.ApplyConfiguration(new SubjectConfiguration());
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -22,8 +25,8 @@ namespace ModularMonolith.Persistence.Read
 
             base.OnConfiguring(optionsBuilder);
         }
-
-        //public DbSet<Payment> Payments { get; set; }
-        public DbSet<Registration> Registrations { get; set; }
+        
+        public IQueryable<Location> Locations => Set<Location>().AsQueryable();
+        public IQueryable<Subject> Subjects => Set<Subject>().AsQueryable();
     }
 }

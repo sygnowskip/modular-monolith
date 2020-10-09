@@ -2,13 +2,12 @@
 using Hexure.Identifiers.Numeric;
 using Hexure.Results;
 using Hexure.Results.Extensions;
-using ModularMonolith.Exams.Domain.Dependencies;
 
-namespace ModularMonolith.Exams.Domain.ValueObjects
+namespace ModularMonolith.Language.Locations
 {
     public class LocationId : Identifier
     {
-        private LocationId(long value) : base(value)
+        internal LocationId(long value) : base(value)
         {
         }
         

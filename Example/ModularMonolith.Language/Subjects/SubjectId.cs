@@ -2,13 +2,12 @@
 using Hexure.Identifiers.Numeric;
 using Hexure.Results;
 using Hexure.Results.Extensions;
-using ModularMonolith.Exams.Domain.Dependencies;
 
-namespace ModularMonolith.Exams.Domain.ValueObjects
+namespace ModularMonolith.Language.Subjects
 {
     public class SubjectId : Identifier
     {
-        private SubjectId(long value) : base(value)
+        internal SubjectId(long value) : base(value)
         {
         }
         

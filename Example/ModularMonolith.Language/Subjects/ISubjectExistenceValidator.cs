@@ -1,4 +1,4 @@
-﻿namespace ModularMonolith.Exams.Domain.Dependencies
+﻿namespace ModularMonolith.Language.Subjects
 {
     public interface ISubjectExistenceValidator
     {

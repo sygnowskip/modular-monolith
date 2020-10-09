@@ -21,13 +21,15 @@ namespace ModularMonolith.Registrations.Queries
 
         public async Task<Result<GetSingleRegistrationDto>> Handle(GetSingleRegistration request, CancellationToken cancellationToken)
         {
-            var registration = await _queryDbContext.Registrations
+            return Result.Ok<GetSingleRegistrationDto>(null);
+
+            /*var registration = await _queryDbContext.Registrations
                 .Where(r => r.Id == request.Id)
                 .Select(r => new GetSingleRegistrationDto(r.Id, r.Status, r.CandidateFirstName, r.CandidateLastName, r.CandidateDateOfBirth))
                 .SingleOrDefaultAsync(cancellationToken);
 
             return Maybe<GetSingleRegistrationDto>.From(registration)
-                .ToResult(GetSingleRegistrationErrors.UnableToFindRegistration.Build());
+                .ToResult(GetSingleRegistrationErrors.UnableToFindRegistration.Build());*/
         }
     }
 }
