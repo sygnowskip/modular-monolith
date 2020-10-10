@@ -6,7 +6,7 @@ services:
       ACCEPT_EULA: Y
       SA_PASSWORD: P@ssword1
     ports:
-      - 2000:1433
+      - 3000:1433
     expose:
       - 1433
   modular-monolith-database-setup:
@@ -28,8 +28,8 @@ services:
       - ./docker/configuration/rabbitmq/definitions.json:/etc/rabbitmq/definitions.json
       - ./docker/configuration/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
     ports:
-      - 2001:5672
-      - 2002:15672
+      - 3001:5672
+      - 3002:15672
     expose:
       - 5672
       - 15672
@@ -44,7 +44,7 @@ services:
     environment:
       - Issuer__Url=http://modular-monolith-identity
     ports:
-      - 2003:80
+      - 3003:80
   modular-monolith-events-publisher:
     build:
       context: "."
@@ -87,4 +87,4 @@ services:
       - ConnectionStrings__Database=Data Source=modular-monolith-database;Initial Catalog=Hexure;Connection Timeout=30;User Id=sa;Password=P@ssword1;MultipleActiveResultSets=False;Timeout=30;
       - Authority__Url=http://modular-monolith-identity
     ports:
-      - 2004:80
+      - 3004:80

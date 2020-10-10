@@ -1,5 +1,4 @@
 ﻿using System;
-using Hexure.EntityFrameworkCore;
 using Hexure.EntityFrameworkCore.Identifiers;
 using Hexure.EntityFrameworkCore.SqlServer.Events;
 using Hexure.Events;

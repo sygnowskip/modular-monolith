@@ -4,6 +4,7 @@ using ModularMonolith.CommandServices;
 using ModularMonolith.Payments.ApplicationServices;
 using ModularMonolith.Persistence;
 using ModularMonolith.Persistence.Read;
+using ModularMonolith.QueryServices;
 using ModularMonolith.Registrations.ApplicationServices;
 using ModularMonolith.Registrations.Queries;
 
@@ -18,7 +19,7 @@ namespace ModularMonolith.Dependencies
         
         public static IServiceCollection AddQueryServices(this IServiceCollection services)
         {
-            return services.AddMediatR(typeof(CreateExamCommand).Assembly);
+            return services.AddMediatR(typeof(GetLocationsQuery).Assembly);
         }
         
         public static IServiceCollection AddRegistrations(this IServiceCollection serviceCollection)

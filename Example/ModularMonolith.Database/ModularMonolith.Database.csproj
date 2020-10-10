@@ -28,6 +28,7 @@
     <EmbeddedResource Include="Scripts\006_Create_Exam.sql" />
     <EmbeddedResource Include="Scripts\007_Create_Read_Schema.sql" />
     <EmbeddedResource Include="Scripts\008_Create_Subjects_And_Locations.sql" />
+    <EmbeddedResource Include="TestData\001_Subjects_And_Locations.sql" />
   </ItemGroup>
 
   <ItemGroup>

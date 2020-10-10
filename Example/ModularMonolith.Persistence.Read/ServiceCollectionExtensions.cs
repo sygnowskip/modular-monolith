@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ModularMonolith.Language.Locations;
 using ModularMonolith.Language.Subjects;
 using ModularMonolith.Persistence.Read.Validators;
+using ModularMonolith.ReadModels;
 
 namespace ModularMonolith.Persistence.Read
 {
@@ -16,6 +17,8 @@ namespace ModularMonolith.Persistence.Read
                     .UseSqlServer(connectionString)
                     .EnableIdentifiers()
             );
+            services.AddTransient<IMonolithQueryDbContext>(provider =>
+                provider.GetRequiredService<MonolithQueryDbContext>());
             services.AddTransient<ILocationExistenceValidator, LocationExistenceValidator>();
             services.AddTransient<ISubjectExistenceValidator, SubjectExistenceValidator>();
             return services;

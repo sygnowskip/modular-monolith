@@ -17,7 +17,8 @@ namespace ModularMonolith.Tests.Identity
             {
                 Address = discoveryDocument.TokenEndpoint,
                 ClientId = "modular-monolith-client",
-                ClientSecret = "modular-monolith-client-secret"
+                ClientSecret = "modular-monolith-client-secret",
+                Scope = AuthoritySettings.Scopes
             });
 
             token.IsError.Should().BeFalse();
