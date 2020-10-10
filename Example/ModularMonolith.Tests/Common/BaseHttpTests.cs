@@ -17,14 +17,14 @@ namespace ModularMonolith.Tests.Common
         protected readonly IHttpClientFactory HttpClientFactory;
         protected HttpClient HttpClient => HttpClientFactory.CreateClient();
 
-        protected readonly AuthoritySettings AuthoritySettings;
+        private readonly AuthoritySettings _authoritySettings;
         protected readonly MonolithApiSettings MonolithSettings;
 
         protected BaseHttpTests()
         {
             ServiceProvider = ServiceProviderBuilder.Build();
             HttpClientFactory = ServiceProvider.GetRequiredService<IHttpClientFactory>();
-            AuthoritySettings = ApplicationSettingsConfigurationProvider.Get().GetSection("Authority").Get<AuthoritySettings>();
+            _authoritySettings = ApplicationSettingsConfigurationProvider.Get().GetSection("Authority").Get<AuthoritySettings>();
             MonolithSettings = ApplicationSettingsConfigurationProvider.Get().GetSection("Monolith").Get<MonolithApiSettings>();
         }
 
@@ -32,7 +32,7 @@ namespace ModularMonolith.Tests.Common
         {
             return await HttpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest()
             {
-                Address = AuthoritySettings.Url,
+                Address = _authoritySettings.Url,
                 Policy = new DiscoveryPolicy()
                 {
                     ValidateIssuerName = false

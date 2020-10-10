@@ -31,6 +31,7 @@ namespace IdentityServer
                     options.IssuerUri = issuerSettings.Url;
                 })
                 .AddInMemoryIdentityResources(Config.Ids)
+                .AddInMemoryApiScopes(Config.Scopes)
                 .AddInMemoryApiResources(Config.Apis)
                 .AddInMemoryClients(Config.Clients);
 
