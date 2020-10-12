@@ -10,16 +10,12 @@ using Hexure.Events.Collecting;
 using Hexure.Events.Serialization;
 using Hexure.Results.Extensions;
 using Microsoft.EntityFrameworkCore;
-using ModularMonolith.Exams.Domain;
-using ModularMonolith.Exams.Persistence;
 using ModularMonolith.Exams.Persistence.Configurations;
-using ModularMonolith.Payments;
 using ModularMonolith.Persistence.Configurations;
-using ModularMonolith.Registrations;
 
 namespace ModularMonolith.Persistence
 {
-    internal class MonolithDbContext : DbContext, IExamDbContext, ISerializedEventDbContext, ITransactionProvider
+    internal partial class MonolithDbContext : DbContext, ISerializedEventDbContext, ITransactionProvider
     {
         private readonly IEventCollector _eventCollector;
         private readonly IEventSerializer _eventSerializer;
@@ -35,7 +31,8 @@ namespace ModularMonolith.Persistence
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ExamEntityConfiguration).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ExamConfiguration).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(LocationConfiguration).Assembly);
             modelBuilder.ApplyConfiguration(new RegistrationEntityConfiguration());
             modelBuilder.ApplyConfiguration(new SerializedEventEntityConfig());
         }
@@ -64,11 +61,6 @@ namespace ModularMonolith.Persistence
                             $"Unable to publish domain event due to: {string.Join(", ", errors.Select(e => e.Message))}"));
             }
         }
-
-        public DbSet<Payment> Payments { get; set; }
-        public DbSet<Registration> Registrations { get; set; }
-        public DbSet<SerializedEventEntity> SerializedEvents { get; set; }
-        public DbSet<Exam> Exams { get; set; }
 
         public Task BeginTransactionAsync()
         {

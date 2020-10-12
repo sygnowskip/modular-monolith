@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ModularMonolith.ReadModels;
 
-namespace ModularMonolith.Persistence.Read.Configurations
+namespace ModularMonolith.Persistence.Configurations
 {
     public class LocationConfiguration : IEntityTypeConfiguration<Location>
     {

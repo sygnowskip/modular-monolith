@@ -10,8 +10,12 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ModularMonolith.Exams.Persistence;
+using ModularMonolith.Language.Locations;
+using ModularMonolith.Language.Subjects;
 using ModularMonolith.Payments;
 using ModularMonolith.Persistence.Repositories;
+using ModularMonolith.Persistence.Validators;
+using ModularMonolith.ReadModels;
 using ModularMonolith.Registrations;
 
 namespace ModularMonolith.Persistence
@@ -62,6 +66,11 @@ namespace ModularMonolith.Persistence
 
             services.AddDomainEvents()
                 .WithPersistence<MonolithDbContext>();
+            
+            services.AddTransient<IMonolithQueryDbContext>(provider =>
+                provider.GetRequiredService<MonolithDbContext>());
+            services.AddTransient<ILocationExistenceValidator, LocationExistenceValidator>();
+            services.AddTransient<ISubjectExistenceValidator, SubjectExistenceValidator>();
 
             return services;
         }

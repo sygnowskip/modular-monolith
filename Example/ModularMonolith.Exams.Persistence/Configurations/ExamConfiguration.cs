@@ -6,7 +6,7 @@ using ModularMonolith.Exams.Language;
 
 namespace ModularMonolith.Exams.Persistence.Configurations
 {
-    public class ExamEntityConfiguration : IEntityTypeConfiguration<Exam>
+    public class ExamConfiguration : IEntityTypeConfiguration<Exam>
     {
         public void Configure(EntityTypeBuilder<Exam> builder)
         {
