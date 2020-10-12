@@ -51,8 +51,7 @@ namespace ModularMonolith.API
             services.AddQueryServices();
             services.AddRegistrations();
             services.AddPayments();
-            services.AddPersistence(Configuration.GetConnectionString("Database"),
-                Configuration.GetConnectionString("Database"));
+            services.AddPersistence(Configuration.GetConnectionString("Database"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

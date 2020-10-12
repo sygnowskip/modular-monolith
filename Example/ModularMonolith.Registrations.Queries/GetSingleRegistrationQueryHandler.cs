@@ -1,8 +1,7 @@
-﻿using System.Threading;
+﻿/*using System.Threading;
 using System.Threading.Tasks;
 using Hexure.Results;
 using MediatR;
-using ModularMonolith.Persistence.Read;
 using ModularMonolith.Registrations.Contracts.Queries;
 
 namespace ModularMonolith.Registrations.Queries
@@ -26,7 +25,7 @@ namespace ModularMonolith.Registrations.Queries
                 .SingleOrDefaultAsync(cancellationToken);
 
             return Maybe<GetSingleRegistrationDto>.From(registration)
-                .ToResult(GetSingleRegistrationErrors.UnableToFindRegistration.Build());*/
+                .ToResult(GetSingleRegistrationErrors.UnableToFindRegistration.Build());#1#
         }
     }
-}
+}*/

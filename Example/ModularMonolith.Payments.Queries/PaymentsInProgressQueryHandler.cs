@@ -1,10 +1,9 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using ModularMonolith.Payments.Contracts.Queries;
-using ModularMonolith.Persistence.Read;
 
 namespace ModularMonolith.Payments.Queries
 {
@@ -24,7 +23,7 @@ namespace ModularMonolith.Payments.Queries
             /*return await _queryDbContext.Payments
                 .Where(p => p.Status == PaymentStatus.New)
                 .Select(p => new PaymentDto(p.Id, p.CorrelationId, p.Status))
-                .ToListAsync(cancellationToken: cancellationToken);*/
+                .ToListAsync(cancellationToken: cancellationToken);#1#
         }
     }
-}
+}*/

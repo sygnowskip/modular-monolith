@@ -7,7 +7,7 @@ namespace ModularMonolith.Registrations.Queries
     {
         public static IServiceCollection AddRegistrationQueries(this IServiceCollection services)
         {
-            services.AddMediatR(typeof(GetSingleRegistrationQueryHandler).Assembly);
+            //services.AddMediatR(typeof(GetSingleRegistrationQueryHandler).Assembly);
             return services;
         }
     }

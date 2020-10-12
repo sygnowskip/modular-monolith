@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using ModularMonolith.CommandServices;
 using ModularMonolith.Payments.ApplicationServices;
 using ModularMonolith.Persistence;
-using ModularMonolith.Persistence.Read;
 using ModularMonolith.QueryServices;
 using ModularMonolith.Registrations.ApplicationServices;
 using ModularMonolith.Registrations.Queries;
@@ -35,12 +34,10 @@ namespace ModularMonolith.Dependencies
                 .AddPaymentsServices();
         }
 
-        public static IServiceCollection AddPersistence(this IServiceCollection serviceCollection,
-            string writeDatabaseConnectionString, string readDatabaseConnectionString)
+        public static IServiceCollection AddPersistence(this IServiceCollection serviceCollection, string writeDatabaseConnectionString)
         {
             return serviceCollection
-                .AddWritePersistence(writeDatabaseConnectionString)
-                .AddReadPersistence(readDatabaseConnectionString);
+                .AddWritePersistence(writeDatabaseConnectionString);
         }
     }
 }

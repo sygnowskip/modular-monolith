@@ -1,9 +1,7 @@
 ﻿using System.Threading.Tasks;
-using ExternalSystem.Events.Locations;
 using ExternalSystem.Events.Subjects;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
-using ModularMonolith.Language.Locations;
 using ModularMonolith.Language.Subjects;
 using ModularMonolith.Persistence;
 

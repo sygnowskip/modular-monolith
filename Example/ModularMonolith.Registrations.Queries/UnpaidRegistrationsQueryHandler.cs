@@ -1,9 +1,8 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using ModularMonolith.Persistence.Read;
 using ModularMonolith.Registrations.Contracts.Queries;
 
 namespace ModularMonolith.Registrations.Queries
@@ -23,7 +22,7 @@ namespace ModularMonolith.Registrations.Queries
             /*return await _queryDbContext.Registrations
                 .Where(r => r.Status == RegistrationStatus.AwaitingPayment || r.Status == RegistrationStatus.New)
                 .Select(r => new UnpaidRegistrationDto(r.Id, r.Status))
-                .ToListAsync(cancellationToken: cancellationToken);*/
+                .ToListAsync(cancellationToken: cancellationToken);#1#
         }
     }
-}
+}*/
