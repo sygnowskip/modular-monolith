@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MassTransit" Version="7.0.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ExternalSystem.Events\ExternalSystem.Events.csproj" />
+      <ProjectReference Include="..\ModularMonolith.Persistence\ModularMonolith.Persistence.csproj" />
+      <ProjectReference Include="..\ModularMonolith.ReadModels\ModularMonolith.ReadModels.csproj" />
+    </ItemGroup>
+
+</Project>

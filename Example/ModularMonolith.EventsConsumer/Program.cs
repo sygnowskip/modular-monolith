@@ -4,6 +4,7 @@ using Hexure.EventsConsumer;
 using Hexure.MassTransit.RabbitMq.Settings;
 using ModularMonolith.Configuration;
 using ModularMonolith.Dependencies;
+using ModularMonolith.ReadModels.EventHandlers.UpdateLocations;
 using ModularMonolith.Registrations.EventHandlers.SendEmails;
 
 namespace ModularMonolith.EventsConsumer
@@ -17,6 +18,7 @@ namespace ModularMonolith.EventsConsumer
             await EventsConsumerFactory
                 .Create()
                 .WithHandlersFromAssemblyOfType<OnRegistrationPaid>()
+                .WithHandlersFromAssemblyOfType<OnLocationAdded>()
                 .WithDomain(services =>
                 {
                     services.AddRegistrations();
