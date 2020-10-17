@@ -1,12 +1,17 @@
-﻿namespace ExternalSystem.Events.Locations
+﻿using System;
+using Hexure.Events;
+
+namespace ExternalSystem.Events.Locations
 {
-    public class LocationDeleted
+    public class LocationDeleted : IEvent
     {
-        public LocationDeleted(long id)
+        public LocationDeleted(long id, DateTime publishedOn)
         {
             Id = id;
+            PublishedOn = publishedOn;
         }
 
-        public long Id { get; private set; }
+        public long Id { get; }
+        public DateTime PublishedOn { get; }
     }
 }

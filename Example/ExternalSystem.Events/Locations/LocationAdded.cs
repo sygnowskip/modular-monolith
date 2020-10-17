@@ -1,14 +1,19 @@
-﻿namespace ExternalSystem.Events.Locations
+﻿using System;
+using Hexure.Events;
+
+namespace ExternalSystem.Events.Locations
 {
-    public class LocationAdded
+    public class LocationAdded : IEvent
     {
-        public LocationAdded(long id, string name)
+        public LocationAdded(long id, string name, DateTime publishedOn)
         {
             Id = id;
             Name = name;
+            PublishedOn = publishedOn;
         }
 
-        public long Id { get; private set; }
-        public string Name { get; private set; }
+        public long Id { get; }
+        public string Name { get; }
+        public DateTime PublishedOn { get; }
     }
 }

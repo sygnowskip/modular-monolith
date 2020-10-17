@@ -7,11 +7,11 @@ using ModularMonolith.Persistence;
 
 namespace ModularMonolith.ReadModels.EventHandlers.UpdateLocations
 {
-    public class OnLocationDeleted : IConsumer<LocationDeleted>
+    internal class OnLocationDeleted : IConsumer<LocationDeleted>
     {
         private readonly MonolithDbContext _monolithDbContext;
 
-        internal OnLocationDeleted(MonolithDbContext monolithDbContext)
+        public OnLocationDeleted(MonolithDbContext monolithDbContext)
         {
             _monolithDbContext = monolithDbContext;
         }

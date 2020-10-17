@@ -7,11 +7,11 @@ using ModularMonolith.Persistence;
 
 namespace ModularMonolith.ReadModels.EventHandlers.UpdateSubjects
 {
-    public class OnSubjectDeleted : IConsumer<SubjectDeleted>
+    internal class OnSubjectDeleted : IConsumer<SubjectDeleted>
     {
         private readonly MonolithDbContext _monolithDbContext;
 
-        internal OnSubjectDeleted(MonolithDbContext monolithDbContext)
+        public OnSubjectDeleted(MonolithDbContext monolithDbContext)
         {
             _monolithDbContext = monolithDbContext;
         }

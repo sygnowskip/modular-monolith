@@ -7,11 +7,11 @@ using ModularMonolith.Persistence;
 
 namespace ModularMonolith.ReadModels.EventHandlers.UpdateLocations
 {
-    public class OnLocationAdded : IConsumer<LocationAdded>
+    internal class OnLocationAdded : IConsumer<LocationAdded>
     {
         private readonly MonolithDbContext _monolithDbContext;
 
-        internal OnLocationAdded(MonolithDbContext monolithDbContext)
+        public OnLocationAdded(MonolithDbContext monolithDbContext)
         {
             _monolithDbContext = monolithDbContext;
         }
@@ -22,8 +22,10 @@ namespace ModularMonolith.ReadModels.EventHandlers.UpdateLocations
             if (locationExist)
                 return;
 
-            await _monolithDbContext.Locations.AddAsync(new Location(new LocationId(context.Message.Id),
-                context.Message.Name));
+            var location = new Location(new LocationId(context.Message.Id),
+                context.Message.Name);
+            await _monolithDbContext.Locations.AddAsync(location);
+
             await _monolithDbContext.SaveChangesAsync();
         }
     }

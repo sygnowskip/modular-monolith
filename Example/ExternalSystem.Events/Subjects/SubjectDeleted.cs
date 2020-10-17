@@ -1,12 +1,17 @@
-﻿namespace ExternalSystem.Events.Subjects
+﻿using System;
+using Hexure.Events;
+
+namespace ExternalSystem.Events.Subjects
 {
-    public class SubjectDeleted
+    public class SubjectDeleted : IEvent
     {
-        public SubjectDeleted(long id)
+        public SubjectDeleted(long id, DateTime publishedOn)
         {
             Id = id;
+            PublishedOn = publishedOn;
         }
 
-        public long Id { get; private set; }
+        public long Id { get; }
+        public DateTime PublishedOn { get; }
     }
 }

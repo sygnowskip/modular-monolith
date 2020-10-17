@@ -1,7 +1,7 @@
 IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'read' AND  TABLE_NAME = 'Subject')
 BEGIN
 	CREATE TABLE [read].[Subject](
-        [Id] [bigint] IDENTITY(1,1) NOT NULL,
+        [Id] [bigint] NOT NULL,
         [Name] [nvarchar](50) NOT NULL,
      CONSTRAINT [PK_Subject] PRIMARY KEY CLUSTERED 
     (
@@ -13,7 +13,7 @@ END
 IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'read' AND  TABLE_NAME = 'Location')
 BEGIN
 	CREATE TABLE [read].[Location](
-        [Id] [bigint] IDENTITY(1,1) NOT NULL,
+        [Id] [bigint] NOT NULL,
         [Name] [nvarchar](50) NOT NULL,
      CONSTRAINT [PK_Location] PRIMARY KEY CLUSTERED 
     (

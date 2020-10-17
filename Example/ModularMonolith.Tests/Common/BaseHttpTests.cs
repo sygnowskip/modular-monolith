@@ -4,10 +4,12 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using IdentityModel.Client;
+using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ModularMonolith.Configuration;
 using Newtonsoft.Json;
+using NUnit.Framework;
 
 namespace ModularMonolith.Tests.Common
 {
@@ -15,6 +17,7 @@ namespace ModularMonolith.Tests.Common
     {
         protected readonly IServiceProvider ServiceProvider;
         protected readonly IHttpClientFactory HttpClientFactory;
+        protected readonly IBusControl BusControl;
         protected HttpClient HttpClient => HttpClientFactory.CreateClient();
 
         private readonly AuthoritySettings _authoritySettings;
@@ -23,9 +26,22 @@ namespace ModularMonolith.Tests.Common
         protected BaseHttpTests()
         {
             ServiceProvider = ServiceProviderBuilder.Build();
+            BusControl = ServiceProvider.GetRequiredService<IBusControl>();
             HttpClientFactory = ServiceProvider.GetRequiredService<IHttpClientFactory>();
             _authoritySettings = ApplicationSettingsConfigurationProvider.Get().GetSection("Authority").Get<AuthoritySettings>();
             MonolithSettings = ApplicationSettingsConfigurationProvider.Get().GetSection("Monolith").Get<MonolithApiSettings>();
+        }
+
+        [OneTimeSetUp]
+        public async Task SetUp()
+        {
+            await BusControl.StartAsync();
+        }
+
+        [OneTimeTearDown]
+        public async Task TearDown()
+        {
+            await BusControl.StopAsync();
         }
 
         protected async Task<DiscoveryDocumentResponse> GetDiscoveryDocumentAsync()
@@ -66,6 +82,19 @@ namespace ModularMonolith.Tests.Common
         {
             return JsonConvert.DeserializeObject<TResult>(await response.Content.ReadAsStringAsync());
 
+        }
+
+        protected async Task<bool> TryUntilSuccess(Func<Task<bool>> asyncAction, int limit, TimeSpan delay)
+        {
+            for (var i = 0; i < limit; i++)
+            {
+                if (await asyncAction())
+                    return true;
+
+                await Task.Delay(delay);
+            }
+
+            return false;
         }
     }
 }

@@ -23,8 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Source\Hexure.EventsPublisher\Hexure.EventsPublisher.csproj" />
     <ProjectReference Include="..\..\Source\Hexure.Testing\Hexure.Testing.csproj" />
     <ProjectReference Include="..\..\Source\Hexure\Hexure.csproj" />
+    <ProjectReference Include="..\ExternalSystem.Events\ExternalSystem.Events.csproj" />
     <ProjectReference Include="..\ModularMonolith.Configuration\ModularMonolith.Configuration.csproj" />
     <ProjectReference Include="..\ModularMonolith.QueryServices\ModularMonolith.QueryServices.csproj" />
     <ProjectReference Include="..\ModularMonolith.Registrations.Contracts\ModularMonolith.Registrations.Contracts.csproj" />
