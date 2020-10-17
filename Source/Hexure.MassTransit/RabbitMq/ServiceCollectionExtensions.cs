@@ -13,6 +13,7 @@ using Hexure.MassTransit.RabbitMq.Formatters;
 using Hexure.MassTransit.RabbitMq.Settings;
 using MassTransit;
 using MassTransit.ExtensionsDependencyInjectionIntegration;
+using MassTransit.Metadata;
 using MassTransit.RabbitMqTransport;
 using MassTransit.Serialization;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +33,8 @@ namespace Hexure.MassTransit.RabbitMq
                 .AddEventsFromAssemblies(withConsumersFromAssemblies)
                 .Build());
 
+            serviceCollection.AddMassTransitHostedService();
+
             RegisterRabbitMq(serviceCollection, rabbitMqSettings, (busConfigurator, provider) =>
                 {
                     busConfigurator.ReceiveEndpointForEachConsumer(provider, rabbitMqSettings.QueuePrefix, withConsumersFromAssemblies,
@@ -44,7 +47,7 @@ namespace Hexure.MassTransit.RabbitMq
                 },
                 configurator =>
                 {
-                    configurator.AddConsumers(withConsumersFromAssemblies.ToArray());
+                    configurator.AddConsumers(ConsumersProvider.GetConsumers(withConsumersFromAssemblies).ToArray());
                 });
         }
 

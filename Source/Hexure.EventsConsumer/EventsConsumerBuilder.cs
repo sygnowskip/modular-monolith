@@ -11,11 +11,11 @@ namespace Hexure.EventsConsumer
     {
         private readonly IServiceCollection _serviceCollection;
         private readonly IList<Assembly> _consumerAssemblies = new List<Assembly>();
-        private ConsumerRabbitMqSettings _consumerRabbitMqSettings;
+        private ConsumerRabbitMqSettings _rabbitMqSettings;
 
-        public EventsConsumerBuilder()
+        private EventsConsumerBuilder(IServiceCollection serviceCollection)
         {
-            _serviceCollection = new ServiceCollection();
+            _serviceCollection = serviceCollection;
         }
 
         public EventsConsumerBuilder WithHandlersFromAssemblyOfType<THandler>()
@@ -32,14 +32,18 @@ namespace Hexure.EventsConsumer
 
         public EventsConsumerBuilder ToRabbitMq(ConsumerRabbitMqSettings rabbitMqSettings)
         {
-            _consumerRabbitMqSettings = rabbitMqSettings;
+            _rabbitMqSettings = rabbitMqSettings;
             return this;
         }
 
-        public EventsConsumer Build()
+        public void Build()
         {
-            _serviceCollection.RegisterRabbitMqConsumer(_consumerRabbitMqSettings, _consumerAssemblies);
-            return new EventsConsumer(_serviceCollection.BuildServiceProvider());
+            _serviceCollection.RegisterRabbitMqConsumer(_rabbitMqSettings, _consumerAssemblies);
+        }
+
+        public static EventsConsumerBuilder Create(IServiceCollection serviceCollection)
+        {
+            return new EventsConsumerBuilder(serviceCollection);
         }
     }
 }

@@ -5,6 +5,7 @@ using Hexure.MassTransit.RabbitMq.Settings;
 using Hexure.Time;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
 using ModularMonolith.Configuration;
 using ModularMonolith.Dependencies;
 using ModularMonolith.Persistence;
@@ -12,28 +13,32 @@ using ModularMonolith.Registrations.Contracts.Events;
 
 namespace ModularMonolith.EventsPublisher
 {
-    public class Program
+    public static class Program
     {
-        public static async Task Main()
+        public static void Main()
         {
-            var batchSize = 20;
-            var delay = TimeSpan.FromSeconds(10);
-            var configuration = ApplicationSettingsConfigurationProvider.Get();
-
-            await EventsPublisherFactory
-                .CreatePublisher(batchSize, delay)
-                .ToRabbitMq(configuration.GetSection("Bus").Get<PublisherRabbitMqSettings>())
-                .WithDbContext<MonolithDbContext>()
-                .WithTransactionProvider<MonolithDbContext>()
-                .WithEventsFromAssemblyOfType<RegistrationPaid>()
-                .WithPersistence(services =>
-                {
-                    services.AddPersistence(configuration.GetConnectionString("Database"));
-
-                    services.TryAddTransient<ISystemTimeProvider, SystemTimeProvider>();
-                })
-                .Build()
-                .RunAsync();
+            CreateHostBuilder().Build().Run();
         }
+
+        private static IHostBuilder CreateHostBuilder() =>
+            Host.CreateDefaultBuilder()
+                .ConfigureServices(servicesCollection =>
+                {
+                    var configuration = ApplicationSettingsConfigurationProvider.Get();
+
+                    EventsPublisherBuilder
+                        .Create(servicesCollection)
+                        .WithSettings(configuration.GetSection("Settings").Get<EventsPublisherSettings>())
+                        .WithDbContext<MonolithDbContext>()
+                        .WithTransactionProvider<MonolithDbContext>()
+                        .WithEventsFromAssemblyOfType<RegistrationPaid>()
+                        .WithPersistence(services =>
+                        {
+                            services.AddPersistence(configuration.GetConnectionString("Database"));
+                            services.TryAddTransient<ISystemTimeProvider, SystemTimeProvider>();
+                        })
+                        .ToRabbitMq(configuration.GetSection("Bus").Get<PublisherRabbitMqSettings>())
+                        .Build();
+                });
     }
 }

@@ -15,18 +15,19 @@ namespace Hexure.EventsPublisher
     public class EventsPublisherBuilder
     {
         private readonly EventTypeProviderBuilder _eventTypeProviderBuilder = new EventTypeProviderBuilder(new EventNamespaceReader());
-        private readonly int _defaultBatchSize;
-        private readonly TimeSpan _defaultDelay;
-
         private readonly IServiceCollection _serviceCollection;
 
         private PublisherRabbitMqSettings _publisherRabbitMqSettings;
 
-        internal EventsPublisherBuilder(int defaultBatchSize, TimeSpan defaultDelay)
+        private EventsPublisherBuilder(IServiceCollection serviceCollection)
         {
-            _defaultBatchSize = defaultBatchSize;
-            _defaultDelay = defaultDelay;
-            _serviceCollection = new ServiceCollection();
+            _serviceCollection = serviceCollection;
+        }
+
+        public EventsPublisherBuilder WithSettings(EventsPublisherSettings settings)
+        {
+            _serviceCollection.AddTransient<EventsPublisherSettings>(provider => settings);
+            return this;
         }
 
         public EventsPublisherBuilder WithDbContext<TDbContext>()
@@ -68,11 +69,17 @@ namespace Hexure.EventsPublisher
             return this;
         }
 
-        public EventsPublisher Build()
+        public void Build()
         {
             _serviceCollection.AddEventTypeProvider(_eventTypeProviderBuilder.Build());
             _serviceCollection.RegisterRabbitMqPublisher(_publisherRabbitMqSettings);
-            return new EventsPublisher(_defaultBatchSize, _defaultDelay, _serviceCollection.BuildServiceProvider());
+            _serviceCollection.AddTransient<EventsPublisher>();
+            _serviceCollection.AddHostedService<EventsPublisherBackgroundService>();
+        }
+        
+        public static EventsPublisherBuilder Create(IServiceCollection serviceCollection)
+        {
+            return new EventsPublisherBuilder(serviceCollection);
         }
     }
 }
