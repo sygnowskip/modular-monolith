@@ -13,7 +13,6 @@ using Hexure.MassTransit.RabbitMq.Formatters;
 using Hexure.MassTransit.RabbitMq.Settings;
 using MassTransit;
 using MassTransit.ExtensionsDependencyInjectionIntegration;
-using MassTransit.Metadata;
 using MassTransit.RabbitMqTransport;
 using MassTransit.Serialization;
 using Microsoft.Extensions.DependencyInjection;

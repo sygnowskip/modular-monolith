@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Hexure.Testing.Snapshots
 {
@@ -11,7 +12,7 @@ namespace Hexure.Testing.Snapshots
             serviceCollection.AddSingleton(provider =>
             {
                 var configuration = provider.GetService<IConfiguration>();
-                return new Snapshot(configuration.GetConnectionString(connectionStringName));
+                return new Snapshot(configuration.GetConnectionString(connectionStringName), provider.GetRequiredService<ILogger<Snapshot>>());
             });
             return serviceCollection;
         }

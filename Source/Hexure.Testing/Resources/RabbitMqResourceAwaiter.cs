@@ -3,7 +3,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace Hexure.Testing.Resources
 {
@@ -20,11 +19,11 @@ namespace Hexure.Testing.Resources
         private readonly RabbitMqResourceConfiguration _configuration;
         private readonly ILogger<RabbitMqResourceAwaiter> _logger;
 
-        public RabbitMqResourceAwaiter(HttpClient httpClient, IOptions<RabbitMqResourceConfiguration> configuration, ILogger<RabbitMqResourceAwaiter> logger)
+        public RabbitMqResourceAwaiter(HttpClient httpClient, RabbitMqResourceConfiguration configuration, ILogger<RabbitMqResourceAwaiter> logger)
         {
             _httpClient = httpClient;
             _logger = logger;
-            _configuration = configuration.Value;
+            _configuration = configuration;
             ConfigureHttpClientAuthentication();
         }
 

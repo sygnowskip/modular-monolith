@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Hexure.EventsPublisher;
+﻿using Hexure.EventsPublisher;
 using Hexure.MassTransit.RabbitMq.Settings;
 using Hexure.Time;
 using Microsoft.Extensions.Configuration;

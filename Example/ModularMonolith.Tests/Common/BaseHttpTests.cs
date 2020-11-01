@@ -5,9 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IdentityModel.Client;
 using MassTransit;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ModularMonolith.Configuration;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
@@ -28,8 +26,8 @@ namespace ModularMonolith.Tests.Common
             ServiceProvider = ServiceProviderBuilder.Build();
             BusControl = ServiceProvider.GetRequiredService<IBusControl>();
             HttpClientFactory = ServiceProvider.GetRequiredService<IHttpClientFactory>();
-            _authoritySettings = ApplicationSettingsConfigurationProvider.Get().GetSection("Authority").Get<AuthoritySettings>();
-            MonolithSettings = ApplicationSettingsConfigurationProvider.Get().GetSection("Monolith").Get<MonolithApiSettings>();
+            _authoritySettings = ServiceProvider.GetRequiredService<AuthoritySettings>();
+            MonolithSettings = ServiceProvider.GetRequiredService<MonolithApiSettings>();
         }
 
         [OneTimeSetUp]
@@ -77,7 +75,7 @@ namespace ModularMonolith.Tests.Common
         {
             return new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
         }
-        
+
         protected async Task<TResult> DeserializeAsync<TResult>(HttpResponseMessage response)
         {
             return JsonConvert.DeserializeObject<TResult>(await response.Content.ReadAsStringAsync());

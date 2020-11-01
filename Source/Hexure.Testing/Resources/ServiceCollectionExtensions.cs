@@ -1,18 +1,22 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Hexure.Testing.Snapshots
+namespace Hexure.Testing.Resources
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddSnapshots(this IServiceCollection serviceCollection,
-            string connectionStringName)
+        public static IServiceCollection AddResourceAwaiters(this IServiceCollection serviceCollection, RabbitMqResourceConfiguration rabbitMqResourceConfiguration)
         {
-            serviceCollection.AddSingleton(provider =>
-            {
-                var configuration = provider.GetService<IConfiguration>();
-                return new Snapshot(configuration.GetConnectionString(connectionStringName));
-            });
+            serviceCollection.AddTransient<IdentityServerAwaiter>();
+            serviceCollection.AddHttpClient<IdentityServerAwaiter>();
+            
+            serviceCollection.AddTransient<RabbitMqResourceAwaiter>();
+            serviceCollection.AddHttpClient<RabbitMqResourceAwaiter>();
+            serviceCollection.AddTransient<RabbitMqResourceConfiguration>(provider => rabbitMqResourceConfiguration);
+            
+            serviceCollection.AddTransient<WebApiResourceAwaiter>();
+            serviceCollection.AddHttpClient<WebApiResourceAwaiter>();
+            
+            serviceCollection.AddTransient<MsSqlResourceAwaiter>();
             return serviceCollection;
         }
     }
