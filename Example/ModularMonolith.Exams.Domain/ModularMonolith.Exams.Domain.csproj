@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Source\Hexure\Hexure.csproj" />
+      <ProjectReference Include="..\ModularMonolith.Exams.Events\ModularMonolith.Exams.Events.csproj" />
+      <ProjectReference Include="..\ModularMonolith.Exams.Language\ModularMonolith.Exams.Language.csproj" />
+      <ProjectReference Include="..\ModularMonolith.Language\ModularMonolith.Language.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Stateless" Version="5.1.3" />
+    </ItemGroup>
+
+</Project>

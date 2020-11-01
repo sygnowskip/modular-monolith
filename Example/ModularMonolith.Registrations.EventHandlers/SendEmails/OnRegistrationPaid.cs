@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Threading.Tasks;
 using MassTransit;
 using ModularMonolith.Registrations.Contracts.Events;
@@ -14,4 +14,4 @@ namespace ModularMonolith.Registrations.EventHandlers.SendEmails
             return Task.CompletedTask;
         }
     }
-}
+}*/

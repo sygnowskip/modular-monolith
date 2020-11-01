@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using IdentityModel.Client;
-using Microsoft.Extensions.Configuration;
+using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
-using ModularMonolith.Configuration;
+using Newtonsoft.Json;
+using NUnit.Framework;
 
 namespace ModularMonolith.Tests.Common
 {
@@ -13,6 +15,7 @@ namespace ModularMonolith.Tests.Common
     {
         protected readonly IServiceProvider ServiceProvider;
         protected readonly IHttpClientFactory HttpClientFactory;
+        protected readonly IBusControl BusControl;
         protected HttpClient HttpClient => HttpClientFactory.CreateClient();
 
         private readonly AuthoritySettings _authoritySettings;
@@ -21,12 +24,25 @@ namespace ModularMonolith.Tests.Common
         protected BaseHttpTests()
         {
             ServiceProvider = ServiceProviderBuilder.Build();
+            BusControl = ServiceProvider.GetRequiredService<IBusControl>();
             HttpClientFactory = ServiceProvider.GetRequiredService<IHttpClientFactory>();
-            _authoritySettings = ApplicationSettingsConfigurationProvider.Get().GetSection("Authority").Get<AuthoritySettings>();
-            MonolithSettings = ApplicationSettingsConfigurationProvider.Get().GetSection("Monolith").Get<MonolithApiSettings>();
+            _authoritySettings = ServiceProvider.GetRequiredService<AuthoritySettings>();
+            MonolithSettings = ServiceProvider.GetRequiredService<MonolithApiSettings>();
         }
 
-        public async Task<DiscoveryDocumentResponse> GetDiscoveryDocumentAsync()
+        [OneTimeSetUp]
+        public async Task SetUp()
+        {
+            await BusControl.StartAsync();
+        }
+
+        [OneTimeTearDown]
+        public async Task TearDown()
+        {
+            await BusControl.StopAsync();
+        }
+
+        protected async Task<DiscoveryDocumentResponse> GetDiscoveryDocumentAsync()
         {
             return await HttpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest()
             {
@@ -38,7 +54,7 @@ namespace ModularMonolith.Tests.Common
             });
         }
 
-        public async Task<HttpClient> PrepareClientWithTokenForScopes(string scopes = null)
+        protected async Task<HttpClient> PrepareClientWithTokenForScopes(string scopes = null)
         {
             var discoveryDocument = await GetDiscoveryDocumentAsync();
             var token = await HttpClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest()
@@ -53,6 +69,30 @@ namespace ModularMonolith.Tests.Common
             authenticatedHttpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", token.AccessToken);
             return authenticatedHttpClient;
+        }
+
+        protected HttpContent Serialize<TRequest>(TRequest request)
+        {
+            return new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+        }
+
+        protected async Task<TResult> DeserializeAsync<TResult>(HttpResponseMessage response)
+        {
+            return JsonConvert.DeserializeObject<TResult>(await response.Content.ReadAsStringAsync());
+
+        }
+
+        protected async Task<bool> TryUntilSuccess(Func<Task<bool>> asyncAction, int limit, TimeSpan delay)
+        {
+            for (var i = 0; i < limit; i++)
+            {
+                if (await asyncAction())
+                    return true;
+
+                await Task.Delay(delay);
+            }
+
+            return false;
         }
     }
 }

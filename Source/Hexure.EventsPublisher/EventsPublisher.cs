@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Hexure.EntityFrameworkCore;
 using Hexure.EntityFrameworkCore.Events.Repositories;
@@ -13,31 +14,30 @@ namespace Hexure.EventsPublisher
 {
     public class EventsPublisher
     {
-        private readonly int _defaultBatchSize;
-        private readonly TimeSpan _defaultDelay;
+        private readonly EventsPublisherSettings _settings;
         private readonly IBusControl _busControl;
         private readonly ISystemTimeProvider _systemTimeProvider;
         private readonly IEventDeserializer _eventDeserializer;
         private readonly IServiceProvider _serviceProvider;
 
-        public EventsPublisher(int defaultBatchSize, TimeSpan defaultDelay, IServiceProvider serviceProvider)
+        public EventsPublisher(EventsPublisherSettings settings, IBusControl busControl,
+            ISystemTimeProvider systemTimeProvider, IEventDeserializer eventDeserializer,
+            IServiceProvider serviceProvider)
         {
-            _defaultBatchSize = defaultBatchSize;
-            _defaultDelay = defaultDelay;
-
+            _settings = settings;
+            _busControl = busControl;
+            _systemTimeProvider = systemTimeProvider;
+            _eventDeserializer = eventDeserializer;
             _serviceProvider = serviceProvider;
-            _busControl = serviceProvider.GetRequiredService<IBusControl>();
-            _systemTimeProvider = serviceProvider.GetRequiredService<ISystemTimeProvider>();
-            _eventDeserializer = serviceProvider.GetRequiredService<IEventDeserializer>();
         }
 
-        public async Task RunAsync()
+        public async Task RunAsync(CancellationToken stoppingToken)
         {
-            await _busControl.StartAsync();
+            await _busControl.StartAsync(stoppingToken);
 
             try
             {
-                while (true)
+                while (!stoppingToken.IsCancellationRequested)
                 {
                     using (var scopedContainer = _serviceProvider.CreateScope())
                     {
@@ -47,18 +47,16 @@ namespace Hexure.EventsPublisher
                             .GetRequiredService<ISerializedEventRepository>();
 
                         await transactionProvider.BeginTransactionAsync();
-                        Console.WriteLine($"{DateTime.UtcNow} Publishing (batch size: {_defaultBatchSize})...");
-                        var eventsToPublish = await serializedEventRepository.GetUnpublishedEventsAsync(_defaultBatchSize);
+                        Console.WriteLine($"{DateTime.UtcNow} Publishing (batch size: {_settings.BatchSize})...");
+                        var eventsToPublish =
+                            await serializedEventRepository.GetUnpublishedEventsAsync(_settings.BatchSize);
 
                         foreach (var serializedEventEntity in eventsToPublish)
                         {
                             try
                             {
                                 await _eventDeserializer.Deserialize(serializedEventEntity.SerializedEvent)
-                                    .OnSuccess(async @event =>
-                                    {
-                                        await _busControl.Publish(@event);
-                                    });
+                                    .OnSuccess(async @event => { await _busControl.Publish(@event); });
 
                                 await serializedEventEntity.MarkAsProcessed(_systemTimeProvider.UtcNow)
                                     .OnSuccess(() => serializedEventRepository.SaveChangesAsync())
@@ -72,15 +70,14 @@ namespace Hexure.EventsPublisher
                         }
 
                         await transactionProvider.CommitTransactionAsync();
-
                     }
 
-                    await Task.Delay(_defaultDelay);
+                    await Task.Delay(_settings.Delay, stoppingToken);
                 }
             }
             catch
             {
-                await _busControl.StopAsync();
+                await _busControl.StopAsync(stoppingToken);
             }
         }
     }

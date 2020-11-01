@@ -32,6 +32,8 @@ namespace Hexure.MassTransit.RabbitMq
                 .AddEventsFromAssemblies(withConsumersFromAssemblies)
                 .Build());
 
+            serviceCollection.AddMassTransitHostedService();
+
             RegisterRabbitMq(serviceCollection, rabbitMqSettings, (busConfigurator, provider) =>
                 {
                     busConfigurator.ReceiveEndpointForEachConsumer(provider, rabbitMqSettings.QueuePrefix, withConsumersFromAssemblies,
@@ -44,7 +46,7 @@ namespace Hexure.MassTransit.RabbitMq
                 },
                 configurator =>
                 {
-                    configurator.AddConsumers(withConsumersFromAssemblies.ToArray());
+                    configurator.AddConsumers(ConsumersProvider.GetConsumers(withConsumersFromAssemblies).ToArray());
                 });
         }
 

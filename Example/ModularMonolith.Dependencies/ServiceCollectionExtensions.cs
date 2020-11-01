@@ -1,7 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using ModularMonolith.CommandServices;
 using ModularMonolith.Payments.ApplicationServices;
 using ModularMonolith.Persistence;
-using ModularMonolith.Persistence.Read;
+using ModularMonolith.QueryServices;
 using ModularMonolith.Registrations.ApplicationServices;
 using ModularMonolith.Registrations.Queries;
 
@@ -9,6 +11,16 @@ namespace ModularMonolith.Dependencies
 {
     public static class ServiceCollectionExtensions
     {
+        public static IServiceCollection AddCommandServices(this IServiceCollection services)
+        {
+            return services.AddMediatR(typeof(CreateExamCommand).Assembly);
+        }
+        
+        public static IServiceCollection AddQueryServices(this IServiceCollection services)
+        {
+            return services.AddMediatR(typeof(GetLocationsQuery).Assembly);
+        }
+        
         public static IServiceCollection AddRegistrations(this IServiceCollection serviceCollection)
         {
             return serviceCollection
@@ -22,12 +34,10 @@ namespace ModularMonolith.Dependencies
                 .AddPaymentsServices();
         }
 
-        public static IServiceCollection AddPersistence(this IServiceCollection serviceCollection,
-            string writeDatabaseConnectionString, string readDatabaseConnectionString)
+        public static IServiceCollection AddPersistence(this IServiceCollection serviceCollection, string writeDatabaseConnectionString)
         {
             return serviceCollection
-                .AddWritePersistence(writeDatabaseConnectionString)
-                .AddReadPersistence(readDatabaseConnectionString);
+                .AddWritePersistence(writeDatabaseConnectionString);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Threading.Tasks;
 using MassTransit;
 using ModularMonolith.Registrations.Contracts.Events;
@@ -23,9 +23,9 @@ namespace ModularMonolith.Registrations.EventHandlers.SendEmails
             Console.WriteLine($"Consumed {nameof(RegistrationCreated)} with {JsonConvert.SerializeObject(context.Message)}");
         }
 
-        public Task Consume(ConsumeContext<RegistrationPaid> context)
+        public async Task Consume(ConsumeContext<RegistrationPaid> context)
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Consumed {nameof(RegistrationPaid)} with {JsonConvert.SerializeObject(context.Message)}");
         }
     }
-}
+}*/

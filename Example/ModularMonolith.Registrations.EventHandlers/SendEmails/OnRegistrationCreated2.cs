@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Threading.Tasks;
 using MassTransit;
 using ModularMonolith.Registrations.Contracts.Events;
@@ -18,10 +18,10 @@ namespace ModularMonolith.Registrations.EventHandlers.SendEmails
 
         public async Task Consume(ConsumeContext<RegistrationCreated> context)
         {
-            throw new Exception();
+            //throw new Exception();
             //await _mediator.Send(new StartPaymentForRegistration(context.Message.Id, new PaymentId(Guid.NewGuid())));
 
             Console.WriteLine($"Consumed 2 {nameof(RegistrationCreated)} with {JsonConvert.SerializeObject(context.Message)}");
         }
     }
-}
+}*/

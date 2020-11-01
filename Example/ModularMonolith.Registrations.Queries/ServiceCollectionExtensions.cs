@@ -1,5 +1,4 @@
-﻿using MediatR;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace ModularMonolith.Registrations.Queries
 {
@@ -7,7 +6,7 @@ namespace ModularMonolith.Registrations.Queries
     {
         public static IServiceCollection AddRegistrationQueries(this IServiceCollection services)
         {
-            services.AddMediatR(typeof(GetSingleRegistrationQueryHandler).Assembly);
+            //services.AddMediatR(typeof(GetSingleRegistrationQueryHandler).Assembly);
             return services;
         }
     }

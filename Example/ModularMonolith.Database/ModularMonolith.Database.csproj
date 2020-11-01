@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -24,6 +24,11 @@
     <EmbeddedResource Include="Scripts\002_Create_Registration.sql" />
     <EmbeddedResource Include="Scripts\003_Create_Schema_For_Events.sql" />
     <EmbeddedResource Include="Scripts\004_Create_SerializedEvent_Table.sql" />
+    <EmbeddedResource Include="Scripts\005_Create_Exam_Schema.sql" />
+    <EmbeddedResource Include="Scripts\006_Create_Exam.sql" />
+    <EmbeddedResource Include="Scripts\007_Create_Read_Schema.sql" />
+    <EmbeddedResource Include="Scripts\008_Create_Subjects_And_Locations.sql" />
+    <EmbeddedResource Include="TestData\001_Subjects_And_Locations.sql" />
   </ItemGroup>
 
   <ItemGroup>

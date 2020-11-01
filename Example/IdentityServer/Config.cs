@@ -9,10 +9,29 @@ namespace IdentityServer
 {
     public static class Config
     {
+        public static class ModularMonolith
+        {
+            public static string ClientId = "modular-monolith-client";
+            public static string ClientSecret = "modular-monolith-client-secret".Sha256();
+
+            public static class Scopes
+            {
+                public static string Registrations = "registrations";
+                public static string Payments = "payments";
+            }
+        }
+
         public static IEnumerable<IdentityResource> Ids =>
             new IdentityResource[]
-            { 
+            {
                 new IdentityResources.OpenId()
+            };
+
+        public static IEnumerable<ApiScope> Scopes =>
+            new ApiScope[]
+            {
+                new ApiScope(ModularMonolith.Scopes.Payments),
+                new ApiScope(ModularMonolith.Scopes.Registrations)
             };
 
         public static IEnumerable<ApiResource> Apis =>
@@ -20,28 +39,32 @@ namespace IdentityServer
             {
                 new ApiResource("modular-monolith")
                 {
+                    DisplayName = "Modular Monolith",
                     Scopes = new List<string>()
                     {
-                        "registrations",
-                        "payments"
+                        ModularMonolith.Scopes.Payments,
+                        ModularMonolith.Scopes.Registrations
                     }
-                }, 
+                },
             };
-        
+
         public static IEnumerable<Client> Clients =>
             new Client[]
             {
                 new Client()
                 {
-                    ClientId = "modular-monolith-client",
+                    ClientId = ModularMonolith.ClientId,
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     ClientSecrets = new List<Secret>()
                     {
-                        new Secret("modular-monolith-client-secret".Sha256())
+                        new Secret(ModularMonolith.ClientSecret)
                     },
-                    AllowedScopes = { "registrations", "payments" }
+                    AllowedScopes =
+                    {
+                        ModularMonolith.Scopes.Registrations,
+                        ModularMonolith.Scopes.Payments
+                    }
                 }
             };
-        
     }
 }

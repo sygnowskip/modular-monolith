@@ -7,7 +7,7 @@ namespace ModularMonolith.Persistence.Repositories
 {
     internal class PaymentRepository : IPaymentRepository
     {
-        public Task<Result<PaymentId>> SaveAsync(Payment aggregate)
+        public Task<Result<Payment>> SaveAsync(Payment aggregate)
         {
             throw new System.NotImplementedException();
         }

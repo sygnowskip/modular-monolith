@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using MassTransit;
-using MassTransit.Metadata;
 using MassTransit.RabbitMqTransport;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,23 +13,14 @@ namespace Hexure.MassTransit.RabbitMq.Consumers
             IServiceProvider provider, string queuePrefix, ICollection<Assembly> fromAssemblies,
             Action<IRabbitMqReceiveEndpointConfigurator> endpointConfiguration = null)
         {
-            foreach (var consumer in GetConsumers(fromAssemblies))
+            foreach (var consumer in ConsumersProvider.GetConsumers(fromAssemblies))
             {
                 configurator.ReceiveEndpoint($"{queuePrefix}:{consumer.FullName}", endpointConfigurator =>
                 {
-                    endpointConfigurator.Consumer(consumer, provider.GetRequiredService);
-                    
+                    endpointConfigurator.Consumer(consumer, type => provider.CreateScope().ServiceProvider.GetRequiredService(type));
                     endpointConfiguration?.Invoke(endpointConfigurator);
                 });
             }
-        }
-
-        private static ICollection<Type> GetConsumers(ICollection<Assembly> fromAssemblies)
-        {
-            return fromAssemblies.SelectMany(a => a.GetTypes())
-                .Where(TypeMetadataCache.IsConsumerOrDefinition)
-                .Select(type => type)
-                .ToList();
         }
     }
 }
