@@ -40,6 +40,17 @@ namespace Hexure.API
             return NotFound();
         }
 
+        //GET MULTIPLE
+        protected IActionResult OkOrUnprocessableEntity<T>(Result<T> result)
+        {
+            if (result.IsSuccess)
+            {
+                return Ok(result.Value);
+            }
+
+            return UnprocessableEntity(result.Error);
+        }
+
         //DELETE
         protected IActionResult NoContentOrNotFound(Result result)
         {

@@ -13,15 +13,14 @@ namespace ModularMonolith.API.Controllers
 {
     [Authorize("Registrations")]
     [Route("api/registrations")]
-    public class RegistrationsController : RestfulController
+    public class RegistrationsController : MediatorController
     {
         private readonly IRegistrationApplicationService _registrationApplicationService;
-        private readonly IMediator _mediator;
 
-        public RegistrationsController(IRegistrationApplicationService registrationApplicationService, IMediator mediator)
+        public RegistrationsController(IMediator mediator,
+            IRegistrationApplicationService registrationApplicationService) : base(mediator)
         {
             _registrationApplicationService = registrationApplicationService;
-            _mediator = mediator;
         }
 
         [HttpPost]
@@ -34,7 +33,7 @@ namespace ModularMonolith.API.Controllers
         [HttpGet, Route("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            var result = await _mediator.Send(new GetSingleRegistration(new RegistrationId(id)));
+            var result = await Mediator.Send(new GetSingleRegistration(new RegistrationId(id)));
             return OkOrNotFound(result);
         }
     }
