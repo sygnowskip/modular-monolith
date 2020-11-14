@@ -19,11 +19,11 @@ namespace Hexure.API
         }
 
         //PUT
-        protected IActionResult OkOrUnprocessableEntity(Result result)
+        protected IActionResult NoContentOrUnprocessableEntity(Result result)
         {
             if (result.IsSuccess)
             {
-                return Ok();
+                return NoContent();
             }
 
             return UnprocessableEntity(result.Error);

@@ -3,17 +3,17 @@ using Hexure.API;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ModularMonolith.CommandServices;
+using ModularMonolith.QueryServices;
 
-namespace ModularMonolith.API.Controllers
+namespace ModularMonolith.API.Controllers.Common
 {
-    [AllowAnonymous]
-    [Route("api/exams")]
-    public class ExamsController : RestfulController
+    [Authorize]
+    [Route("api/locations")]
+    public class LocationsController : RestfulController
     {
         private readonly IMediator _mediator;
 
-        public ExamsController(IMediator mediator)
+        public LocationsController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -21,9 +21,7 @@ namespace ModularMonolith.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            await _mediator.Send(new CreateExamCommand());
-            
-            return Ok();
+            return Ok(await _mediator.Send(new GetLocationsQuery()));
         }
     }
 }

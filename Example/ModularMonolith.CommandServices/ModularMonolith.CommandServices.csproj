@@ -9,6 +9,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\ModularMonolith.Contracts\ModularMonolith.Contracts.csproj" />
       <ProjectReference Include="..\ModularMonolith.Exams.Domain\ModularMonolith.Exams.Domain.csproj" />
     </ItemGroup>
 
