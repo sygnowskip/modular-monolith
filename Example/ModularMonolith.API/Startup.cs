@@ -52,6 +52,10 @@ namespace ModularMonolith.API
             services.AddRegistrations();
             services.AddPayments();
             services.AddPersistence(Configuration.GetConnectionString("Database"));
+            services.AddSwaggerDocument(settings =>
+            {
+                settings.Title =  "Modular monolith API";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,6 +72,9 @@ namespace ModularMonolith.API
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
             app.UseEndpoints(endpoints =>
             {

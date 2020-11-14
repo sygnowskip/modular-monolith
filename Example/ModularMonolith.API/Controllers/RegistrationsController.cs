@@ -12,7 +12,7 @@ using ModularMonolith.Registrations.Language;
 namespace ModularMonolith.API.Controllers
 {
     [Authorize("Registrations")]
-    [Route("api/[controller]")]
+    [Route("api/registrations")]
     public class RegistrationsController : RestfulController
     {
         private readonly IRegistrationApplicationService _registrationApplicationService;
@@ -31,7 +31,7 @@ namespace ModularMonolith.API.Controllers
             return CreatedOrUnprocessableEntity(result, id => $"/api/registrations/{id}");
         }
 
-        [Route("{id}")]
+        [HttpGet, Route("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
             var result = await _mediator.Send(new GetSingleRegistration(new RegistrationId(id)));
