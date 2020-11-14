@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Hexure.API;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,9 +8,8 @@ using ModularMonolith.CommandServices;
 namespace ModularMonolith.API.Controllers
 {
     [AllowAnonymous]
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ExamsController : ControllerBase
+    [Route("api/exams")]
+    public class ExamsController : RestfulController
     {
         private readonly IMediator _mediator;
 

@@ -8,7 +8,7 @@ namespace Hexure.API
     public abstract class RestfulController : ControllerBase
     {
         //POST
-        public IActionResult CreatedOrUnprocessableEntity<T>(Result<T> result, Func<T, string> locationUrlFactory)
+        protected IActionResult CreatedOrUnprocessableEntity<T>(Result<T> result, Func<T, string> locationUrlFactory)
         {
             if (result.IsSuccess)
             {
@@ -19,7 +19,7 @@ namespace Hexure.API
         }
 
         //PUT
-        public IActionResult OkOrUnprocessableEntity(Result result)
+        protected IActionResult OkOrUnprocessableEntity(Result result)
         {
             if (result.IsSuccess)
             {
@@ -30,7 +30,7 @@ namespace Hexure.API
         }
 
         //GET
-        public IActionResult OkOrNotFound<T>(Result<T> result)
+        protected IActionResult OkOrNotFound<T>(Result<T> result)
         {
             if (result.IsSuccess)
             {
@@ -41,7 +41,7 @@ namespace Hexure.API
         }
 
         //DELETE
-        public IActionResult NoContentOrNotFound(Result result)
+        protected IActionResult NoContentOrNotFound(Result result)
         {
             if (result.IsSuccess)
             {

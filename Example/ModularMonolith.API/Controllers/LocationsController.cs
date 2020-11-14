@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Hexure.API;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,9 +8,8 @@ using ModularMonolith.QueryServices;
 namespace ModularMonolith.API.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
-    [ApiController]
-    public class LocationsController : ControllerBase
+    [Route("api/locations")]
+    public class LocationsController : RestfulController
     {
         private readonly IMediator _mediator;
 
