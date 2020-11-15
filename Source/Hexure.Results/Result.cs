@@ -121,7 +121,7 @@ namespace Hexure.Results
             return false;
         }
 
-        public void SetPropertyName(string propertyName, Func<Error, bool> selector, bool allowOverride = false)
+        public void SetPropertyName(string propertyName, Func<Error, bool> selector)
         {
             if (IsSuccess)
                 return;
@@ -133,20 +133,17 @@ namespace Hexure.Results
                 var result = new List<Error>();
                 foreach (var error in Error)
                 {
-                    if (error.PropertyName.AllowOverride && selector(error))
-                        result.Add(error.SetPropertyName(propertyName, allowOverride));
-                    else
-                        result.Add(error);
+                    result.Add(selector(error) ? error.SetPropertyName(propertyName) : error);
                 }
 
                 return result;
             }
         }
 
-        public void SetPropertyName<T>(Expression<Func<T, object>> propertyExpression, Func<Error, bool> selector, bool allowOverride = false)
+        public void SetPropertyName<T>(Expression<Func<T, object>> propertyExpression, Func<Error, bool> selector)
         {
             var propertyName = GetPropertyName(propertyExpression);
-            SetPropertyName(propertyName, selector, allowOverride);
+            SetPropertyName(propertyName, selector);
         }
 
         private string GetPropertyName<TModel>(Expression<Func<TModel, object>> expr, string separator = ".")
@@ -391,39 +388,39 @@ namespace Hexure.Results
 
         public bool HasError(Error error) => _logic.HasError(error);
 
-        public Result SetPropertyName(string propertyName, Func<Error, bool> selector, bool allowOverride = false)
+        public Result SetPropertyName(string propertyName, Func<Error, bool> selector)
         {
-            _logic.SetPropertyName(propertyName, selector, allowOverride);
+            _logic.SetPropertyName(propertyName, selector);
             return this;
         }
 
-        public Result SetPropertyName(string propertyName, Error.ErrorType errorType, bool allowOverride = false)
+        public Result SetPropertyName(string propertyName, Error.ErrorType errorType)
         {
-            _logic.SetPropertyName(propertyName, x => x.Code == errorType, allowOverride);
+            _logic.SetPropertyName(propertyName, x => x.Code == errorType);
             return this;
         }
 
-        public Result SetPropertyName(string propertyName, bool allowOverride = false)
+        public Result SetPropertyName(string propertyName)
         {
-            _logic.SetPropertyName(propertyName, x => true, allowOverride);
+            _logic.SetPropertyName(propertyName, x => true);
             return this;
         }
 
-        public Result SetPropertyName<TModel>(Expression<Func<TModel, object>> propertyExpression, Func<Error, bool> selector, bool allowOverride = false)
+        public Result SetPropertyName<TModel>(Expression<Func<TModel, object>> propertyExpression, Func<Error, bool> selector)
         {
-            _logic.SetPropertyName(propertyExpression, selector, allowOverride);
+            _logic.SetPropertyName(propertyExpression, selector);
             return this;
         }
 
-        public Result SetPropertyName<TModel>(Expression<Func<TModel, object>> propertyExpression, Error.ErrorType errorType, bool allowOverride = false)
+        public Result SetPropertyName<TModel>(Expression<Func<TModel, object>> propertyExpression, Error.ErrorType errorType)
         {
-            _logic.SetPropertyName(propertyExpression, x => x.Code == errorType, allowOverride);
+            _logic.SetPropertyName(propertyExpression, x => x.Code == errorType);
             return this;
         }
 
-        public Result SetPropertyName<TModel>(Expression<Func<TModel, object>> propertyExpression, bool allowOverride = false)
+        public Result SetPropertyName<TModel>(Expression<Func<TModel, object>> propertyExpression)
         {
-            _logic.SetPropertyName(propertyExpression, x => true, allowOverride);
+            _logic.SetPropertyName(propertyExpression, x => true);
             return this;
         }
 
@@ -509,39 +506,39 @@ namespace Hexure.Results
 
         public bool HasError(Error error) => _logic.HasError(error);
 
-        public Result<T> SetPropertyName(string propertyName, Func<Error, bool> selector, bool allowOverride = false)
+        public Result<T> SetPropertyName(string propertyName, Func<Error, bool> selector)
         {
-            _logic.SetPropertyName(propertyName, selector, allowOverride);
+            _logic.SetPropertyName(propertyName, selector);
             return this;
         }
 
-        public Result<T> SetPropertyName(string propertyName, Error.ErrorType errorType, bool allowOverride = false)
+        public Result<T> SetPropertyName(string propertyName, Error.ErrorType errorType)
         {
-            _logic.SetPropertyName(propertyName, x => x.Code == errorType, allowOverride);
+            _logic.SetPropertyName(propertyName, x => x.Code == errorType);
             return this;
         }
 
-        public Result<T> SetPropertyName(string propertyName, bool allowOverride = false)
+        public Result<T> SetPropertyName(string propertyName)
         {
-            _logic.SetPropertyName(propertyName, x => true, allowOverride);
+            _logic.SetPropertyName(propertyName, x => true);
             return this;
         }
 
-        public Result<T> SetPropertyName<TModel>(Expression<Func<TModel, object>> propertyExpression, Func<Error, bool> selector, bool allowOverride = false)
+        public Result<T> SetPropertyName<TModel>(Expression<Func<TModel, object>> propertyExpression, Func<Error, bool> selector)
         {
-            _logic.SetPropertyName(propertyExpression, selector, allowOverride);
+            _logic.SetPropertyName(propertyExpression, selector);
             return this;
         }
 
-        public Result<T> SetPropertyName<TModel>(Expression<Func<TModel, object>> propertyExpression, Error.ErrorType errorType, bool allowOverride = false)
+        public Result<T> SetPropertyName<TModel>(Expression<Func<TModel, object>> propertyExpression, Error.ErrorType errorType)
         {
-            _logic.SetPropertyName(propertyExpression, x => x.Code == errorType, allowOverride);
+            _logic.SetPropertyName(propertyExpression, x => x.Code == errorType);
             return this;
         }
 
-        public Result<T> SetPropertyName<TModel>(Expression<Func<TModel, object>> propertyExpression, bool allowOverride = false)
+        public Result<T> SetPropertyName<TModel>(Expression<Func<TModel, object>> propertyExpression)
         {
-            _logic.SetPropertyName(propertyExpression, x => true, allowOverride);
+            _logic.SetPropertyName(propertyExpression, x => true);
             return this;
         }
 

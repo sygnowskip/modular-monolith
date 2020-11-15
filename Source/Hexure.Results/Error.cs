@@ -4,36 +4,15 @@ using SmartFormat;
 
 namespace Hexure.Results
 {
-    public class PropertyName
-    {
-        public static PropertyName Empty(bool allowOverride = true) => new PropertyName(string.Empty, allowOverride);
-
-        public string Value { get; }
-        public bool AllowOverride { get; }
-
-        public PropertyName(string value, bool allowOverride)
-        {
-            Value = value;
-            AllowOverride = allowOverride;
-        }
-
-        public static implicit operator string(PropertyName propertyName) => propertyName.Value;
-    }
-
     public class Error
     {
         public string Code { get; }
         public string Message { get; }
+        public string PropertyName { get; private set; }
 
-        [JsonProperty]
-        public PropertyName PropertyName { get; private set; } = PropertyName.Empty();
-
-        public Error SetPropertyName(string value, bool allowOverride = true)
+        public Error SetPropertyName(string propertyName)
         {
-            if (!PropertyName.AllowOverride)
-                throw new InvalidOperationException($"Cannot override property name for error: {Code}, because its property name {PropertyName} is not overridable.");
-
-            PropertyName = new PropertyName(value, allowOverride);
+            PropertyName = propertyName;
             return this;
         }
 
