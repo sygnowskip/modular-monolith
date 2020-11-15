@@ -1,6 +1,6 @@
-﻿using System.Runtime.CompilerServices;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using Hexure.MediatR;
 using Hexure.Results;
 using Hexure.Results.Extensions;
 using Hexure.Time;
@@ -14,7 +14,7 @@ using ModularMonolith.Language.Subjects;
 
 namespace ModularMonolith.CommandServices.Exams
 {
-    public class CreateExamCommand : IRequest<Result<ExamId>>
+    public class CreateExamCommand : ICommandRequest<ExamId>
     {
         public CreateExamCommand(SubjectId subjectId, LocationId locationId, UtcDateTime examDateTime,
             Capacity capacity, UtcDate registrationStartDate, UtcDate registrationEndDate)
@@ -49,7 +49,7 @@ namespace ModularMonolith.CommandServices.Exams
             var registrationStartDate = UtcDate.Create(request.RegistrationStartDate)
                 .BindErrorsTo(nameof(request.RegistrationStartDate));
             var registrationEndDate = UtcDate.Create(request.RegistrationEndDate)
-                .BindErrorsTo(nameof(request.RegistrationStartDate));
+                .BindErrorsTo(nameof(request.RegistrationEndDate));
 
             return Result.Combine(subjectId, locationId, examDateTime, capacity, registrationStartDate,
                     registrationEndDate)

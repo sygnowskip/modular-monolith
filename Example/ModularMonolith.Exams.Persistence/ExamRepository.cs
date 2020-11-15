@@ -18,6 +18,7 @@ namespace ModularMonolith.Exams.Persistence
         public async Task<Result<Exam>> SaveAsync(Exam aggregate)
         {
             await _examDbContext.Exams.AddAsync(aggregate);
+            await _examDbContext.SaveChangesAsync();
             return Result.Ok(aggregate);
         }
 

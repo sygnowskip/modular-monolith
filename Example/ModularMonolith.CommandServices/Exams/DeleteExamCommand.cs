@@ -1,9 +1,9 @@
-﻿using Hexure.Results;
-using MediatR;
+﻿using Hexure.MediatR;
+using Hexure.Results;
 
 namespace ModularMonolith.CommandServices.Exams
 {
-    public class DeleteExamCommand : IRequest<Result>
+    public class DeleteExamCommand : ICommandRequest
     {
         
         public static Result<DeleteExamCommand> Create(long examId)
