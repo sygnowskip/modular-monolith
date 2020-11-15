@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Hexure.Identifiers.Numeric;
 using Hexure.Results;
 using Hexure.Results.Extensions;

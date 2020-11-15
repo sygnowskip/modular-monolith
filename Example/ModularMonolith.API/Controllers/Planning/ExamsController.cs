@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using ModularMonolith.CommandServices.Exams;
 using ModularMonolith.Contracts.Exams;
 using ModularMonolith.Exams.Language;
+using ModularMonolith.Language.Locations;
+using ModularMonolith.Language.Subjects;
 using ModularMonolith.QueryServices.Exams;
 using NSwag.Annotations;
 
@@ -16,8 +18,14 @@ namespace ModularMonolith.API.Controllers.Planning
     [Route("api/exams")]
     public class ExamsController : MediatorController
     {
-        public ExamsController(IMediator mediator) : base(mediator)
+        private readonly ISubjectExistenceValidator _subjectExistenceValidator;
+        private readonly ILocationExistenceValidator _locationExistenceValidator;
+
+        public ExamsController(IMediator mediator, ISubjectExistenceValidator subjectExistenceValidator,
+            ILocationExistenceValidator locationExistenceValidator) : base(mediator)
         {
+            _subjectExistenceValidator = subjectExistenceValidator;
+            _locationExistenceValidator = locationExistenceValidator;
         }
 
         [HttpGet, Route("{examId}")]
@@ -38,7 +46,9 @@ namespace ModularMonolith.API.Controllers.Planning
         [SwaggerResponse(typeof(void))]
         public Task<IActionResult> Create(CreateExamRequest request)
         {
-            return CreatedOrUnprocessableEntityAsync<CreateExamCommand, ExamId>(CreateExamCommand.Create(request), id => $"/api/exams/{id}");
+            return CreatedOrUnprocessableEntityAsync<CreateExamCommand, ExamId>(
+                CreateExamCommand.Create(request, _subjectExistenceValidator, _locationExistenceValidator),
+                id => $"/api/exams/{id}");
         }
 
         [HttpPut, Route("{examId}")]
