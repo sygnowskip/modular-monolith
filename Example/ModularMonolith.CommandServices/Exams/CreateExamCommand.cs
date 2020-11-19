@@ -16,7 +16,7 @@ namespace ModularMonolith.CommandServices.Exams
 {
     public class CreateExamCommand : ICommandRequest<ExamId>
     {
-        public CreateExamCommand(SubjectId subjectId, LocationId locationId, UtcDateTime examDateTime,
+        private CreateExamCommand(SubjectId subjectId, LocationId locationId, UtcDateTime examDateTime,
             Capacity capacity, UtcDate registrationStartDate, UtcDate registrationEndDate)
         {
             SubjectId = subjectId;

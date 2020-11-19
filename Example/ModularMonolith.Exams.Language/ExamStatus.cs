@@ -5,6 +5,7 @@
         Planned,
         AvailableForRegistration,
         ClosedForRegistration,
-        TookPlace
+        TookPlace,
+        Deleted
     }
 }

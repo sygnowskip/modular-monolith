@@ -1,4 +1,5 @@
 ﻿using Hexure;
+using Hexure.Deleting;
 using Hexure.Events;
 using Hexure.Results;
 using Hexure.Time;
@@ -11,46 +12,50 @@ using Stateless;
 
 namespace ModularMonolith.Exams.Domain
 {
-    public partial class Exam : Entity, IAggregateRoot<ExamId>
+    public partial class Exam : Entity, IAggregateRoot<ExamId>, IDeletableAggregate
     {
         private readonly ISystemTimeProvider _systemTimeProvider;
 
         private readonly StateMachine<ExamStatus, ExamActions> _stateMachine;
-        
+
 
         protected Exam(ISystemTimeProvider systemTimeProvider)
         {
             _systemTimeProvider = systemTimeProvider;
+            _stateMachine = new StateMachine<ExamStatus, ExamActions>(() => Status, status => Status = status);
+
+            ConfigureStateMachine();
         }
-        
+
         private Exam(SubjectId subjectId, LocationId locationId, UtcDateTime examDateTime, Capacity capacity,
             UtcDate registrationStartDate, UtcDate registrationEndDate, ISystemTimeProvider systemTimeProvider)
+            : this(systemTimeProvider)
         {
             LocationId = locationId;
             Capacity = capacity;
             SubjectId = subjectId;
             RegistrationStartDate = registrationStartDate;
             RegistrationEndDate = registrationEndDate;
-            _systemTimeProvider = systemTimeProvider;
             ExamDateTime = examDateTime;
             Status = ExamStatus.Planned;
-
-            _stateMachine = new StateMachine<ExamStatus, ExamActions>(() => Status, status => Status = status);
-            ConfigureStateMachine();
         }
 
         private void ConfigureStateMachine()
         {
             _stateMachine.Configure(ExamStatus.Planned)
-                .Permit(ExamActions.OpenForRegistration, ExamStatus.AvailableForRegistration);
+                .Permit(ExamActions.Delete, ExamStatus.Deleted)
+                .PermitIf(ExamActions.OpenForRegistration, ExamStatus.AvailableForRegistration,
+                    () => RegistrationStartDate.Value >= _systemTimeProvider.UtcNow);
 
             _stateMachine.Configure(ExamStatus.AvailableForRegistration)
                 .OnEntry(() => RaiseEvent(new ExamAvailable(Id, _systemTimeProvider.UtcNow)))
-                .Permit(ExamActions.CloseRegistration, ExamStatus.ClosedForRegistration);
+                .PermitIf(ExamActions.CloseRegistration, ExamStatus.ClosedForRegistration,
+                    () => RegistrationEndDate.Value >= _systemTimeProvider.UtcNow);
 
             _stateMachine.Configure(ExamStatus.ClosedForRegistration)
                 .OnEntry(() => RaiseEvent(new ExamClosed(Id, _systemTimeProvider.UtcNow)))
-                .Permit(ExamActions.MarkAsDone, ExamStatus.TookPlace);
+                .PermitIf(ExamActions.MarkAsDone, ExamStatus.TookPlace,
+                    () => ExamDateTime.Value >= _systemTimeProvider.UtcNow);
 
             _stateMachine.Configure(ExamStatus.TookPlace)
                 .OnEntry(() => RaiseEvent(new ExamTookPlace(Id, _systemTimeProvider.UtcNow)));
@@ -68,30 +73,41 @@ namespace ModularMonolith.Exams.Domain
 
         public ExamStatus Status { get; private set; }
 
-        public Result OpenForRegistration(ISystemTimeProvider systemTimeProvider)
+        public bool IsDeleted => _stateMachine.IsInState(ExamStatus.Deleted);
+
+        public Result OpenForRegistration()
         {
-            if (!_stateMachine.CanFire(ExamActions.OpenForRegistration) || RegistrationStartDate.Value >= systemTimeProvider.UtcNow)
+            if (!_stateMachine.CanFire(ExamActions.OpenForRegistration))
                 return Result.Fail(ExamErrors.UnableToOpenForRegistration.Build());
-            
+
             _stateMachine.Fire(ExamActions.OpenForRegistration);
             return Result.Ok();
         }
 
-        public Result CloseRegistration(ISystemTimeProvider systemTimeProvider)
+        public Result CloseRegistration()
         {
-            if (!_stateMachine.CanFire(ExamActions.CloseRegistration) || RegistrationEndDate.Value >= systemTimeProvider.UtcNow)
+            if (!_stateMachine.CanFire(ExamActions.CloseRegistration))
                 return Result.Fail(ExamErrors.UnableToCloseRegistration.Build());
-            
+
             _stateMachine.Fire(ExamActions.CloseRegistration);
             return Result.Ok();
         }
 
-        public Result MarkAsDone(ISystemTimeProvider systemTimeProvider)
+        public Result MarkAsDone()
         {
-            if (!_stateMachine.CanFire(ExamActions.MarkAsDone) || ExamDateTime.Value >= systemTimeProvider.UtcNow)
-                return Result.Fail(ExamErrors.UnableToCloseRegistration.Build());
-            
+            if (!_stateMachine.CanFire(ExamActions.MarkAsDone))
+                return Result.Fail(ExamErrors.UnableToMarkAsDone.Build());
+
             _stateMachine.Fire(ExamActions.MarkAsDone);
+            return Result.Ok();
+        }
+
+        public Result Delete()
+        {
+            if (!_stateMachine.CanFire(ExamActions.Delete))
+                return Result.Fail(ExamErrors.UnableToDelete.Build());
+
+            _stateMachine.Fire(ExamActions.Delete);
             return Result.Ok();
         }
     }
@@ -100,11 +116,14 @@ namespace ModularMonolith.Exams.Domain
     {
         public static readonly Error.ErrorType UnableToOpenForRegistration =
             new Error.ErrorType(nameof(UnableToOpenForRegistration), "Unable to open for registration");
-        
+
         public static readonly Error.ErrorType UnableToCloseRegistration =
             new Error.ErrorType(nameof(UnableToCloseRegistration), "Unable to close registration");
-        
+
         public static readonly Error.ErrorType UnableToMarkAsDone =
             new Error.ErrorType(nameof(UnableToMarkAsDone), "Unable to mark as done");
+
+        public static readonly Error.ErrorType UnableToDelete =
+            new Error.ErrorType(nameof(UnableToDelete), "Unable to delete");
     }
 }

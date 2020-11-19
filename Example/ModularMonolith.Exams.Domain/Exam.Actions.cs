@@ -4,6 +4,7 @@
     {
         OpenForRegistration,
         CloseRegistration,
-        MarkAsDone
+        MarkAsDone,
+        Delete
     }
 }
