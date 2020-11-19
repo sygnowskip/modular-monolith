@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Hexure.Deleting;
 using Hexure.EntityFrameworkCore;
 using Hexure.EntityFrameworkCore.Events;
 using Hexure.EntityFrameworkCore.Events.Entites;
@@ -40,10 +41,12 @@ namespace ModularMonolith.Persistence
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             await PublishDomainEventsAsync();
-
+            await DeleteAggregates();
+            
             return await base.SaveChangesAsync(cancellationToken);
         }
 
+        //TODO: EF Core 5.0 interceptors
         private async Task PublishDomainEventsAsync()
         {
             var events = _eventCollector
@@ -59,6 +62,20 @@ namespace ModularMonolith.Persistence
                     .OnFailure(errors =>
                         throw new InvalidOperationException(
                             $"Unable to publish domain event due to: {string.Join(", ", errors.Select(e => e.Message))}"));
+            }
+        }
+
+        //TODO: EF Core 5.0 interceptors
+        private async Task DeleteAggregates()
+        {
+            var aggregates = ChangeTracker.Entries<IDeletableAggregate>();
+
+            foreach (var aggregate in aggregates)
+            {
+                if (aggregate.Entity.IsDeleted)
+                {
+                    aggregate.State = aggregate.State == EntityState.Added ? EntityState.Detached : EntityState.Deleted;
+                }
             }
         }
 
