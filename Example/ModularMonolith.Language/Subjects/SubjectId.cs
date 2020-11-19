@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using Hexure.Identifiers.Numeric;
 using Hexure.Results;
 using Hexure.Results.Extensions;
+using ModularMonolith.Errors;
 
 namespace ModularMonolith.Language.Subjects
 {
@@ -20,15 +21,10 @@ namespace ModularMonolith.Language.Subjects
 
         public static Result<SubjectId> Create(long subjectId, ISubjectExistenceValidator subjectExistenceValidator)
         {
-            return Result.Create(() => subjectId > 0, SubjectIdErrors.SubjectDoesNotExist.Build())
+            return Result.Create(() => subjectId > 0, DomainErrors.BuildInvalidIdentifier(subjectId))
                 .AndEnsure(() => subjectExistenceValidator.Exist(subjectId),
-                    SubjectIdErrors.SubjectDoesNotExist.Build())
+                    DomainErrors.BuildNotFound("Subject", subjectId))
                 .OnSuccess(() => new SubjectId(subjectId));
         }
-    }
-
-    public class SubjectIdErrors
-    {
-        public static readonly Error.ErrorType SubjectDoesNotExist = new Error.ErrorType(nameof(SubjectDoesNotExist), "Subject for provided identifier does not exist");
     }
 }

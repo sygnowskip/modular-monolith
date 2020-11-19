@@ -1,24 +1,22 @@
 ﻿using Hexure.Identifiers.Numeric;
 using Hexure.Results;
 using Hexure.Results.Extensions;
+using ModularMonolith.Errors;
+using ModularMonolith.Exams.Language.Validators;
 
 namespace ModularMonolith.Exams.Language
 {
     public class ExamId : Identifier
     {
-        protected ExamId(long value) : base(value)
+        internal ExamId(long value) : base(value)
         {
         }
 
-        public static Result<ExamId> Create(long examId)
+        public static Result<ExamId> Create(long examId, IExamExistenceValidator examExistenceValidator)
         {
-            return Result.Create(() => examId > 0, ExamIdErrors.InvalidExamIdentifier.Build())
+            return Result.Create(() => examId > 0, DomainErrors.BuildInvalidIdentifier(examId))
+                .AndEnsure(() => examExistenceValidator.Exist(examId), DomainErrors.BuildNotFound("Exam", examId))
                 .OnSuccess(() => new ExamId(examId));
         }
-    }
-
-    public class ExamIdErrors
-    {
-        public static readonly Error.ErrorType InvalidExamIdentifier = new Error.ErrorType(nameof(InvalidExamIdentifier), "Invalid exam identifier");
     }
 }
