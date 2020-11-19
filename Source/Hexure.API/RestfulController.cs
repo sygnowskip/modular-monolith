@@ -52,14 +52,19 @@ namespace Hexure.API
         }
 
         //DELETE
-        protected IActionResult NoContentOrNotFound(Result result)
+        protected IActionResult NoContentOrBadRequestOrNotFound(Result result, Error.ErrorType notFoundErrorType)
         {
             if (result.IsSuccess)
             {
                 return NoContent();
             }
 
-            return NotFound();
+            if (result.ViolatesOnly(notFoundErrorType))
+            {
+                return NotFound();
+            }
+
+            return BadRequest(result.Error);
         }
     }
 }

@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ModularMonolith.CommandServices.Exams;
 using ModularMonolith.Contracts.Exams;
+using ModularMonolith.Errors;
 using ModularMonolith.Exams.Language;
+using ModularMonolith.Exams.Language.Validators;
 using ModularMonolith.Language.Locations;
 using ModularMonolith.Language.Subjects;
 using ModularMonolith.QueryServices.Exams;
@@ -20,12 +22,15 @@ namespace ModularMonolith.API.Controllers.Planning
     {
         private readonly ISubjectExistenceValidator _subjectExistenceValidator;
         private readonly ILocationExistenceValidator _locationExistenceValidator;
+        private readonly IExamExistenceValidator _examExistenceValidator;
 
         public ExamsController(IMediator mediator, ISubjectExistenceValidator subjectExistenceValidator,
-            ILocationExistenceValidator locationExistenceValidator) : base(mediator)
+            ILocationExistenceValidator locationExistenceValidator,
+            IExamExistenceValidator examExistenceValidator) : base(mediator)
         {
             _subjectExistenceValidator = subjectExistenceValidator;
             _locationExistenceValidator = locationExistenceValidator;
+            _examExistenceValidator = examExistenceValidator;
         }
 
         [HttpGet, Route("{examId}")]
@@ -62,7 +67,8 @@ namespace ModularMonolith.API.Controllers.Planning
         [SwaggerResponse(typeof(void))]
         public Task<IActionResult> Delete(long examId)
         {
-            return NoContentOrNotFoundAsync(DeleteExamCommand.Create(examId));
+            return NoContentOrBadRequestOrNotFound(DeleteExamCommand.Create(examId, _examExistenceValidator),
+                DomainErrors.NotFound);
         }
     }
 }

@@ -58,13 +58,13 @@ namespace Hexure.API
         }
 
         //DELETE
-        protected async Task<IActionResult> NoContentOrNotFoundAsync<TCommand>(Result<TCommand> commandFactoryResult)
+        protected async Task<IActionResult> NoContentOrBadRequestOrNotFound<TCommand>(Result<TCommand> commandFactoryResult, Error.ErrorType notFoundErrorType)
             where TCommand : IRequest<Result>
         {
             var result = await commandFactoryResult
                 .OnSuccess(async query => await Mediator.Send(query));
 
-            return NoContentOrNotFound(result);
+            return NoContentOrBadRequestOrNotFound(result, notFoundErrorType);
         }
     }
 }
