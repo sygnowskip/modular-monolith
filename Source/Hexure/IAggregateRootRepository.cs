@@ -8,7 +8,7 @@ namespace Hexure
         where TAggregate : IAggregateRoot<TIdentifier>
     {
         Task<Result<TAggregate>> SaveAsync(TAggregate aggregate);
-        Task<Maybe<TAggregate>> GetAsync(TIdentifier identifier);
+        Task<Result<TAggregate>> GetAsync(TIdentifier identifier);
         Task<Result> Delete(TAggregate aggregate);
     }
 }

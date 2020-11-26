@@ -27,16 +27,6 @@ namespace Hexure.API
             return CreatedOrUnprocessableEntity(result, locationUrlFactory);
         }
 
-        //PUT
-        protected async Task<IActionResult> NoContentOrUnprocessableEntityAsync<TCommand>(Result<TCommand> commandFactoryResult)
-            where TCommand : IRequest<Result>
-        {
-            var result = await commandFactoryResult
-                .OnSuccess(async query => await Mediator.Send(query));
-
-            return NoContentOrUnprocessableEntity(result);
-        }
-
         //GET
         protected async Task<IActionResult> OkOrNotFoundAsync<TQuery, TResponse>(Result<TQuery> queryFactoryResult)
         where TQuery : IRequest<Result<TResponse>>
@@ -57,14 +47,14 @@ namespace Hexure.API
             return OkOrUnprocessableEntity(result);
         }
 
-        //DELETE
-        protected async Task<IActionResult> NoContentOrBadRequestOrNotFound<TCommand>(Result<TCommand> commandFactoryResult, Error.ErrorType notFoundErrorType)
+        //DELETE, PUT
+        protected async Task<IActionResult> NoContentOrUnprocessableEntityOrNotFound<TCommand>(Result<TCommand> commandFactoryResult, Error.ErrorType notFoundErrorType)
             where TCommand : IRequest<Result>
         {
             var result = await commandFactoryResult
                 .OnSuccess(async query => await Mediator.Send(query));
 
-            return NoContentOrBadRequestOrNotFound(result, notFoundErrorType);
+            return NoContentOrUnprocessableEntityOrNotFound(result, notFoundErrorType);
         }
     }
 }

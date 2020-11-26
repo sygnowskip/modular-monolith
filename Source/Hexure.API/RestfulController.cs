@@ -18,17 +18,6 @@ namespace Hexure.API
             return UnprocessableEntity(result.Error);
         }
 
-        //PUT
-        protected IActionResult NoContentOrUnprocessableEntity(Result result)
-        {
-            if (result.IsSuccess)
-            {
-                return NoContent();
-            }
-
-            return UnprocessableEntity(result.Error);
-        }
-
         //GET
         protected IActionResult OkOrNotFound<T>(Result<T> result)
         {
@@ -51,8 +40,8 @@ namespace Hexure.API
             return UnprocessableEntity(result.Error);
         }
 
-        //DELETE
-        protected IActionResult NoContentOrBadRequestOrNotFound(Result result, Error.ErrorType notFoundErrorType)
+        //DELETE, PUT
+        protected IActionResult NoContentOrUnprocessableEntityOrNotFound(Result result, Error.ErrorType notFoundErrorType)
         {
             if (result.IsSuccess)
             {
@@ -64,7 +53,7 @@ namespace Hexure.API
                 return NotFound();
             }
 
-            return BadRequest(result.Error);
+            return UnprocessableEntity(result.Error);
         }
     }
 }

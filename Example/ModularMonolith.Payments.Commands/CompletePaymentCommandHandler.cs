@@ -32,7 +32,6 @@ namespace ModularMonolith.Payments.Commands
         public async Task<Result> Handle(CompletePayment request, CancellationToken cancellationToken)
         {
             return await _paymentRepository.GetAsync(request.Id)
-                .ToResult(PaymentsRepositoryErrors.UnableToFindPayment.Build())
                 .OnSuccess(async payment =>
                 {
                     payment.CompletePayment();

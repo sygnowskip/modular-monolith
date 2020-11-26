@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Hexure.Results;
+using Hexure.Results.Extensions;
 using Microsoft.EntityFrameworkCore;
 using ModularMonolith.Registrations;
 using ModularMonolith.Registrations.Language;
@@ -23,10 +24,11 @@ namespace ModularMonolith.Persistence.Repositories
             return Result.Ok(aggregate);
         }
 
-        public async Task<Maybe<Registration>> GetAsync(RegistrationId identifier)
+        public async Task<Result<Registration>> GetAsync(RegistrationId identifier)
         {
             return Maybe<Registration>.From(
-                await _dbContext.Registrations.SingleOrDefaultAsync(r => r.Id == identifier));
+                    await _dbContext.Registrations.SingleOrDefaultAsync(r => r.Id == identifier))
+                .ToResult(RegistrationRepositoryErrors.UnableToFindRegistration.Build());
         }
 
         public Task<Result> Delete(Registration aggregate)

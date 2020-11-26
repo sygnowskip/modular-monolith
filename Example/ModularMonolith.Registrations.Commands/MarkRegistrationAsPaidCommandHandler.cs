@@ -32,7 +32,6 @@ namespace ModularMonolith.Registrations.Commands
         public async Task<Result> Handle(MarkRegistrationAsPaid request, CancellationToken cancellationToken)
         {
             return await _registrationRepository.GetAsync(request.Id)
-                .ToResult(RegistrationRepositoryErrors.UnableToFindRegistration.Build())
                 .OnSuccess(registration => registration.MarkAsPaid(_systemTimeProvider));
         }
     }

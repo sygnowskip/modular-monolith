@@ -4,7 +4,6 @@ using Hexure.MediatR;
 using Hexure.Results;
 using Hexure.Results.Extensions;
 using MediatR;
-using ModularMonolith.Errors;
 using ModularMonolith.Exams.Domain;
 using ModularMonolith.Exams.Language;
 using ModularMonolith.Exams.Language.Validators;
@@ -39,7 +38,6 @@ namespace ModularMonolith.CommandServices.Exams
         public async Task<Result> Handle(DeleteExamCommand request, CancellationToken cancellationToken)
         {
             return await _examRepository.GetAsync(request.ExamId)
-                .ToResult(DomainErrors.BuildNotFound(nameof(Exam), request.ExamId.Value))
                 .OnSuccess(exam => exam.Delete());
         }
     }

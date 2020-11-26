@@ -58,17 +58,18 @@ namespace ModularMonolith.API.Controllers.Planning
 
         [HttpPut, Route("{examId}")]
         [SwaggerResponse(typeof(void))]
-        public Task<IActionResult> Edit(EditExamRequest request)
+        public Task<IActionResult> Edit(long examId, EditExamRequest request)
         {
-            return NoContentOrUnprocessableEntityAsync(EditExamCommand.Create(request));
+            return NoContentOrUnprocessableEntityOrNotFound(
+                EditExamCommand.Create(examId, request, _examExistenceValidator), DomainErrors.AggregateNotFound);
         }
 
         [HttpDelete, Route("{examId}")]
         [SwaggerResponse(typeof(void))]
         public Task<IActionResult> Delete(long examId)
         {
-            return NoContentOrBadRequestOrNotFound(DeleteExamCommand.Create(examId, _examExistenceValidator),
-                DomainErrors.NotFound);
+            return NoContentOrUnprocessableEntityOrNotFound(DeleteExamCommand.Create(examId, _examExistenceValidator),
+                DomainErrors.AggregateNotFound);
         }
     }
 }

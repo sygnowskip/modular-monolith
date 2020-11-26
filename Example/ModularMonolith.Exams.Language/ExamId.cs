@@ -15,7 +15,7 @@ namespace ModularMonolith.Exams.Language
         public static Result<ExamId> Create(long examId, IExamExistenceValidator examExistenceValidator)
         {
             return Result.Create(() => examId > 0, DomainErrors.BuildInvalidIdentifier(examId))
-                .AndEnsure(() => examExistenceValidator.Exist(examId), DomainErrors.BuildNotFound("Exam", examId))
+                .AndEnsure(() => examExistenceValidator.Exist(examId), DomainErrors.BuildAggregateNotFound("Exam", examId))
                 .OnSuccess(() => new ExamId(examId));
         }
     }
