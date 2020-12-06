@@ -37,7 +37,7 @@ namespace ModularMonolith.Exams.Domain
             
             return CanPerform(ExamActions.ChangeRegistrationStartDate,
                     ExamErrors.RegistrationStartDate.UnableToChange.Build())
-                .AndEnsure(() => _systemTimeProvider.UtcNow.Date <= registrationStartDate.Value,
+                .AndEnsure(() => _systemTimeProvider.UtcNow.Date < registrationStartDate.Value,
                     ExamErrors.RegistrationStartDate.HasToBeSetInTheFuture.Build())
                 .OnSuccess(() =>
                 {
@@ -55,7 +55,7 @@ namespace ModularMonolith.Exams.Domain
 
             return CanPerform(ExamActions.ChangeRegistrationEndDate,
                     ExamErrors.RegistrationEndDate.UnableToChange.Build())
-                .AndEnsure(() => _systemTimeProvider.UtcNow.Date <= registrationEndDate.Value,
+                .AndEnsure(() => _systemTimeProvider.UtcNow.Date < registrationEndDate.Value,
                     ExamErrors.RegistrationEndDate.HasToBeSetInTheFuture.Build())
                 .AndEnsure(() => registrationEndDate.Value < ExamDateTime.Value.Date, 
                     ExamErrors.RegistrationEndDate.HasToBeSetBeforeExamDate.Build())

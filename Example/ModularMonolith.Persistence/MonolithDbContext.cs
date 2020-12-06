@@ -13,6 +13,7 @@ using Hexure.Results.Extensions;
 using Microsoft.EntityFrameworkCore;
 using ModularMonolith.Exams.Persistence.Configurations;
 using ModularMonolith.Persistence.Configurations;
+using ModularMonolith.ReadModels.Persistence.Common;
 
 namespace ModularMonolith.Persistence
 {
@@ -33,6 +34,7 @@ namespace ModularMonolith.Persistence
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ExamConfiguration).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(RegistrationEntityConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(LocationConfiguration).Assembly);
             modelBuilder.ApplyConfiguration(new RegistrationEntityConfiguration());
             modelBuilder.ApplyConfiguration(new SerializedEventEntityConfig());

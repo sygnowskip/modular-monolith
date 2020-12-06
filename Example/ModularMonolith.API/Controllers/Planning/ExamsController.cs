@@ -40,7 +40,7 @@ namespace ModularMonolith.API.Controllers.Planning
             return OkOrNotFoundAsync<GetExamQuery, ExamDto>(GetExamQuery.Create(examId));
         }
 
-        [HttpGet, Route("/all")]
+        [HttpGet]
         [SwaggerResponse(typeof(IEnumerable<ExamDto>))]
         public Task<IActionResult> GetAll()
         {

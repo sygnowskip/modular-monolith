@@ -16,6 +16,7 @@
     <ProjectReference Include="..\..\Source\Hexure.MediatR\Hexure.MediatR.csproj" />
     <ProjectReference Include="..\ModularMonolith.Exams.Persistence\ModularMonolith.Exams.Persistence.csproj" />
     <ProjectReference Include="..\ModularMonolith.Payments\ModularMonolith.Payments.csproj" />
+    <ProjectReference Include="..\ModularMonolith.ReadModels.Persistence\ModularMonolith.ReadModels.Persistence.csproj" />
     <ProjectReference Include="..\ModularMonolith.ReadModels\ModularMonolith.ReadModels.csproj" />
     <ProjectReference Include="..\ModularMonolith.Registrations\ModularMonolith.Registrations.csproj" />
   </ItemGroup>
