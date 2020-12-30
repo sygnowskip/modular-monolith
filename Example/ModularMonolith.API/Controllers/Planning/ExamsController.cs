@@ -16,7 +16,7 @@ using NSwag.Annotations;
 
 namespace ModularMonolith.API.Controllers.Planning
 {
-    [AllowAnonymous]
+    [Authorize]
     [Route("api/exams")]
     public class ExamsController : MediatorController
     {
