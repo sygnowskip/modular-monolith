@@ -123,6 +123,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReadModels", "ReadModels", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.ReadModels.EventHandlers", "Example\ModularMonolith.ReadModels.EventHandlers\ModularMonolith.ReadModels.EventHandlers.csproj", "{9C8AC6A0-143F-4287-963B-5A860ADCD031}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Contracts", "Example\ModularMonolith.Contracts\ModularMonolith.Contracts.csproj", "{B43BA073-018E-446C-8DC6-A04CA99712AC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{AAB009C7-9166-441B-926A-8234D32900FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Errors", "Example\ModularMonolith.Errors\ModularMonolith.Errors.csproj", "{E52F57F1-F2E7-4F72-8972-967A1A75CE97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.ReadModels.Persistence", "Example\ModularMonolith.ReadModels.Persistence\ModularMonolith.ReadModels.Persistence.csproj", "{1A84EE46-FB83-451B-B8A3-7E5E40AD584B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -305,6 +313,18 @@ Global
 		{9C8AC6A0-143F-4287-963B-5A860ADCD031}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C8AC6A0-143F-4287-963B-5A860ADCD031}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C8AC6A0-143F-4287-963B-5A860ADCD031}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B43BA073-018E-446C-8DC6-A04CA99712AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B43BA073-018E-446C-8DC6-A04CA99712AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B43BA073-018E-446C-8DC6-A04CA99712AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B43BA073-018E-446C-8DC6-A04CA99712AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E52F57F1-F2E7-4F72-8972-967A1A75CE97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E52F57F1-F2E7-4F72-8972-967A1A75CE97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E52F57F1-F2E7-4F72-8972-967A1A75CE97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E52F57F1-F2E7-4F72-8972-967A1A75CE97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A84EE46-FB83-451B-B8A3-7E5E40AD584B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A84EE46-FB83-451B-B8A3-7E5E40AD584B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A84EE46-FB83-451B-B8A3-7E5E40AD584B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A84EE46-FB83-451B-B8A3-7E5E40AD584B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -368,6 +388,10 @@ Global
 		{015B5211-29BA-46FD-9624-288E79BB6CCA} = {68B2FD7E-BE5C-4B57-A6FA-BDC77362B4CC}
 		{D1B181EA-76DC-4A2B-85E4-B7464F984E27} = {015B5211-29BA-46FD-9624-288E79BB6CCA}
 		{9C8AC6A0-143F-4287-963B-5A860ADCD031} = {015B5211-29BA-46FD-9624-288E79BB6CCA}
+		{B43BA073-018E-446C-8DC6-A04CA99712AC} = {AAB009C7-9166-441B-926A-8234D32900FF}
+		{AAB009C7-9166-441B-926A-8234D32900FF} = {6447FD98-2D85-48B0-9AC3-6D1D91B5399B}
+		{E52F57F1-F2E7-4F72-8972-967A1A75CE97} = {68B2FD7E-BE5C-4B57-A6FA-BDC77362B4CC}
+		{1A84EE46-FB83-451B-B8A3-7E5E40AD584B} = {015B5211-29BA-46FD-9624-288E79BB6CCA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {598A3A02-79C7-4D50-889E-D65594383E6D}

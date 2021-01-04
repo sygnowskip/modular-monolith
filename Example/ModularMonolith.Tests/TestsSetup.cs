@@ -54,7 +54,7 @@ namespace ModularMonolith.Tests
                     configuration.GetConnectionString(ApplicationSettings.ConnectionStrings.Database)),
                 rabbitMqAwaiter.WaitForConnectionAsync(),
                 identityServerAwaiter.WaitForScopeAsync(authoritySettings.Url, authoritySettings.RequiredScope),
-                webApiAwaiter.WaitForEndpointAsync(monolithApiSettings.Url + "api/healthmonitor")
+                webApiAwaiter.WaitForEndpointAsync(monolithApiSettings.Url + "api/health-monitor")
             );
 
             await _snapshot.DeleteAsync();

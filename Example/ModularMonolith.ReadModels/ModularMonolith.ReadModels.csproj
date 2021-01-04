@@ -5,6 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\ModularMonolith.Exams.Language\ModularMonolith.Exams.Language.csproj" />
       <ProjectReference Include="..\ModularMonolith.Language\ModularMonolith.Language.csproj" />
     </ItemGroup>
 

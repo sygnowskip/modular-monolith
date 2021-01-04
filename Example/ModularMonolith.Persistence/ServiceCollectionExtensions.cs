@@ -1,5 +1,4 @@
-﻿using System;
-using Hexure.EntityFrameworkCore.Identifiers;
+﻿using Hexure.EntityFrameworkCore.Identifiers;
 using Hexure.EntityFrameworkCore.SqlServer.Events;
 using Hexure.Events;
 using Hexure.MediatR;
@@ -9,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using ModularMonolith.Exams.Language.Validators;
 using ModularMonolith.Exams.Persistence;
 using ModularMonolith.Language.Locations;
 using ModularMonolith.Language.Subjects;
@@ -20,24 +20,6 @@ using ModularMonolith.Registrations;
 
 namespace ModularMonolith.Persistence
 {
-    public class SystemTimeProviderBindingFactory : IParameterBindingFactory
-    {
-        public bool CanBind(Type parameterType, string parameterName)
-        {
-            return parameterType == typeof(ISystemTimeProvider);
-        }
-
-        public ParameterBinding Bind(IMutableEntityType entityType, Type parameterType, string parameterName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ParameterBinding Bind(IConventionEntityType entityType, Type parameterType, string parameterName)
-        {
-            throw new NotImplementedException();
-        }
-    }
-    
     public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddWritePersistence(this IServiceCollection services, string connectionString)
@@ -71,6 +53,7 @@ namespace ModularMonolith.Persistence
                 provider.GetRequiredService<MonolithDbContext>());
             services.AddTransient<ILocationExistenceValidator, LocationExistenceValidator>();
             services.AddTransient<ISubjectExistenceValidator, SubjectExistenceValidator>();
+            services.AddTransient<IExamExistenceValidator, ExamExistenceValidator>();
 
             return services;
         }

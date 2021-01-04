@@ -301,5 +301,17 @@ namespace Hexure.Results.Extensions
             Func<T, K, R> @return) =>
             result.OnSuccess(x => bind(x)
                     .OnSuccess(y => Result.Ok(@return(x, y))));
+
+        public static Result<T> BindErrorsTo<T>(this Result<T> result, string property)
+        {
+            return result
+                .OnFailure(errors =>
+                {
+                    foreach (var error in errors)
+                    {
+                        error.SetPropertyName(property.ToCamelCase());
+                    }
+                });
+        }
     }
 }

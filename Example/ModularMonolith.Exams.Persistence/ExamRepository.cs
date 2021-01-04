@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Hexure.Results;
+using Hexure.Results.Extensions;
 using Microsoft.EntityFrameworkCore;
+using ModularMonolith.Errors;
 using ModularMonolith.Exams.Domain;
 using ModularMonolith.Exams.Language;
 
@@ -18,12 +20,14 @@ namespace ModularMonolith.Exams.Persistence
         public async Task<Result<Exam>> SaveAsync(Exam aggregate)
         {
             await _examDbContext.Exams.AddAsync(aggregate);
+            await _examDbContext.SaveChangesAsync();
             return Result.Ok(aggregate);
         }
 
-        public async Task<Maybe<Exam>> GetAsync(ExamId identifier)
+        public async Task<Result<Exam>> GetAsync(ExamId identifier)
         {
-            return await _examDbContext.Exams.SingleOrDefaultAsync(exam => exam.Id == identifier);
+            return Maybe<Exam>.From(await _examDbContext.Exams.SingleOrDefaultAsync(exam => exam.Id == identifier))
+                .ToResult(DomainErrors.BuildAggregateNotFound(nameof(Exam), identifier.Value));
         }
 
         public Task<Result> Delete(Exam aggregate)

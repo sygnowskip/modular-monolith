@@ -13,7 +13,7 @@ namespace ModularMonolith.Tests.API
         [Test]
         public async Task ShouldHealthMonitorReturns200()
         {
-            var result = await HttpClient.GetAsync(new Uri(MonolithSettings.BaseUrl, "api/healthmonitor"));
+            var result = await HttpClient.GetAsync(new Uri(MonolithSettings.BaseUrl, "api/health-monitor"));
 
             result.StatusCode.Should().Be(HttpStatusCode.OK);
         }

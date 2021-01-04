@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using ModularMonolith.CommandServices;
+using ModularMonolith.CommandServices.Exams;
 using ModularMonolith.Payments.ApplicationServices;
 using ModularMonolith.Persistence;
 using ModularMonolith.QueryServices;

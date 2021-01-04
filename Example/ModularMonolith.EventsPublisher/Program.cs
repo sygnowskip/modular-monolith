@@ -1,4 +1,5 @@
-﻿using Hexure.EventsPublisher;
+﻿using System.Threading.Tasks;
+using Hexure.EventsPublisher;
 using Hexure.MassTransit.RabbitMq.Settings;
 using Hexure.Time;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +14,8 @@ namespace ModularMonolith.EventsPublisher
 {
     public static class Program
     {
+        //https://hub.docker.com/r/willfarrell/autoheal/
+        //+ DOCKER HealthCheck
         public static void Main()
         {
             CreateHostBuilder().Build().Run();

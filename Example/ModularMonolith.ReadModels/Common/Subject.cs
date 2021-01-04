@@ -1,6 +1,6 @@
 ﻿using ModularMonolith.Language.Subjects;
 
-namespace ModularMonolith.ReadModels
+namespace ModularMonolith.ReadModels.Common
 {
     public class Subject
     {

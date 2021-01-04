@@ -12,7 +12,7 @@ namespace ModularMonolith.Persistence.Repositories
             throw new System.NotImplementedException();
         }
 
-        public Task<Maybe<Payment>> GetAsync(PaymentId identifier)
+        public Task<Result<Payment>> GetAsync(PaymentId identifier)
         {
             throw new System.NotImplementedException();
         }

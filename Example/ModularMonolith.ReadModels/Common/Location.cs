@@ -1,6 +1,6 @@
 ﻿using ModularMonolith.Language.Locations;
 
-namespace ModularMonolith.ReadModels
+namespace ModularMonolith.ReadModels.Common
 {
     public class Location
     {

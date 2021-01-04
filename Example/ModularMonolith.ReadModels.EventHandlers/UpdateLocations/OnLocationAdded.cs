@@ -4,6 +4,7 @@ using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using ModularMonolith.Language.Locations;
 using ModularMonolith.Persistence;
+using ModularMonolith.ReadModels.Common;
 
 namespace ModularMonolith.ReadModels.EventHandlers.UpdateLocations
 {

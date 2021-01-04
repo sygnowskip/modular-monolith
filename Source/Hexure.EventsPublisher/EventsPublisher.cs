@@ -7,6 +7,7 @@ using Hexure.Events.Serialization;
 using Hexure.Results.Extensions;
 using Hexure.Time;
 using MassTransit;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
@@ -39,40 +40,53 @@ namespace Hexure.EventsPublisher
             {
                 while (!stoppingToken.IsCancellationRequested)
                 {
-                    using (var scopedContainer = _serviceProvider.CreateScope())
+                    try
                     {
-                        var transactionProvider =
-                            scopedContainer.ServiceProvider.GetRequiredService<ITransactionProvider>();
-                        var serializedEventRepository = scopedContainer.ServiceProvider
-                            .GetRequiredService<ISerializedEventRepository>();
-
-                        await transactionProvider.BeginTransactionAsync();
-                        Console.WriteLine($"{DateTime.UtcNow} Publishing (batch size: {_settings.BatchSize})...");
-                        var eventsToPublish =
-                            await serializedEventRepository.GetUnpublishedEventsAsync(_settings.BatchSize);
-
-                        foreach (var serializedEventEntity in eventsToPublish)
+                        using (var scopedContainer = _serviceProvider.CreateScope())
                         {
-                            try
-                            {
-                                await _eventDeserializer.Deserialize(serializedEventEntity.SerializedEvent)
-                                    .OnSuccess(async @event => { await _busControl.Publish(@event); });
+                            var transactionProvider =
+                                scopedContainer.ServiceProvider.GetRequiredService<ITransactionProvider>();
+                            var serializedEventRepository = scopedContainer.ServiceProvider
+                                .GetRequiredService<ISerializedEventRepository>();
 
-                                await serializedEventEntity.MarkAsProcessed(_systemTimeProvider.UtcNow)
-                                    .OnSuccess(() => serializedEventRepository.SaveChangesAsync())
-                                    .OnFailure(errors =>
-                                        throw new InvalidOperationException(JsonConvert.SerializeObject(errors)));
-                            }
-                            catch (Exception ex)
+                            await transactionProvider.BeginTransactionAsync();
+                            Console.WriteLine($"{DateTime.UtcNow} Publishing (batch size: {_settings.BatchSize})...");
+                            var eventsToPublish =
+                                await serializedEventRepository.GetUnpublishedEventsAsync(_settings.BatchSize);
+
+                            foreach (var serializedEventEntity in eventsToPublish)
                             {
-                                Console.WriteLine(ex.ToString());
+                                try
+                                {
+                                    await _eventDeserializer.Deserialize(serializedEventEntity.SerializedEvent)
+                                        .OnSuccess(async @event =>
+                                        {
+                                            await _busControl.Publish(@event, stoppingToken);
+                                        });
+
+                                    await serializedEventEntity.MarkAsProcessed(_systemTimeProvider.UtcNow)
+                                        .OnSuccess(() => serializedEventRepository.SaveChangesAsync())
+                                        .OnFailure(errors =>
+                                            throw new InvalidOperationException(JsonConvert.SerializeObject(errors)));
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.WriteLine(ex.ToString());
+                                }
                             }
+
+                            await transactionProvider.CommitTransactionAsync();
                         }
-
-                        await transactionProvider.CommitTransactionAsync();
                     }
-
-                    await Task.Delay(_settings.Delay, stoppingToken);
+                    catch (SqlException ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        //TODO: Logging
+                    }
+                    finally
+                    {
+                        await Task.Delay(_settings.Delay, stoppingToken);
+                    }
                 }
             }
             catch

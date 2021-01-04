@@ -5,23 +5,20 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ModularMonolith.QueryServices;
 
-namespace ModularMonolith.API.Controllers
+namespace ModularMonolith.API.Controllers.Common
 {
     [Authorize]
     [Route("api/subjects")]
-    public class SubjectsController : RestfulController
+    public class SubjectsController : MediatorController
     {
-        private readonly IMediator _mediator;
-
-        public SubjectsController(IMediator mediator)
+        public SubjectsController(IMediator mediator) : base(mediator)
         {
-            _mediator = mediator;
         }
-
+        
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _mediator.Send(new GetSubjectsQuery()));
+            return Ok(await Mediator.Send(new GetSubjectsQuery()));
         }
     }
 }
