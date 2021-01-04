@@ -11,6 +11,9 @@ namespace ModularMonolith.Exams.Domain
         {
             _stateMachine.Configure(ExamStatus.Planned)
                 .Permit(ExamActions.Delete, ExamStatus.Deleted)
+                .PermitReentry(ExamActions.ChangeCapacity)
+                .PermitReentry(ExamActions.ChangeRegistrationStartDate)
+                .PermitReentry(ExamActions.ChangeRegistrationEndDate)
                 .PermitIf(ExamActions.OpenForRegistration, ExamStatus.AvailableForRegistration,
                     () => RegistrationStartDate.Value >= _systemTimeProvider.UtcNow);
 

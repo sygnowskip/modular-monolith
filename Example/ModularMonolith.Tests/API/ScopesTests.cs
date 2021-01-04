@@ -10,8 +10,8 @@ namespace ModularMonolith.Tests.API
     [TestFixture]
     public class ScopesTests : BaseHttpTests
     {
-        [TestCase("api/healthmonitor/registrations")]
-        [TestCase("api/healthmonitor/payments")]
+        [TestCase("api/registrations")]
+        [TestCase("api/payments")]
         public async Task ShouldGet200WithToken(string relativeUrl)
         {
             var httpClient = await PrepareClientWithTokenForScopes();
@@ -20,16 +20,16 @@ namespace ModularMonolith.Tests.API
             result.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
-        [TestCase("api/healthmonitor/registrations")]
-        [TestCase("api/healthmonitor/payments")]
+        [TestCase("api/registrations")]
+        [TestCase("api/payments")]
         public async Task ShouldNotAccessEndpointsWithoutToken(string relativeUrl)
         {
             var result = await HttpClient.GetAsync(new Uri(MonolithSettings.BaseUrl, relativeUrl));
             result.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
         }
 
-        [TestCase("api/healthmonitor/registrations", "payments")]
-        [TestCase("api/healthmonitor/payments", "registrations")]
+        [TestCase("api/registrations", "payments")]
+        [TestCase("api/payments", "registrations")]
         public async Task ShouldNotAccessAddressWithDifferentScope(string relativeUrl, string scopes)
         {
             var httpClient = await PrepareClientWithTokenForScopes(scopes);
