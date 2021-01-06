@@ -1,21 +1,13 @@
-﻿using System.Threading.Tasks;
-using Hexure.EventsPublisher;
-using Hexure.MassTransit.RabbitMq.Settings;
-using Hexure.Time;
+﻿using Hexure.Workers;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using ModularMonolith.Configuration;
-using ModularMonolith.Dependencies;
-using ModularMonolith.Persistence;
-using ModularMonolith.Registrations.Contracts.Events;
 
 namespace ModularMonolith.EventsPublisher
 {
     public static class Program
     {
-        //https://hub.docker.com/r/willfarrell/autoheal/
-        //+ DOCKER HealthCheck
         public static void Main()
         {
             CreateHostBuilder().Build().Run();
@@ -23,23 +15,14 @@ namespace ModularMonolith.EventsPublisher
 
         private static IHostBuilder CreateHostBuilder() =>
             Host.CreateDefaultBuilder()
-                .ConfigureServices(servicesCollection =>
+                .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    var configuration = ApplicationSettingsConfigurationProvider.Get();
-
-                    EventsPublisherBuilder
-                        .Create(servicesCollection)
-                        .WithSettings(configuration.GetSection("Settings").Get<EventsPublisherSettings>())
-                        .WithDbContext<MonolithDbContext>()
-                        .WithTransactionProvider<MonolithDbContext>()
-                        .WithEventsFromAssemblyOfType<RegistrationPaid>()
-                        .WithPersistence(services =>
-                        {
-                            services.AddPersistence(configuration.GetConnectionString("Database"));
-                            services.TryAddTransient<ISystemTimeProvider, SystemTimeProvider>();
-                        })
-                        .ToRabbitMq(configuration.GetSection("Bus").Get<PublisherRabbitMqSettings>())
-                        .Build();
+                    var httpBindings = ApplicationSettingsConfigurationProvider.Get()
+                        .GetSection(nameof(HttpBindings))
+                        .Get<HttpBindings>();
+                    
+                    webBuilder.UseUrls(httpBindings.Values);
+                    webBuilder.UseStartup<EventsPublisherStartup>();
                 });
     }
 }

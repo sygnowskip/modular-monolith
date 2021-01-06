@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,19 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="appsettings.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
+    <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="3.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Source\Hexure.EventsConsumer\Hexure.EventsConsumer.csproj" />
+    <ProjectReference Include="..\..\Source\Hexure.Workers\Hexure.Workers.csproj" />
     <ProjectReference Include="..\ModularMonolith.Configuration\ModularMonolith.Configuration.csproj" />
     <ProjectReference Include="..\ModularMonolith.Dependencies\ModularMonolith.Dependencies.csproj" />
     <ProjectReference Include="..\ModularMonolith.ReadModels.EventHandlers\ModularMonolith.ReadModels.EventHandlers.csproj" />

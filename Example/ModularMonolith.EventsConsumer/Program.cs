@@ -1,10 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
-using Hexure.EventsConsumer;
-using Hexure.MassTransit.RabbitMq.Settings;
+﻿using Hexure.Workers;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using ModularMonolith.Configuration;
-using ModularMonolith.Dependencies;
-using ModularMonolith.ReadModels.EventHandlers.UpdateLocations;
 
 namespace ModularMonolith.EventsConsumer
 {
@@ -17,23 +15,14 @@ namespace ModularMonolith.EventsConsumer
 
         private static IHostBuilder CreateHostBuilder() =>
             Host.CreateDefaultBuilder()
-                .ConfigureServices(servicesCollection =>
+                .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    var configuration = ApplicationSettingsConfigurationProvider.Get();
-
-                    EventsConsumerBuilder
-                        .Create(servicesCollection)
-                        //.WithHandlersFromAssemblyOfType<OnRegistrationPaid>()
-                        .WithHandlersFromAssemblyOfType<OnLocationAdded>()
-                        .WithDomain(services =>
-                        {
-                            services.AddRegistrations();
-                            services.AddPayments();
-                            services.AddPersistence(configuration.GetConnectionString("Database"));
-                        })
-                        .ToRabbitMq(configuration.GetSection("Bus").Get<ConsumerRabbitMqSettings>())
-                        .Build();
+                    var httpBindings = ApplicationSettingsConfigurationProvider.Get()
+                        .GetSection(nameof(HttpBindings))
+                        .Get<HttpBindings>();
+                    
+                    webBuilder.UseUrls(httpBindings.Values);
+                    webBuilder.UseStartup<EventsConsumerStartup>();
                 });
-
     }
 }
