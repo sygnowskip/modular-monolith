@@ -19,7 +19,7 @@ namespace Hexure.Tests.Unit.MassTransit
 
             connectionString.Should()
                 .Be(
-                    $"{RabbitMqConnectionStringBuilder.Protocol}://{username}:{password}@{host}/{RabbitMqConnectionStringBuilder.DefaultVirtualHost}");
+                    $"{RabbitMqConnectionStringBuilder.DefaultProtocol}://{username}:{password}@{host}/{RabbitMqConnectionStringBuilder.DefaultVirtualHost}");
         }
         
         [Test]
@@ -33,7 +33,7 @@ namespace Hexure.Tests.Unit.MassTransit
 
             connectionString.Should()
                 .Be(
-                    $"{RabbitMqConnectionStringBuilder.Protocol}://{username}:{password}@{host}/{RabbitMqConnectionStringBuilder.DefaultVirtualHost}");
+                    $"{RabbitMqConnectionStringBuilder.DefaultProtocol}://{username}:{password}@{host}/{RabbitMqConnectionStringBuilder.DefaultVirtualHost}");
         }
     }
 }

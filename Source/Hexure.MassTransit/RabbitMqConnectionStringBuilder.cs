@@ -5,12 +5,12 @@ namespace Hexure.MassTransit
 {
     public static class RabbitMqConnectionStringBuilder
     {
-        public static readonly string Protocol = "amqp";
-        public static readonly string DefaultVirtualHost = "%2F";
+        public static readonly string DefaultProtocol = "amqp";
+        public static readonly string DefaultVirtualHost = HttpUtility.UrlEncode("/");
         
         public static string Build(string host, string username, string password)
         {
-            return $"{Protocol}://{HttpUtility.UrlEncode(username)}:{HttpUtility.UrlEncode(password)}@{HostWithoutProtocol()}/{DefaultVirtualHost}";
+            return $"{DefaultProtocol}://{HttpUtility.UrlEncode(username)}:{HttpUtility.UrlEncode(password)}@{HostWithoutProtocol()}/{DefaultVirtualHost}";
             
             string HostWithoutProtocol()
             {
