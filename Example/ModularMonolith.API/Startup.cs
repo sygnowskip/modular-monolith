@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,11 +22,12 @@ namespace ModularMonolith.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var authoritySettings = Configuration.GetSection("Authority").Get<AuthoritySettings>();
+            
             services
                 .AddControllers()
                 .AddNewtonsoftJson();
 
-            var authoritySettings = Configuration.GetSection("Authority").Get<AuthoritySettings>();
             
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
@@ -46,16 +48,22 @@ namespace ModularMonolith.API
             });
 
             IdentityModelEventSource.ShowPII = true;
-
-            services.AddCommandServices();
-            services.AddQueryServices();
-            services.AddRegistrations();
-            services.AddPayments();
-            services.AddPersistence(Configuration.GetConnectionString("Database"));
+            
             services.AddSwaggerDocument(settings =>
             {
                 settings.Title =  "Modular monolith API";
             });
+
+            services.AddCommandServices();
+            services.AddQueryServices();
+            services.AddHealthChecks()
+                .AddSqlServer(Configuration.GetConnectionString("Database"))
+                .AddIdentityServer(new Uri(authoritySettings.Url));
+            
+            //TODO: Clean up
+            services.AddRegistrations();
+            services.AddPayments();
+            services.AddPersistence(Configuration.GetConnectionString("Database"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,6 +87,7 @@ namespace ModularMonolith.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/api/health-check");
             });
         }
     }

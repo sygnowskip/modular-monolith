@@ -1,5 +1,12 @@
 version: "3"
 services:
+  modular-monolith-autoheal:
+    image: willfarrell/autoheal
+    environment:
+      - AUTOHEAL_INTERVAL=30
+      - AUTOHEAL_CONTAINER_LABEL=all    
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
   modular-monolith-database:
     image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
     environment:
@@ -9,6 +16,9 @@ services:
       - 3000:1433
     expose:
       - 1433
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-U", "sa", "-P", "P@ssword1", "-Q", "SELECT 1"]
+      retries: 5
   modular-monolith-database-setup:
     build:
       context: "."
@@ -33,6 +43,9 @@ services:
     expose:
       - 5672
       - 15672
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      retries: 5
   modular-monolith-identity:
     build:
       context: "."
@@ -45,10 +58,13 @@ services:
       - Issuer__Url=http://modular-monolith-identity
     ports:
       - 3003:80
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://modular-monolith-identity/.well-known/openid-configuration"]
+      retries: 5
   modular-monolith-events-publisher:
     build:
       context: "."
-      dockerfile: "./docker/configuration/dotnet/Dockerfile"
+      dockerfile: "./docker/configuration/dotnet-api/Dockerfile"
       args:
         PROJECT_PATH: Example/ModularMonolith.EventsPublisher
         ASSEMBLY_NAME: ModularMonolith.EventsPublisher
@@ -59,10 +75,14 @@ services:
     environment:
       - ConnectionStrings__Database=Data Source=modular-monolith-database;Initial Catalog=Hexure;Connection Timeout=30;User Id=sa;Password=P@ssword1;MultipleActiveResultSets=False;Timeout=30;
       - Bus__Host=rabbitmq://modular-monolith-rabbitmq
+      - ASPNETCORE_URLS=http://+:80
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://modular-monolith-events-publisher/api/health-check"]
+      retries: 5
   modular-monolith-events-consumer:
     build:
       context: "."
-      dockerfile: "./docker/configuration/dotnet/Dockerfile"
+      dockerfile: "./docker/configuration/dotnet-api/Dockerfile"
       args:
         PROJECT_PATH: Example/ModularMonolith.EventsConsumer
         ASSEMBLY_NAME: ModularMonolith.EventsConsumer
@@ -73,6 +93,10 @@ services:
     environment:
       - ConnectionStrings__Database=Data Source=modular-monolith-database;Initial Catalog=Hexure;Connection Timeout=30;User Id=sa;Password=P@ssword1;MultipleActiveResultSets=False;Timeout=30;
       - Bus__Host=rabbitmq://modular-monolith-rabbitmq
+      - ASPNETCORE_URLS=http://+:80
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://modular-monolith-events-consumer/api/health-check"]
+      retries: 5
   modular-monolith-api:
     build:
       context: "."
@@ -88,3 +112,6 @@ services:
       - Authority__Url=http://modular-monolith-identity
     ports:
       - 3004:80
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://modular-monolith-api/api/health-check"]
+      retries: 5

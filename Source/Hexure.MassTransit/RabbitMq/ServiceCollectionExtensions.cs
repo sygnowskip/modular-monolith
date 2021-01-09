@@ -59,8 +59,12 @@ namespace Hexure.MassTransit.RabbitMq
 
             serviceCollection.AddMassTransit(configurator =>
             {
+                //TODO: Migrate to CreateUsingRabbitMq (MassTrasit@7 change)
+                //https://masstransit-project.com/getting-started/upgrade-v6.html#version-7
                 configurator.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(factoryConfigurator =>
                 {
+                    factoryConfigurator.UseHealthCheck(provider);
+                    
                     factoryConfigurator.Host(rabbitMqSettings.Host, hostConfigurator =>
                     {
                         hostConfigurator.Username(rabbitMqSettings.Username);
