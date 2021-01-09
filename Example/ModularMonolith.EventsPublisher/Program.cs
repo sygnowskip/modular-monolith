@@ -1,8 +1,5 @@
-﻿using Hexure.Workers;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using ModularMonolith.Configuration;
 
 namespace ModularMonolith.EventsPublisher
 {
@@ -17,11 +14,6 @@ namespace ModularMonolith.EventsPublisher
             Host.CreateDefaultBuilder()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    var httpBindings = ApplicationSettingsConfigurationProvider.Get()
-                        .GetSection(nameof(HttpBindings))
-                        .Get<HttpBindings>();
-                    
-                    webBuilder.UseUrls(httpBindings.Values);
                     webBuilder.UseStartup<EventsPublisherStartup>();
                 });
     }

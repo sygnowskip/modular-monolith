@@ -1,0 +1,13 @@
+﻿{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "ModularMonolith.EventsPublisher": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "applicationUrl": "http://localhost:5006;https://localhost:5007",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
