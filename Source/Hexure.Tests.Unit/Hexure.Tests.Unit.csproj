@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Hexure.MassTransit\Hexure.MassTransit.csproj" />
     <ProjectReference Include="..\Hexure.MediatR\Hexure.MediatR.csproj" />
   </ItemGroup>
 

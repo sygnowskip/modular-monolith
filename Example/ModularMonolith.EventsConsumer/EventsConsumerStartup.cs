@@ -1,4 +1,5 @@
 ﻿using Hexure.EventsConsumer;
+using Hexure.MassTransit;
 using Hexure.MassTransit.RabbitMq.Settings;
 using Hexure.Workers;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +15,7 @@ namespace ModularMonolith.EventsConsumer
         public override void ConfigureServices(IServiceCollection serviceCollection)
         {
             var configuration = ApplicationSettingsConfigurationProvider.Get();
+            var rabbitMqSettings = configuration.GetSection("Bus").Get<ConsumerRabbitMqSettings>();
 
             EventsConsumerBuilder
                 .Create(serviceCollection)
@@ -24,11 +26,13 @@ namespace ModularMonolith.EventsConsumer
                     services.AddPayments();
                     services.AddPersistence(configuration.GetConnectionString("Database"));
                 })
-                .ToRabbitMq(configuration.GetSection("Bus").Get<ConsumerRabbitMqSettings>())
+                .ToRabbitMq(rabbitMqSettings)
                 .Build();
 
             serviceCollection.AddHealthChecks()
-                .AddSqlServer(configuration.GetConnectionString("Database"));
+                .AddSqlServer(configuration.GetConnectionString("Database"))
+                .AddRabbitMQ(rabbitConnectionString: RabbitMqConnectionStringBuilder.Build(rabbitMqSettings.Host,
+                    rabbitMqSettings.Username, rabbitMqSettings.Password));
         }
     }
 }

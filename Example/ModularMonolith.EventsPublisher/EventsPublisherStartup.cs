@@ -1,4 +1,5 @@
 ﻿using Hexure.EventsPublisher;
+using Hexure.MassTransit;
 using Hexure.MassTransit.RabbitMq.Settings;
 using Hexure.Time;
 using Hexure.Workers;
@@ -17,6 +18,7 @@ namespace ModularMonolith.EventsPublisher
         public override void ConfigureServices(IServiceCollection serviceCollection)
         {
             var configuration = ApplicationSettingsConfigurationProvider.Get();
+            var rabbitMqSettings = configuration.GetSection("Bus").Get<PublisherRabbitMqSettings>();
 
             EventsPublisherBuilder
                 .Create(serviceCollection)
@@ -29,11 +31,14 @@ namespace ModularMonolith.EventsPublisher
                     services.AddPersistence(configuration.GetConnectionString("Database"));
                     services.TryAddTransient<ISystemTimeProvider, SystemTimeProvider>();
                 })
-                .ToRabbitMq(configuration.GetSection("Bus").Get<PublisherRabbitMqSettings>())
+                .ToRabbitMq(rabbitMqSettings)
                 .Build();
-            
+
             serviceCollection.AddHealthChecks()
-                .AddSqlServer(configuration.GetConnectionString("Database"));
+                .AddSqlServer(configuration.GetConnectionString("Database"))
+                .AddRabbitMQ(rabbitConnectionString: RabbitMqConnectionStringBuilder.Build(rabbitMqSettings.Host,
+                    rabbitMqSettings.Username, rabbitMqSettings.Password));
+
         }
     }
 }
