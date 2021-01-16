@@ -79,6 +79,8 @@ services:
     healthcheck:
       test: ["CMD", "curl", "-f", "http://modular-monolith-events-publisher/api/health-check"]
       retries: 5
+    ports:
+      - 3006:80
   modular-monolith-events-consumer:
     build:
       context: "."
@@ -97,6 +99,8 @@ services:
     healthcheck:
       test: ["CMD", "curl", "-f", "http://modular-monolith-events-consumer/api/health-check"]
       retries: 5
+    ports:
+      - 3005:80
   modular-monolith-api:
     build:
       context: "."

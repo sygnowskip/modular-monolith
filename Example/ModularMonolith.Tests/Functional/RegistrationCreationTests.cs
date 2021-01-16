@@ -9,6 +9,7 @@ using NUnit.Framework;
 namespace ModularMonolith.Tests.Functional
 {
     [TestFixture]
+    [Ignore("Registrations are currently in obsolete architecture, will be changed soon")]
     public class RegistrationCreationTests : BaseHttpTests
     {
         [Test]
