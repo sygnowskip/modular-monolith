@@ -10,6 +10,7 @@ RUN dotnet publish "${ASSEMBLY_NAME}.csproj" -c Release -o /api
 
 # run
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS runtime
+RUN apt-get update && apt-get install -y --no-install-recommends curl
 ARG ASSEMBLY_NAME
 ENV RUN_ASSEMBLY_FILENAME="${ASSEMBLY_NAME}.dll"
 EXPOSE 80
