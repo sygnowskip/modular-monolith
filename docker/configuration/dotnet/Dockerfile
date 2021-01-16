@@ -1,5 +1,5 @@
 # build
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1.200-buster AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 ARG ASSEMBLY_NAME
 ARG PROJECT_PATH
 WORKDIR /src
@@ -9,7 +9,7 @@ WORKDIR "/src/${PROJECT_PATH}"
 RUN dotnet publish "${ASSEMBLY_NAME}.csproj" -c Release -o /app
 
 # run
-FROM mcr.microsoft.com/dotnet/core/runtime:3.1.2-buster-slim AS runtime
+FROM mcr.microsoft.com/dotnet/runtime:5.0 AS runtime
 ARG ASSEMBLY_NAME
 ENV RUN_ASSEMBLY_FILENAME="${ASSEMBLY_NAME}.dll"
 WORKDIR /app
