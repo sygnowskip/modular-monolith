@@ -99,39 +99,39 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{98F41D58
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexure.Tests.Unit", "Source\Hexure.Tests.Unit\Hexure.Tests.Unit.csproj", "{ABA448FF-8F06-42AB-A43D-FB50AEEFA9E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.CommandServices", "Example\ModularMonolith.CommandServices\ModularMonolith.CommandServices.csproj", "{4C8E6750-97D4-4604-AA90-C263C5557B8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith.CommandServices", "Example\ModularMonolith.CommandServices\ModularMonolith.CommandServices.csproj", "{4C8E6750-97D4-4604-AA90-C263C5557B8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.QueryServices", "Example\ModularMonolith.QueryServices\ModularMonolith.QueryServices.csproj", "{F8341092-6C4A-400E-B20E-14E3A81BFBF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith.QueryServices", "Example\ModularMonolith.QueryServices\ModularMonolith.QueryServices.csproj", "{F8341092-6C4A-400E-B20E-14E3A81BFBF5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Exams", "Exams", "{5FBB51F6-F5E8-436D-A0D9-3A4AFAFE59F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Exams.Language", "Example\ModularMonolith.Exams.Language\ModularMonolith.Exams.Language.csproj", "{1B3C702E-671F-4B21-AA99-D199BB5F1E5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith.Exams.Language", "Example\ModularMonolith.Exams.Language\ModularMonolith.Exams.Language.csproj", "{1B3C702E-671F-4B21-AA99-D199BB5F1E5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Exams.Events", "Example\ModularMonolith.Exams.Events\ModularMonolith.Exams.Events.csproj", "{A5CA203B-B0DF-4F87-851F-DD44F91C9F4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith.Exams.Events", "Example\ModularMonolith.Exams.Events\ModularMonolith.Exams.Events.csproj", "{A5CA203B-B0DF-4F87-851F-DD44F91C9F4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Exams.Persistence", "Example\ModularMonolith.Exams.Persistence\ModularMonolith.Exams.Persistence.csproj", "{A05E8D01-2988-4427-BAE9-6EEDBCC17144}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith.Exams.Persistence", "Example\ModularMonolith.Exams.Persistence\ModularMonolith.Exams.Persistence.csproj", "{A05E8D01-2988-4427-BAE9-6EEDBCC17144}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Exams.Domain", "Example\ModularMonolith.Exams.Domain\ModularMonolith.Exams.Domain.csproj", "{B8ED6D41-0957-4EEA-B098-ACB64D4A2556}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith.Exams.Domain", "Example\ModularMonolith.Exams.Domain\ModularMonolith.Exams.Domain.csproj", "{B8ED6D41-0957-4EEA-B098-ACB64D4A2556}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.ReadModels", "Example\ModularMonolith.ReadModels\ModularMonolith.ReadModels.csproj", "{D1B181EA-76DC-4A2B-85E4-B7464F984E27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith.ReadModels", "Example\ModularMonolith.ReadModels\ModularMonolith.ReadModels.csproj", "{D1B181EA-76DC-4A2B-85E4-B7464F984E27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Language", "Example\ModularMonolith.Language\ModularMonolith.Language.csproj", "{51C0F85C-BD3F-4551-B031-B9C4D074233D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith.Language", "Example\ModularMonolith.Language\ModularMonolith.Language.csproj", "{51C0F85C-BD3F-4551-B031-B9C4D074233D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExternalSystem.Events", "Example\ExternalSystem.Events\ExternalSystem.Events.csproj", "{8652EDB9-B20C-4EF1-AB05-1613431176E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalSystem.Events", "Example\ExternalSystem.Events\ExternalSystem.Events.csproj", "{8652EDB9-B20C-4EF1-AB05-1613431176E8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReadModels", "ReadModels", "{015B5211-29BA-46FD-9624-288E79BB6CCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.ReadModels.EventHandlers", "Example\ModularMonolith.ReadModels.EventHandlers\ModularMonolith.ReadModels.EventHandlers.csproj", "{9C8AC6A0-143F-4287-963B-5A860ADCD031}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith.ReadModels.EventHandlers", "Example\ModularMonolith.ReadModels.EventHandlers\ModularMonolith.ReadModels.EventHandlers.csproj", "{9C8AC6A0-143F-4287-963B-5A860ADCD031}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Contracts", "Example\ModularMonolith.Contracts\ModularMonolith.Contracts.csproj", "{B43BA073-018E-446C-8DC6-A04CA99712AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith.Contracts", "Example\ModularMonolith.Contracts\ModularMonolith.Contracts.csproj", "{B43BA073-018E-446C-8DC6-A04CA99712AC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{AAB009C7-9166-441B-926A-8234D32900FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Errors", "Example\ModularMonolith.Errors\ModularMonolith.Errors.csproj", "{E52F57F1-F2E7-4F72-8972-967A1A75CE97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith.Errors", "Example\ModularMonolith.Errors\ModularMonolith.Errors.csproj", "{E52F57F1-F2E7-4F72-8972-967A1A75CE97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.ReadModels.Persistence", "Example\ModularMonolith.ReadModels.Persistence\ModularMonolith.ReadModels.Persistence.csproj", "{1A84EE46-FB83-451B-B8A3-7E5E40AD584B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith.ReadModels.Persistence", "Example\ModularMonolith.ReadModels.Persistence\ModularMonolith.ReadModels.Persistence.csproj", "{1A84EE46-FB83-451B-B8A3-7E5E40AD584B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexure.Workers", "Source\Hexure.Workers\Hexure.Workers.csproj", "{7CB5C777-A8DC-485C-8E86-80E4043680E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexure.Workers", "Source\Hexure.Workers\Hexure.Workers.csproj", "{7CB5C777-A8DC-485C-8E86-80E4043680E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -389,10 +389,10 @@ Global
 		{A5CA203B-B0DF-4F87-851F-DD44F91C9F4D} = {5FBB51F6-F5E8-436D-A0D9-3A4AFAFE59F6}
 		{A05E8D01-2988-4427-BAE9-6EEDBCC17144} = {5FBB51F6-F5E8-436D-A0D9-3A4AFAFE59F6}
 		{B8ED6D41-0957-4EEA-B098-ACB64D4A2556} = {5FBB51F6-F5E8-436D-A0D9-3A4AFAFE59F6}
+		{D1B181EA-76DC-4A2B-85E4-B7464F984E27} = {015B5211-29BA-46FD-9624-288E79BB6CCA}
 		{51C0F85C-BD3F-4551-B031-B9C4D074233D} = {68B2FD7E-BE5C-4B57-A6FA-BDC77362B4CC}
 		{8652EDB9-B20C-4EF1-AB05-1613431176E8} = {3DA7069C-3B35-44A6-97E5-31C50B0F666D}
 		{015B5211-29BA-46FD-9624-288E79BB6CCA} = {68B2FD7E-BE5C-4B57-A6FA-BDC77362B4CC}
-		{D1B181EA-76DC-4A2B-85E4-B7464F984E27} = {015B5211-29BA-46FD-9624-288E79BB6CCA}
 		{9C8AC6A0-143F-4287-963B-5A860ADCD031} = {015B5211-29BA-46FD-9624-288E79BB6CCA}
 		{B43BA073-018E-446C-8DC6-A04CA99712AC} = {AAB009C7-9166-441B-926A-8234D32900FF}
 		{AAB009C7-9166-441B-926A-8234D32900FF} = {6447FD98-2D85-48B0-9AC3-6D1D91B5399B}

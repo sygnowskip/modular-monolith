@@ -21,6 +21,7 @@ namespace Hexure.EntityFrameworkCore.SqlServer.Events
                 .SerializedEvents
                 .WithHint("XLOCK, ROWLOCK, READPAST")
                 .Where(entity => !entity.ProcessedOn.HasValue)
+                .OrderBy(entity => entity.Id)
                 .Take(batchSize)
                 .ToListAsync();
         }
