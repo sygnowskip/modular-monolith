@@ -128,6 +128,16 @@ namespace Hexure.Results.Extensions
             return await func(result).ConfigureAwait(Result.DefaultConfigureAwait);
         }
 
+        public static Result<T> OnFailure<T>(this Result<T> result, Func<T> func)
+        {
+            if (result.IsFailure)
+            {
+                func();
+            }
+
+            return result;
+        }
+        
         public static async Task<Result<T>> OnFailure<T>(this Result<T> result, Func<Task> func)
         {
             if (result.IsFailure)
@@ -143,16 +153,6 @@ namespace Hexure.Results.Extensions
             if (result.IsFailure)
             {
                 await func().ConfigureAwait(Result.DefaultConfigureAwait);
-            }
-
-            return result;
-        }
-
-        public static async Task<Result<T>> OnFailure<T>(this Result<T> result, Func<IReadOnlyList<Error>, Task> func)
-        {
-            if (result.IsFailure)
-            {
-                await func(result.Error).ConfigureAwait(Result.DefaultConfigureAwait);
             }
 
             return result;

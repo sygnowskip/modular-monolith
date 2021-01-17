@@ -29,6 +29,9 @@ namespace ModularMonolith.Exams.Domain
 
             _stateMachine.Configure(ExamStatus.TookPlace)
                 .OnEntry(() => RaiseEvent(new ExamTookPlace(Id, _systemTimeProvider.UtcNow)));
+
+            _stateMachine.Configure(ExamStatus.Deleted)
+                .OnEntry(() => RaiseEvent(new ExamDeleted(Id, _systemTimeProvider.UtcNow)));
         }
 
         public Result OpenForRegistration()

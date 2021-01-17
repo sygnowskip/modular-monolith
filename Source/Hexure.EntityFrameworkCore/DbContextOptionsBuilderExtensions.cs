@@ -1,15 +1,23 @@
-﻿using Hexure.EntityFrameworkCore.Identifiers;
+﻿using System;
+using Hexure.EntityFrameworkCore.Deleting;
+using Hexure.EntityFrameworkCore.Events;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Hexure.EntityFrameworkCore
 {
     public static class DbContextOptionsBuilderExtensions
     {
-        public static DbContextOptionsBuilder EnableIdentifiers(this DbContextOptionsBuilder builder)
+        public static DbContextOptionsBuilder AddPublishDomainEventsInterceptorOnSaveChanges(this DbContextOptionsBuilder builder, IServiceProvider provider)
         {
             return builder
-                .ReplaceService<IValueConverterSelector, IdentifiersValueConverterSelector>();
+                    .AddInterceptors(provider.GetRequiredService<PublishDomainEventsOnSaveChangesInterceptor>());
+        }
+        
+        public static DbContextOptionsBuilder AddDeleteAggregatesInterceptorOnSaveChanges(this DbContextOptionsBuilder builder, IServiceProvider provider)
+        {
+            return builder
+                    .AddInterceptors(provider.GetRequiredService<DeleteAggregatesOnSaveChangesInterceptor>());
         }
     }
 }

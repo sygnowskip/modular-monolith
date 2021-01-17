@@ -1,13 +1,11 @@
-﻿using Hexure.EntityFrameworkCore.Identifiers;
+﻿using Hexure.EntityFrameworkCore;
 using Hexure.EntityFrameworkCore.SqlServer.Events;
 using Hexure.Events;
 using Hexure.MediatR;
 using Hexure.Time;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using ModularMonolith.Exams.Language.Validators;
 using ModularMonolith.Exams.Persistence;
 using ModularMonolith.Language.Locations;
@@ -26,21 +24,24 @@ namespace ModularMonolith.Persistence
         {
             services.AddTransient<IRegistrationRepository, RegistrationRepository>();
             services.AddTransient<IPaymentRepository, PaymentRepository>();
-            services.AddDbContext<MonolithDbContext>(builder =>
+            services.AddDbContext<MonolithDbContext>((provider, builder) =>
                 {
                     var serviceProvider = new ServiceCollection()
                         .AddEntityFrameworkSqlServer()
                         .AddTransient<ISystemTimeProvider, SystemTimeProvider>()
-                        .AddTransient<IParameterBindingFactory>(provider => new ServiceParameterBindingFactory(typeof(ISystemTimeProvider)))
-                        .Replace(ServiceDescriptor.Transient<IValueConverterSelector, IdentifiersValueConverterSelector>())
+                        .AddTransient<IParameterBindingFactory>(sp => new ServiceParameterBindingFactory(typeof(ISystemTimeProvider)))
+                        .EnableIdentifiers()
                         .BuildServiceProvider();
 
                     builder
                         .UseSqlServer(connectionString)
-                        .UseInternalServiceProvider(serviceProvider);
+                        .UseInternalServiceProvider(serviceProvider)
+                        .AddPublishDomainEventsInterceptorOnSaveChanges(provider)
+                        .AddDeleteAggregatesInterceptorOnSaveChanges(provider);
                 }
             );
 
+            services.AddInterceptors();
             services.AddExamsWritePersistence<MonolithDbContext>();
 
             services.AddTransactionalCommands()
