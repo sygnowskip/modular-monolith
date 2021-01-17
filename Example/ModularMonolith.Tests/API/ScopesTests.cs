@@ -8,6 +8,7 @@ using NUnit.Framework;
 namespace ModularMonolith.Tests.API
 {
     [TestFixture]
+    [Ignore("Registrations / Payments are currently in obsolete architecture, will be changed soon")]
     public class ScopesTests : BaseHttpTests
     {
         [TestCase("api/registrations")]
