@@ -1,15 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Hexure.Deleting;
+﻿using System.Threading.Tasks;
 using Hexure.EntityFrameworkCore;
 using Hexure.EntityFrameworkCore.Events;
 using Hexure.EntityFrameworkCore.Events.Entites;
-using Hexure.Events;
-using Hexure.Events.Collecting;
-using Hexure.Events.Serialization;
-using Hexure.Results.Extensions;
 using Microsoft.EntityFrameworkCore;
 using ModularMonolith.Exams.Persistence.Configurations;
 using ModularMonolith.Persistence.Configurations;
@@ -19,14 +11,8 @@ namespace ModularMonolith.Persistence
 {
     internal partial class MonolithDbContext : DbContext, ISerializedEventDbContext, ITransactionProvider
     {
-        private readonly IEventCollector _eventCollector;
-        private readonly IEventSerializer _eventSerializer;
-
-        public MonolithDbContext(DbContextOptions<MonolithDbContext> options, IEventCollector eventCollector,
-            IEventSerializer eventSerializer) : base(options)
+        public MonolithDbContext(DbContextOptions<MonolithDbContext> options) : base(options)
         {
-            _eventCollector = eventCollector;
-            _eventSerializer = eventSerializer;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,47 +26,6 @@ namespace ModularMonolith.Persistence
             modelBuilder.ApplyConfiguration(new SerializedEventEntityConfig());
         }
 
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
-        {
-            await PublishDomainEventsAsync();
-            await DeleteAggregates();
-            
-            return await base.SaveChangesAsync(cancellationToken);
-        }
-
-        //TODO: EF Core 5.0 interceptors
-        private async Task PublishDomainEventsAsync()
-        {
-            var events = _eventCollector
-                .Collect(ChangeTracker.Entries<IEntityWithDomainEvents>()
-                    .Select(entry => entry.Entity)
-                    .ToList());
-
-            foreach (var @event in events)
-            {
-                await _eventSerializer.Serialize(@event)
-                    .OnSuccess(SerializedEventEntity.Create)
-                    .OnSuccess(serializedEvent => SerializedEvents.Add(serializedEvent))
-                    .OnFailure(errors =>
-                        throw new InvalidOperationException(
-                            $"Unable to publish domain event due to: {string.Join(", ", errors.Select(e => e.Message))}"));
-            }
-        }
-
-        //TODO: EF Core 5.0 interceptors
-        private async Task DeleteAggregates()
-        {
-            var aggregates = ChangeTracker.Entries<IDeletableAggregate>();
-
-            foreach (var aggregate in aggregates)
-            {
-                if (aggregate.Entity.IsDeleted)
-                {
-                    aggregate.State = aggregate.State == EntityState.Added ? EntityState.Detached : EntityState.Deleted;
-                }
-            }
-        }
-
         public Task BeginTransactionAsync()
         {
             return Database.BeginTransactionAsync();
@@ -89,13 +34,12 @@ namespace ModularMonolith.Persistence
         public async Task CommitTransactionAsync()
         {
             await SaveChangesAsync();
-            Database.CommitTransaction();
+            await Database.CommitTransactionAsync();
         }
 
         public Task RollbackTransactionAsync()
         {
-            Database.RollbackTransaction();
-            return Task.CompletedTask;
+            return Database.RollbackTransactionAsync();
         }
     }
 }
