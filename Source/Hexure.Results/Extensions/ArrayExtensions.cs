@@ -8,7 +8,5 @@ namespace Hexure.Results.Extensions
         {
             return (array == null || array.Length == 0);
         }
-
-        public static bool IsNotNullOrEmpty(this Array array) => !IsNullOrEmpty(array);
     }
 }

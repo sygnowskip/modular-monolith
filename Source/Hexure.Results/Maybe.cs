@@ -1,10 +1,8 @@
 ﻿using System;
-using Hexure.Results.Deserialization;
 using Newtonsoft.Json;
 
 namespace Hexure.Results
 {
-    [JsonConverter(typeof(MaybeJsonConverter))]
     public struct Maybe<T> : IEquatable<Maybe<T>>
     {
         private readonly MaybeValueWrapper _value;
