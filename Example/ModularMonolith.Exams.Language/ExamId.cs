@@ -3,11 +3,13 @@ using Hexure.Results;
 using Hexure.Results.Extensions;
 using ModularMonolith.Errors;
 using ModularMonolith.Exams.Language.Validators;
+using Newtonsoft.Json;
 
 namespace ModularMonolith.Exams.Language
 {
     public class ExamId : Identifier
     {
+        [JsonConstructor]
         internal ExamId(long value) : base(value)
         {
         }

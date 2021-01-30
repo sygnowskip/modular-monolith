@@ -7,4 +7,3 @@ BEGIN
     ALTER TABLE [events].[SerializedEvent]
     DROP COLUMN ProcessedOn
 END
-GO

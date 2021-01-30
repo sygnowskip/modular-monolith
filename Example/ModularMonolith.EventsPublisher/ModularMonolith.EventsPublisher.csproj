@@ -8,6 +8,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Source\Hexure.EventsPublisher\Hexure.EventsPublisher.csproj" />
     <ProjectReference Include="..\..\Source\Hexure.Workers\Hexure.Workers.csproj" />
+    <ProjectReference Include="..\ExternalSystem.Events\ExternalSystem.Events.csproj" />
     <ProjectReference Include="..\ModularMonolith.Configuration\ModularMonolith.Configuration.csproj" />
     <ProjectReference Include="..\ModularMonolith.Dependencies\ModularMonolith.Dependencies.csproj" />
     <ProjectReference Include="..\ModularMonolith.Persistence\ModularMonolith.Persistence.csproj" />
