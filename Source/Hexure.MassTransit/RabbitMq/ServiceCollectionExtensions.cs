@@ -39,7 +39,7 @@ namespace Hexure.MassTransit.RabbitMq
                     busConfigurator.ReceiveEndpointForEachConsumer(provider, rabbitMqSettings.QueuePrefix, withConsumersFromAssemblies,
                         configurator =>
                         {
-                            configurator.PrefetchCount = 3;
+                            configurator.PrefetchCount = 25;
                             configurator.UseMessageRetry(x =>
                                 x.Incremental(2, TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(12)));
                         });
@@ -69,6 +69,11 @@ namespace Hexure.MassTransit.RabbitMq
                     {
                         hostConfigurator.Username(rabbitMqSettings.Username);
                         hostConfigurator.Password(rabbitMqSettings.Password);
+                        hostConfigurator.ConfigureBatchPublish(publishConfigurator =>
+                        {
+                            publishConfigurator.Enabled = true;
+                            publishConfigurator.Timeout = TimeSpan.FromMilliseconds(50);
+                        });
                     });
 
                     factoryConfigurator.MessageTopology.SetEntityNameFormatter(

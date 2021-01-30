@@ -8,6 +8,7 @@ namespace Hexure.EntityFrameworkCore.Events.Repositories
     {
         Task<IReadOnlyCollection<SerializedEventEntity>> GetUnpublishedEventsAsync(int batchSize);
         Task SaveChangesAsync();
+        void RemoveRange(IEnumerable<SerializedEventEntity> processedEvents);
     }
 
     public abstract class AbstractSerializedEventRepository : ISerializedEventRepository
@@ -24,6 +25,11 @@ namespace Hexure.EntityFrameworkCore.Events.Repositories
         public Task SaveChangesAsync()
         {
             return DbContext.SaveChangesAsync();
+        }
+
+        public void RemoveRange(IEnumerable<SerializedEventEntity> processedEvents)
+        {
+            DbContext.SerializedEvents.RemoveRange(processedEvents);
         }
     }
 }
