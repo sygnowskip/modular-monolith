@@ -36,14 +36,4 @@ namespace Hexure.Results
             Error = error;
         }
     }
-
-    public class ResultFailureException<TError> : ResultFailureException
-    {
-        public new TError Error { get; }
-
-        internal ResultFailureException(TError error) : base(ResultMessages.ValueIsInaccessibleForFailure)
-        {
-            Error = error;
-        }
-    }
 }

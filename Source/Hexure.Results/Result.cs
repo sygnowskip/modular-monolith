@@ -5,10 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
-using Hexure.Results.Deserialization;
-using Hexure.Results.Deserialization.Strategies;
 using Hexure.Results.Extensions;
-using Newtonsoft.Json;
 
 namespace Hexure.Results
 {
@@ -96,7 +93,7 @@ namespace Hexure.Results
         {
             if (IsSuccess)
                 return false;
-            return Error.Where(x => x.Code == invariant.Code).Any();
+            return Error.Any(x => x.Code == invariant.Code);
         }
 
         public bool ViolatesOnly(Error.ErrorType invariant)
@@ -140,12 +137,6 @@ namespace Hexure.Results
             }
         }
 
-        public void SetPropertyName<T>(Expression<Func<T, object>> propertyExpression, Func<Error, bool> selector)
-        {
-            var propertyName = GetPropertyName(propertyExpression);
-            SetPropertyName(propertyName, selector);
-        }
-
         private string GetPropertyName<TModel>(Expression<Func<TModel, object>> expr, string separator = ".")
         {
             MemberExpression me;
@@ -175,7 +166,6 @@ namespace Hexure.Results
         }
     }
 
-    [JsonConverter(typeof(ResultJsonConverter))]
     public struct Result : IResult, ISerializable
     {
         private static readonly Result OkResult = new Result(false, null);
@@ -229,7 +219,7 @@ namespace Hexure.Results
 
         public static Result<Maybe<T>> CreateOptional<T>(bool isEmpty, Func<Result<T>> createResult)
         {
-            return isEmpty ? Result.Ok(Maybe<T>.None) : createResult().Map(Maybe<T>.From);
+            return isEmpty ? Ok(Maybe<T>.None) : createResult().OnSuccess(Maybe<T>.From);
         }
 
         public static Result Create(Func<bool> predicate, Error error)
@@ -244,7 +234,6 @@ namespace Hexure.Results
         }
 
         [DebuggerStepThrough]
-        [ResultOkFactoryMethod]
         public static Result<T> Ok<T>(T value)
         {
             return new Result<T>(false, value, null);
@@ -257,7 +246,6 @@ namespace Hexure.Results
         }
 
         [DebuggerStepThrough]
-        [ResultFailFactoryMethod]
         public static Result<T> Fail<T>(Error[] error)
         {
             return new Result<T>(true, default(T), error);
@@ -281,27 +269,6 @@ namespace Hexure.Results
             return Create(isSuccess, value, error);
         }
 
-        /// <summary>
-        /// Returns first failure in the list of <paramref name="results"/>. If there is no failure returns success.
-        /// </summary>
-        /// <param name="results">List of results.</param>
-        [DebuggerStepThrough]
-        public static Result FirstFailureOrSuccess(params Result[] results)
-        {
-            foreach (Result result in results)
-            {
-                if (result.IsFailure)
-                    return Fail(result.Error.First());
-            }
-
-            return Ok();
-        }
-
-        /// <summary>
-        /// Returns failure which combined from all failures in the <paramref name="results"/> list./>.
-        /// If there is no failure returns success.
-        /// </summary>
-        /// <param name="results">List of results.</param>
         [DebuggerStepThrough]
         public static Result Combine(params Result[] results)
         {
@@ -314,72 +281,6 @@ namespace Hexure.Results
             return Fail(errors);
         }
 
-        [DebuggerStepThrough]
-        public static Result Combine<T>(params Result<T>[] results)
-        {
-            Result[] untyped = results.Select(result => (Result)result).ToArray();
-            return Combine(untyped);
-        }
-
-        public static Result Try(Action action, Func<Exception, Error> errorHandler)
-        {
-            try
-            {
-                action();
-
-                return Ok();
-            }
-            catch (Exception exc)
-            {
-                Error message = errorHandler(exc);
-
-                return Fail(message);
-            }
-        }
-
-        public static Result<T> Try<T>(Func<T> func, Func<Exception, Error> errorHandler)
-        {
-            try
-            {
-                return Ok(func());
-            }
-            catch (Exception exc)
-            {
-                Error message = errorHandler(exc);
-
-                return Fail<T>(message);
-            }
-        }
-
-        public static async Task<Result<T>> Try<T>(Func<Task<T>> func, Func<Exception, Error> errorHandler)
-        {
-            try
-            {
-                var result = await func().ConfigureAwait(Result.DefaultConfigureAwait);
-
-                return Ok(result);
-            }
-            catch (Exception exc)
-            {
-                Error message = errorHandler(exc);
-
-                return Fail<T>(message);
-            }
-        }
-
-        public void Deconstruct(out bool isSuccess, out bool isFailure)
-        {
-            isSuccess = IsSuccess;
-            isFailure = IsFailure;
-        }
-
-        public void Deconstruct(out bool isSuccess, out bool isFailure, out Error[] error)
-        {
-            isSuccess = IsSuccess;
-            isFailure = IsFailure;
-            error = IsFailure ? Error.ToArray() : null;
-        }
-
         public bool Violates(Error.ErrorType invariant) => _logic.Violates(invariant);
 
         public bool ViolatesOnly(Error.ErrorType invariant) => _logic.ViolatesOnly(invariant);
@@ -387,47 +288,8 @@ namespace Hexure.Results
         public bool ViolatesOnly(Error.ErrorType invariant, int count) => _logic.ViolatesOnly(invariant, count);
 
         public bool HasError(Error error) => _logic.HasError(error);
-
-        public Result SetPropertyName(string propertyName, Func<Error, bool> selector)
-        {
-            _logic.SetPropertyName(propertyName, selector);
-            return this;
-        }
-
-        public Result SetPropertyName(string propertyName, Error.ErrorType errorType)
-        {
-            _logic.SetPropertyName(propertyName, x => x.Code == errorType);
-            return this;
-        }
-
-        public Result SetPropertyName(string propertyName)
-        {
-            _logic.SetPropertyName(propertyName, x => true);
-            return this;
-        }
-
-        public Result SetPropertyName<TModel>(Expression<Func<TModel, object>> propertyExpression, Func<Error, bool> selector)
-        {
-            _logic.SetPropertyName(propertyExpression, selector);
-            return this;
-        }
-
-        public Result SetPropertyName<TModel>(Expression<Func<TModel, object>> propertyExpression, Error.ErrorType errorType)
-        {
-            _logic.SetPropertyName(propertyExpression, x => x.Code == errorType);
-            return this;
-        }
-
-        public Result SetPropertyName<TModel>(Expression<Func<TModel, object>> propertyExpression)
-        {
-            _logic.SetPropertyName(propertyExpression, x => true);
-            return this;
-        }
-
-        public bool ShouldSerializeError() => IsFailure;
     }
 
-    [JsonConverter(typeof(ResultJsonConverter))]
     public struct Result<T> : IResult, ISerializable
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -461,14 +323,7 @@ namespace Hexure.Results
                 return _value;
             }
         }
-
-        [DebuggerStepThrough]
-        internal Result(bool isFailure, T value, params Error[] error)
-        {
-            _logic = ResultCommonLogic.Create(isFailure, error);
-            _value = value;
-        }
-
+        
         public static implicit operator Result(Result<T> result)
         {
             if (result.IsSuccess)
@@ -477,25 +332,11 @@ namespace Hexure.Results
                 return Result.Fail(result.Error.ToArray());
         }
 
-        public void Deconstruct(out bool isSuccess, out bool isFailure)
+        [DebuggerStepThrough]
+        internal Result(bool isFailure, T value, params Error[] error)
         {
-            isSuccess = IsSuccess;
-            isFailure = IsFailure;
-        }
-
-        public void Deconstruct(out bool isSuccess, out bool isFailure, out T value)
-        {
-            isSuccess = IsSuccess;
-            isFailure = IsFailure;
-            value = IsSuccess ? Value : default(T);
-        }
-
-        public void Deconstruct(out bool isSuccess, out bool isFailure, out T value, out Error[] error)
-        {
-            isSuccess = IsSuccess;
-            isFailure = IsFailure;
-            value = IsSuccess ? Value : default(T);
-            error = IsFailure ? Error.ToArray() : null;
+            _logic = ResultCommonLogic.Create(isFailure, error);
+            _value = value;
         }
 
         public bool Violates(Error.ErrorType invariant) => _logic.Violates(invariant);
@@ -505,45 +346,5 @@ namespace Hexure.Results
         public bool ViolatesOnly(Error.ErrorType invariant, int count) => _logic.ViolatesOnly(invariant, count);
 
         public bool HasError(Error error) => _logic.HasError(error);
-
-        public Result<T> SetPropertyName(string propertyName, Func<Error, bool> selector)
-        {
-            _logic.SetPropertyName(propertyName, selector);
-            return this;
-        }
-
-        public Result<T> SetPropertyName(string propertyName, Error.ErrorType errorType)
-        {
-            _logic.SetPropertyName(propertyName, x => x.Code == errorType);
-            return this;
-        }
-
-        public Result<T> SetPropertyName(string propertyName)
-        {
-            _logic.SetPropertyName(propertyName, x => true);
-            return this;
-        }
-
-        public Result<T> SetPropertyName<TModel>(Expression<Func<TModel, object>> propertyExpression, Func<Error, bool> selector)
-        {
-            _logic.SetPropertyName(propertyExpression, selector);
-            return this;
-        }
-
-        public Result<T> SetPropertyName<TModel>(Expression<Func<TModel, object>> propertyExpression, Error.ErrorType errorType)
-        {
-            _logic.SetPropertyName(propertyExpression, x => x.Code == errorType);
-            return this;
-        }
-
-        public Result<T> SetPropertyName<TModel>(Expression<Func<TModel, object>> propertyExpression)
-        {
-            _logic.SetPropertyName(propertyExpression, x => true);
-            return this;
-        }
-
-        public bool ShouldSerializeError() => IsFailure;
-
-        public bool ShouldSerializeValue() => IsSuccess;
     }
 }
