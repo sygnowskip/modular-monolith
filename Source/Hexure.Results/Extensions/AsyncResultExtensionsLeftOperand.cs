@@ -32,6 +32,12 @@ namespace Hexure.Results.Extensions
             Result<T> result = await resultTask.ConfigureAwait(Result.DefaultConfigureAwait);
             return result.OnSuccess(action);
         }
+        
+        public static async Task<Result<T>> OnFailure<T>(this Task<Result<T>> resultTask, Action<IReadOnlyList<Error>> action)
+        {
+            Result<T> result = await resultTask.ConfigureAwait(Result.DefaultConfigureAwait);
+            return result.OnFailure(action);
+        }
 
         public static async Task<Result> OnFailure(this Task<Result> resultTask, Action<IReadOnlyList<Error>> action)
         {

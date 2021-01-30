@@ -1,4 +1,5 @@
-﻿using Hexure.EventsPublisher;
+﻿using ExternalSystem.Events.Locations;
+using Hexure.EventsPublisher;
 using Hexure.MassTransit;
 using Hexure.MassTransit.RabbitMq.Settings;
 using Hexure.Time;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ModularMonolith.Configuration;
 using ModularMonolith.Dependencies;
+using ModularMonolith.Exams.Events;
 using ModularMonolith.Persistence;
 using ModularMonolith.Registrations.Contracts.Events;
 
@@ -26,6 +28,8 @@ namespace ModularMonolith.EventsPublisher
                 .WithDbContext<MonolithDbContext>()
                 .WithTransactionProvider<MonolithDbContext>()
                 .WithEventsFromAssemblyOfType<RegistrationPaid>()
+                .WithEventsFromAssemblyOfType<LocationAdded>()
+                .WithEventsFromAssemblyOfType<ExamPlanned>()
                 .WithPersistence(services =>
                 {
                     services.AddPersistence(configuration.GetConnectionString("Database"));

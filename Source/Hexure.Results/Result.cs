@@ -281,6 +281,18 @@ namespace Hexure.Results
             return Fail(errors);
         }
 
+        [DebuggerStepThrough]
+        public static Result Combine<T>(params Result<T>[] results)
+        {
+            List<Result<T>> failedResults = results.Where(x => x.IsFailure).ToList();
+
+            if (!failedResults.Any())
+                return Ok();
+
+            Error[] errors = failedResults.SelectMany(x => x.Error).ToArray();
+            return Fail(errors);
+        }
+
         public bool Violates(Error.ErrorType invariant) => _logic.Violates(invariant);
 
         public bool ViolatesOnly(Error.ErrorType invariant) => _logic.ViolatesOnly(invariant);

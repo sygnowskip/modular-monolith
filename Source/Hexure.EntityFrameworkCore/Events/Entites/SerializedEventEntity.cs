@@ -1,5 +1,4 @@
-﻿using System;
-using Hexure.Events.Serialization;
+﻿using Hexure.Events.Serialization;
 using Hexure.Results;
 using Hexure.Results.Extensions;
 
@@ -24,17 +23,7 @@ namespace Hexure.EntityFrameworkCore.Events.Entites
         }
 
         public long Id { get; private set; }
-        public DateTime? ProcessedOn { get; private set; }
         public SerializedEvent SerializedEvent { get; private set; }
-
-        public Result MarkAsProcessed(DateTime processedOn)
-        {
-            if (ProcessedOn.HasValue)
-                return Result.Fail(SerializedEventEntityErrors.EventAlreadyProcessed.Build());
-
-            ProcessedOn = processedOn;
-            return Result.Ok();
-        }
 
         public static Result<SerializedEventEntity> Create(SerializedEvent serializedEvent)
         {
