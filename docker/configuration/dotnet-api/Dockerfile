@@ -1,5 +1,5 @@
 # build
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0.102-ca-patch-buster-slim AS build
 ARG ASSEMBLY_NAME
 ARG PROJECT_PATH
 WORKDIR /src
