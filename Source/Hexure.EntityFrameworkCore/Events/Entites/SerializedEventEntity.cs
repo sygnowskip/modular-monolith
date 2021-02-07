@@ -1,4 +1,5 @@
-﻿using Hexure.Events.Serialization;
+﻿using System;
+using Hexure.Events.Serialization;
 using Hexure.Results;
 using Hexure.Results.Extensions;
 
@@ -20,9 +21,11 @@ namespace Hexure.EntityFrameworkCore.Events.Entites
         private SerializedEventEntity(SerializedEvent serializedEvent)
         {
             SerializedEvent = serializedEvent;
+            MessageId = Guid.NewGuid();
         }
 
         public long Id { get; private set; }
+        public Guid MessageId { get; private set; }
         public SerializedEvent SerializedEvent { get; private set; }
 
         public static Result<SerializedEventEntity> Create(SerializedEvent serializedEvent)
