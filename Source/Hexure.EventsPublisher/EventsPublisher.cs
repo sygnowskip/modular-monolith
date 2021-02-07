@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Hexure.EntityFrameworkCore;
+using Hexure.EntityFrameworkCore.Events.Entites;
 using Hexure.EntityFrameworkCore.Events.Repositories;
 using Hexure.Events.Serialization;
 using Hexure.Results;
@@ -82,7 +83,8 @@ namespace Hexure.EventsPublisher
 
             var publishActions = eventsToPublish
                 .Select(serializedEventEntity => _eventDeserializer.Deserialize(serializedEventEntity.SerializedEvent)
-                    .OnSuccess(@event => _busControl.Publish(@event, stoppingToken)));
+                    .OnSuccess(@event => _busControl.Publish(@event,
+                        context => AssignMessageId(context, serializedEventEntity), stoppingToken)));
 
             Result.Combine(await Task.WhenAll(publishActions))
                 .OnSuccess(() => serializedEventRepository.RemoveRange(eventsToPublish))
@@ -94,6 +96,11 @@ namespace Hexure.EventsPublisher
                 $"{DateTime.UtcNow} Publish completed (events: {eventsToPublish.Count}, batch size: {_settings.BatchSize})...");
 
             return eventsToPublish.Count < _settings.BatchSize;
+
+            void AssignMessageId(PublishContext context, SerializedEventEntity serializedEventEntity)
+            {
+                context.MessageId = serializedEventEntity.MessageId;
+            }
         }
     }
 }
