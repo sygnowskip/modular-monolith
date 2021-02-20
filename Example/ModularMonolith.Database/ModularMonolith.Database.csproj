@@ -31,6 +31,7 @@
     <EmbeddedResource Include="Scripts\009_Create_Exam_View.sql" />
     <EmbeddedResource Include="Scripts\010_Remove_SerializedEvent_ProcessedOn_Column.sql" />
     <EmbeddedResource Include="Scripts\011_Add_MessageId_Column_To_Serialized_Event_Table.sql" />
+    <EmbeddedResource Include="Scripts\012_Create_ProcessedEvent_Table.sql" />
     <EmbeddedResource Include="TestData\001_Subjects_And_Locations.sql" />
   </ItemGroup>
 
