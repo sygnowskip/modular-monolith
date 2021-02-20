@@ -11,6 +11,9 @@ namespace Hexure.EntityFrameworkCore.Events.Entites
             builder.ToTable(nameof(SerializedEventEntity.SerializedEvent), "events");
             builder.HasKey(entity => entity.Id);
 
+            builder.Property(entity => entity.Id)
+                .ValueGeneratedOnAdd();
+
             builder.OwnsOne(entity => entity.SerializedEvent, navigationBuilder =>
             {
                 navigationBuilder.Property(@event => @event.Namespace)
