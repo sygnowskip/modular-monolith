@@ -5,13 +5,13 @@ namespace ModularMonolith.EventsPublisher
 {
     public static class Program
     {
-        public static void Main()
+        public static void Main(string[] args)
         {
-            CreateHostBuilder().Build().Run();
+            CreateHostBuilder(args).Build().Run();
         }
 
-        private static IHostBuilder CreateHostBuilder() =>
-            Host.CreateDefaultBuilder()
+        private static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<EventsPublisherStartup>();
