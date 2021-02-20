@@ -12,6 +12,7 @@ services:
     environment:
       ACCEPT_EULA: Y
       SA_PASSWORD: P@ssword1
+      MSSQL_AGENT_ENABLED: 'True'
     ports:
       - 3000:1433
     expose:
