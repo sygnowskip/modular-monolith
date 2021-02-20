@@ -28,6 +28,7 @@ namespace ModularMonolith.EventsConsumer
                     services.AddPayments();
                     services.AddPersistence(configuration.GetConnectionString("Database"));
                     services.AddInbox<MonolithDbContext>();
+                    services.AddMemoryCache();
                 })
                 .ToRabbitMq(rabbitMqSettings)
                 .Build();

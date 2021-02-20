@@ -1,9 +1,5 @@
-﻿using System.Reflection;
-using System.Security.Cryptography;
-using System.Text;
-using Hexure.Results;
+﻿using Hexure.Results;
 using MassTransit;
-using MassTransit.Context;
 
 namespace Hexure.MassTransit.Inbox
 {
@@ -15,34 +11,28 @@ namespace Hexure.MassTransit.Inbox
 
     public class ConsumerProvider : IConsumerProvider
     {
+        private readonly IConsumerPropertyProvider _consumerPropertyProvider;
+        private readonly IConsumerHashProvider _consumerHashProvider;
+
+        public ConsumerProvider(IConsumerPropertyProvider consumerPropertyProvider,
+            IConsumerHashProvider consumerHashProvider)
+        {
+            _consumerPropertyProvider = consumerPropertyProvider;
+            _consumerHashProvider = consumerHashProvider;
+        }
+
         public Maybe<string> GetConsumer<TMessage>(ConsumeContext<TMessage> consumeContext)
             where TMessage : class
         {
-            var property = GetConsumerProperty(consumeContext);
-            if (property == null)
+            var property = _consumerPropertyProvider.GetConsumerProperty(consumeContext);
+            if (property.HasNoValue)
                 return Maybe<string>.None;
 
-            var value = property.GetValue(consumeContext);
+            var value = property.Value.GetValue(consumeContext);
             if (value == null)
                 return Maybe<string>.None;
 
-            var consumerType = value.GetType().FullName;
-            if (string.IsNullOrWhiteSpace(consumerType))
-                return Maybe<string>.None;
-
-            using var md5 = MD5.Create();
-            var builder = new StringBuilder();                           
-
-            foreach (var b in md5.ComputeHash(Encoding.UTF8.GetBytes(consumerType)))
-                builder.Append(b.ToString("x2"));
-
-            return builder.ToString();
-        }
-
-        private PropertyInfo GetConsumerProperty<TMessage>(ConsumeContext<TMessage> consumeContext)
-            where TMessage : class
-        {
-            return consumeContext.GetType().GetProperty(nameof(ConsumerConsumeContextScope<object, object>.Consumer));
+            return _consumerHashProvider.GetConsumerHash(value.GetType());
         }
     }
 }
