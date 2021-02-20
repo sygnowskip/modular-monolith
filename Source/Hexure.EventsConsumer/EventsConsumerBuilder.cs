@@ -24,7 +24,7 @@ namespace Hexure.EventsConsumer
             return this;
         }
 
-        public EventsConsumerBuilder WithDomain(Action<IServiceCollection> registerAction)
+        public EventsConsumerBuilder WithServices(Action<IServiceCollection> registerAction)
         {
             registerAction.Invoke(_serviceCollection);
             return this;

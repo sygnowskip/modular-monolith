@@ -29,7 +29,8 @@ namespace ModularMonolith.Persistence
                     var serviceProvider = new ServiceCollection()
                         .AddEntityFrameworkSqlServer()
                         .AddTransient<ISystemTimeProvider, SystemTimeProvider>()
-                        .AddTransient<IParameterBindingFactory>(sp => new ServiceParameterBindingFactory(typeof(ISystemTimeProvider)))
+                        .AddTransient<IParameterBindingFactory>(sp =>
+                            new ServiceParameterBindingFactory(typeof(ISystemTimeProvider)))
                         .EnableIdentifiers()
                         .BuildServiceProvider();
 
@@ -39,17 +40,14 @@ namespace ModularMonolith.Persistence
                         .AddPublishDomainEventsInterceptorOnSaveChanges(provider)
                         .AddDeleteAggregatesInterceptorOnSaveChanges(provider);
                 }
-            );
+            ).WithTransactionProvider(provider => provider.GetRequiredService<MonolithDbContext>());
 
             services.AddInterceptors();
             services.AddExamsWritePersistence<MonolithDbContext>();
 
-            services.AddTransactionalCommands()
-                .WithTransactionProvider(provider => provider.GetRequiredService<MonolithDbContext>());
-
             services.AddDomainEvents()
                 .WithPersistence<MonolithDbContext>();
-            
+
             services.AddTransient<IMonolithQueryDbContext>(provider =>
                 provider.GetRequiredService<MonolithDbContext>());
             services.AddTransient<ILocationExistenceValidator, LocationExistenceValidator>();

@@ -1,11 +1,13 @@
 ﻿using Hexure.EventsConsumer;
 using Hexure.MassTransit;
+using Hexure.MassTransit.Inbox;
 using Hexure.MassTransit.RabbitMq.Settings;
 using Hexure.Workers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ModularMonolith.Configuration;
 using ModularMonolith.Dependencies;
+using ModularMonolith.Persistence;
 using ModularMonolith.ReadModels.EventHandlers.UpdateLocations;
 
 namespace ModularMonolith.EventsConsumer
@@ -20,11 +22,12 @@ namespace ModularMonolith.EventsConsumer
             EventsConsumerBuilder
                 .Create(serviceCollection)
                 .WithHandlersFromAssemblyOfType<OnLocationAdded>()
-                .WithDomain(services =>
+                .WithServices(services =>
                 {
                     services.AddRegistrations();
                     services.AddPayments();
                     services.AddPersistence(configuration.GetConnectionString("Database"));
+                    services.AddInbox<MonolithDbContext>();
                 })
                 .ToRabbitMq(rabbitMqSettings)
                 .Build();

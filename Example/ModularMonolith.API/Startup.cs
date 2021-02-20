@@ -1,4 +1,5 @@
 using System;
+using Hexure.MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -63,7 +64,8 @@ namespace ModularMonolith.API
             //TODO: Clean up
             services.AddRegistrations();
             services.AddPayments();
-            services.AddPersistence(Configuration.GetConnectionString("Database"));
+            services.AddPersistence(Configuration.GetConnectionString("Database"))
+                .AddTransactionalCommands();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

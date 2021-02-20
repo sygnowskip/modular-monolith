@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Hexure.EntityFrameworkCore.SqlServer\Hexure.EntityFrameworkCore.SqlServer.csproj" />
+    <ProjectReference Include="..\Hexure.EntityFrameworkCore\Hexure.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Hexure\Hexure.csproj" />
   </ItemGroup>
 
