@@ -12,6 +12,7 @@ services:
     environment:
       ACCEPT_EULA: Y
       SA_PASSWORD: P@ssword1
+      MSSQL_AGENT_ENABLED: 'True'
     ports:
       - 3000:1433
     expose:
@@ -100,7 +101,7 @@ services:
       test: ["CMD", "curl", "-f", "http://modular-monolith-events-consumer/api/health-check"]
       retries: 5
     ports:
-      - 3005:80
+      - 3005-3015:80
   modular-monolith-api:
     build:
       context: "."

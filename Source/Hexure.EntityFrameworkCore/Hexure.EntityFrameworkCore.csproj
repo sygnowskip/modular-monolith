@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Hexure\Hexure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="Inbox\Scripts\002_Create_ProcessedEvent_Table.sql" />
+  </ItemGroup>
+
 </Project>

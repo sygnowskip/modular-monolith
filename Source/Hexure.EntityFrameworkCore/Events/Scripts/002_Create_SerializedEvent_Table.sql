@@ -8,7 +8,6 @@ BEGIN
 		[SerializedEventNamespace] [nvarchar](max) NOT NULL,
 		[SerializedEventType] [nvarchar](max) NOT NULL,
 		[SerializedEventPayload] [nvarchar](max) NOT NULL,
-		[ProcessedOn] [datetime2](7) NULL,
 	 CONSTRAINT [PK_Serialized] PRIMARY KEY CLUSTERED 
 	(
 		[Id] ASC
