@@ -1,14 +1,11 @@
-﻿using System.Linq;
+﻿using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
+using Dapper;
 using Hexure.Results;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using ModularMonolith.Contracts.Exams;
 using ModularMonolith.Errors;
-using ModularMonolith.QueryServices.Exams.Extensions;
-using ModularMonolith.ReadModels;
-using ModularMonolith.ReadModels.Planning;
 
 namespace ModularMonolith.QueryServices.Exams
 {
@@ -29,22 +26,22 @@ namespace ModularMonolith.QueryServices.Exams
 
     public class GetExamQueryHandler : IRequestHandler<GetExamQuery, Result<ExamDto>>
     {
-        private readonly IMonolithQueryDbContext _monolithQueryDbContext;
+        private readonly IQueryBuilder _queryBuilder;
+        private readonly IDbConnection _dbConnection;
 
-        public GetExamQueryHandler(IMonolithQueryDbContext monolithQueryDbContext)
+        public GetExamQueryHandler(IQueryBuilder queryBuilder, IDbConnection dbConnection)
         {
-            _monolithQueryDbContext = monolithQueryDbContext;
+            _queryBuilder = queryBuilder;
+            _dbConnection = dbConnection;
         }
 
         public async Task<Result<ExamDto>> Handle(GetExamQuery request, CancellationToken cancellationToken)
         {
-            var exam = await _monolithQueryDbContext.Exams
-                .Where(e => e.Id == request.Id)
-                .Select(e => e.ToExamDto())
-                .SingleOrDefaultAsync(cancellationToken: cancellationToken);
+            var exam = await _dbConnection.QuerySingleAsync<ExamDto>(_queryBuilder.SingleExamQuery(),
+                new {id = request.Id});
 
             return exam == null
-                ? Result.Fail<ExamDto>(DomainErrors.BuildNotFound(nameof(Exam), request.Id))
+                ? Result.Fail<ExamDto>(DomainErrors.BuildNotFound("Exam", request.Id))
                 : Result.Ok(exam);
         }
     }

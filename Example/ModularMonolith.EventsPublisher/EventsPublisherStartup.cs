@@ -32,7 +32,9 @@ namespace ModularMonolith.EventsPublisher
                 .WithEventsFromAssemblyOfType<ExamPlanned>()
                 .WithPersistence(services =>
                 {
-                    services.AddPersistence(configuration.GetConnectionString("Database"));
+                    services.AddPersistence(
+                        configuration.GetConnectionString("Database"),
+                        configuration.GetConnectionString("Database"));
                     services.TryAddTransient<ISystemTimeProvider, SystemTimeProvider>();
                 })
                 .ToRabbitMq(rabbitMqSettings)

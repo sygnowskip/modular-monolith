@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Source\Hexure.Dapper\Hexure.Dapper.csproj" />
     <ProjectReference Include="..\ModularMonolith.CommandServices\ModularMonolith.CommandServices.csproj" />
     <ProjectReference Include="..\ModularMonolith.Payments.ApplicationServices\ModularMonolith.Payments.ApplicationServices.csproj" />
     <ProjectReference Include="..\ModularMonolith.Persistence\ModularMonolith.Persistence.csproj" />

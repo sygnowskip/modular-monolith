@@ -3,7 +3,7 @@ using Hexure.API;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ModularMonolith.QueryServices;
+using ModularMonolith.QueryServices.Common;
 
 namespace ModularMonolith.API.Controllers.Common
 {

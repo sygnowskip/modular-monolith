@@ -23,7 +23,6 @@ namespace ModularMonolith.Persistence
         internal DbSet<Location> Locations { get; set; }
         internal DbSet<Subject> Subjects { get; set; }
 
-        IQueryable<ReadModels.Planning.Exam> IMonolithQueryDbContext.Exams => Set<ReadModels.Planning.Exam>().AsNoTracking().AsQueryable();
         IQueryable<Location> IMonolithQueryDbContext.Locations => Locations.AsNoTracking().AsQueryable();
         IQueryable<Subject> IMonolithQueryDbContext.Subjects => Subjects.AsNoTracking().AsQueryable();
     }

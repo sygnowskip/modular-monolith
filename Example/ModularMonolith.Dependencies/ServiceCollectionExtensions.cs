@@ -4,6 +4,7 @@ using ModularMonolith.CommandServices.Exams;
 using ModularMonolith.Payments.ApplicationServices;
 using ModularMonolith.Persistence;
 using ModularMonolith.QueryServices;
+using ModularMonolith.QueryServices.Common;
 using ModularMonolith.Registrations.ApplicationServices;
 using ModularMonolith.Registrations.Queries;
 
@@ -11,14 +12,16 @@ namespace ModularMonolith.Dependencies
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddCommandServices(this IServiceCollection services)
+        public static IServiceCollection AddCommands(this IServiceCollection services)
         {
             return services.AddMediatR(typeof(CreateExamCommand).Assembly);
         }
         
-        public static IServiceCollection AddQueryServices(this IServiceCollection services)
+        public static IServiceCollection AddQueries(this IServiceCollection services)
         {
-            return services.AddMediatR(typeof(GetLocationsQuery).Assembly);
+            return services
+                .AddMediatR(typeof(GetLocationsQuery).Assembly)
+                .AddQueryServices();
         }
         
         public static IServiceCollection AddRegistrations(this IServiceCollection serviceCollection)
@@ -34,10 +37,11 @@ namespace ModularMonolith.Dependencies
                 .AddPaymentsServices();
         }
 
-        public static IServiceCollection AddPersistence(this IServiceCollection serviceCollection, string writeDatabaseConnectionString)
+        public static IServiceCollection AddPersistence(this IServiceCollection serviceCollection, string writeDatabaseConnectionString, string readDatabaseConnectionString)
         {
             return serviceCollection
-                .AddWritePersistence(writeDatabaseConnectionString);
+                .AddWritePersistence(writeDatabaseConnectionString)
+                .AddReadPersistence(readDatabaseConnectionString);
         }
     }
 }

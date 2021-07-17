@@ -8,7 +8,7 @@ using ExternalSystem.Events.Locations;
 using FluentAssertions;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
-using ModularMonolith.QueryServices;
+using ModularMonolith.QueryServices.Common;
 using ModularMonolith.Tests.Common;
 using NUnit.Framework;
 

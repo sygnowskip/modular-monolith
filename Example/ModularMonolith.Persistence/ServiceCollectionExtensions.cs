@@ -1,4 +1,5 @@
-﻿using Hexure.EntityFrameworkCore;
+﻿using Hexure.Dapper;
+using Hexure.EntityFrameworkCore;
 using Hexure.EntityFrameworkCore.SqlServer.Events;
 using Hexure.Events;
 using Hexure.MediatR;
@@ -20,6 +21,12 @@ namespace ModularMonolith.Persistence
 {
     public static class ServiceCollectionExtensions
     {
+        public static IServiceCollection AddReadPersistence(this IServiceCollection services, string connectionString)
+        {
+            services.AddDbConnection(connectionString);
+            return services;
+        }
+        
         public static IServiceCollection AddWritePersistence(this IServiceCollection services, string connectionString)
         {
             services.AddTransient<IRegistrationRepository, RegistrationRepository>();

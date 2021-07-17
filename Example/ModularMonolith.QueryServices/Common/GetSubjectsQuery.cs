@@ -3,10 +3,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using ModularMonolith.ReadModels;
 using Microsoft.EntityFrameworkCore;
+using ModularMonolith.ReadModels;
 
-namespace ModularMonolith.QueryServices
+namespace ModularMonolith.QueryServices.Common
 {
     public class SubjectDto
     {

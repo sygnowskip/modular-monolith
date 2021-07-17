@@ -55,8 +55,8 @@ namespace ModularMonolith.API
                 settings.Title =  "Modular monolith API";
             });
 
-            services.AddCommandServices();
-            services.AddQueryServices();
+            services.AddCommands();
+            services.AddQueries();
             services.AddHealthChecks()
                 .AddSqlServer(Configuration.GetConnectionString("Database"))
                 .AddIdentityServer(new Uri(authoritySettings.Url));
@@ -64,7 +64,9 @@ namespace ModularMonolith.API
             //TODO: Clean up
             services.AddRegistrations();
             services.AddPayments();
-            services.AddPersistence(Configuration.GetConnectionString("Database"))
+            services.AddPersistence(
+                    Configuration.GetConnectionString("Database"), 
+                    Configuration.GetConnectionString("Database"))
                 .AddTransactionalCommands();
         }
 
