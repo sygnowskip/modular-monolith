@@ -33,6 +33,7 @@
     <EmbeddedResource Include="Scripts\011_Add_MessageId_Column_To_Serialized_Event_Table.sql" />
     <EmbeddedResource Include="Scripts\012_Create_ProcessedEvent_Table.sql" />
     <EmbeddedResource Include="Scripts\013_Clean_Up_Job_For_Processed_Events.sql" />
+    <EmbeddedResource Include="Scripts\014_Delete_Exam_View.sql" />
     <EmbeddedResource Include="TestData\001_Subjects_And_Locations.sql" />
   </ItemGroup>
 

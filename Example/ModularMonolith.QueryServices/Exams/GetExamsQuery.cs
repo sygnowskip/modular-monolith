@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
+using Dapper;
 using Hexure.Results;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using ModularMonolith.Contracts.Exams;
-using ModularMonolith.QueryServices.Exams.Extensions;
-using ModularMonolith.ReadModels;
 
 namespace ModularMonolith.QueryServices.Exams
 {
@@ -21,19 +19,19 @@ namespace ModularMonolith.QueryServices.Exams
 
     public class GetExamsQueryHandler : IRequestHandler<GetExamsQuery, IEnumerable<ExamDto>>
     {
-        private readonly IMonolithQueryDbContext _monolithQueryDbContext;
+        private readonly IQueryBuilder _queryBuilder;
+        private readonly IDbConnection _dbConnection;
 
-        public GetExamsQueryHandler(IMonolithQueryDbContext monolithQueryDbContext)
+        public GetExamsQueryHandler(IQueryBuilder queryBuilder, IDbConnection dbConnection)
         {
-            _monolithQueryDbContext = monolithQueryDbContext;
+            _queryBuilder = queryBuilder;
+            _dbConnection = dbConnection;
         }
 
         public async Task<IEnumerable<ExamDto>> Handle(GetExamsQuery request, CancellationToken cancellationToken)
         {
             //TODO: Pagination, filters?
-            return await _monolithQueryDbContext.Exams
-                .Select(e => e.ToExamDto())
-                .ToListAsync(cancellationToken: cancellationToken);
+            return await _dbConnection.QueryAsync<ExamDto>(_queryBuilder.MultipleExamsQuery());
         }
     }
 }

@@ -12,14 +12,16 @@ namespace ModularMonolith.Dependencies
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddCommandServices(this IServiceCollection services)
+        public static IServiceCollection AddCommands(this IServiceCollection services)
         {
             return services.AddMediatR(typeof(CreateExamCommand).Assembly);
         }
         
-        public static IServiceCollection AddQueryServices(this IServiceCollection services)
+        public static IServiceCollection AddQueries(this IServiceCollection services)
         {
-            return services.AddMediatR(typeof(GetLocationsQuery).Assembly);
+            return services
+                .AddMediatR(typeof(GetLocationsQuery).Assembly)
+                .AddQueryServices();
         }
         
         public static IServiceCollection AddRegistrations(this IServiceCollection serviceCollection)
