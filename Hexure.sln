@@ -133,6 +133,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularMonolith.ReadModels.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexure.Workers", "Source\Hexure.Workers\Hexure.Workers.csproj", "{7CB5C777-A8DC-485C-8E86-80E4043680E2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexure.Dapper", "Source\Hexure.Dapper\Hexure.Dapper.csproj", "{4E53EAD3-E78A-466D-A238-7FFF6C2C738E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -331,6 +333,10 @@ Global
 		{7CB5C777-A8DC-485C-8E86-80E4043680E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CB5C777-A8DC-485C-8E86-80E4043680E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CB5C777-A8DC-485C-8E86-80E4043680E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E53EAD3-E78A-466D-A238-7FFF6C2C738E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E53EAD3-E78A-466D-A238-7FFF6C2C738E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E53EAD3-E78A-466D-A238-7FFF6C2C738E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E53EAD3-E78A-466D-A238-7FFF6C2C738E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -399,6 +405,7 @@ Global
 		{E52F57F1-F2E7-4F72-8972-967A1A75CE97} = {68B2FD7E-BE5C-4B57-A6FA-BDC77362B4CC}
 		{1A84EE46-FB83-451B-B8A3-7E5E40AD584B} = {015B5211-29BA-46FD-9624-288E79BB6CCA}
 		{7CB5C777-A8DC-485C-8E86-80E4043680E2} = {4352D366-EC5C-43F3-AD54-7A36A4BE0BA4}
+		{4E53EAD3-E78A-466D-A238-7FFF6C2C738E} = {4352D366-EC5C-43F3-AD54-7A36A4BE0BA4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {598A3A02-79C7-4D50-889E-D65594383E6D}

@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Source\Hexure.Dapper\Hexure.Dapper.csproj" />
     <ProjectReference Include="..\..\Source\Hexure.EntityFrameworkCore.SqlServer\Hexure.EntityFrameworkCore.SqlServer.csproj" />
     <ProjectReference Include="..\..\Source\Hexure.EntityFrameworkCore\Hexure.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\Source\Hexure.MediatR\Hexure.MediatR.csproj" />

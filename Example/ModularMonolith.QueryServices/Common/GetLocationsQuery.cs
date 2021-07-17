@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ModularMonolith.ReadModels;
 
-namespace ModularMonolith.QueryServices
+namespace ModularMonolith.QueryServices.Common
 {
     public class LocationDto
     {

@@ -26,7 +26,9 @@ namespace ModularMonolith.EventsConsumer
                 {
                     services.AddRegistrations();
                     services.AddPayments();
-                    services.AddPersistence(configuration.GetConnectionString("Database"));
+                    services.AddPersistence(
+                        configuration.GetConnectionString("Database"),
+                        configuration.GetConnectionString("Database"));
                     services.AddInbox<MonolithDbContext>();
                     services.AddMemoryCache();
                 })
