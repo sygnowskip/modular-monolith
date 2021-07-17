@@ -135,6 +135,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexure.Workers", "Source\He
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexure.Dapper", "Source\Hexure.Dapper\Hexure.Dapper.csproj", "{4E53EAD3-E78A-466D-A238-7FFF6C2C738E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Tests.Performance", "Example\ModularMonolith.Tests.Performance\ModularMonolith.Tests.Performance.csproj", "{D2C77E21-E7C0-4297-8EC8-FE45165BD0DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -337,6 +339,10 @@ Global
 		{4E53EAD3-E78A-466D-A238-7FFF6C2C738E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E53EAD3-E78A-466D-A238-7FFF6C2C738E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E53EAD3-E78A-466D-A238-7FFF6C2C738E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2C77E21-E7C0-4297-8EC8-FE45165BD0DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2C77E21-E7C0-4297-8EC8-FE45165BD0DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2C77E21-E7C0-4297-8EC8-FE45165BD0DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2C77E21-E7C0-4297-8EC8-FE45165BD0DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -406,6 +412,7 @@ Global
 		{1A84EE46-FB83-451B-B8A3-7E5E40AD584B} = {015B5211-29BA-46FD-9624-288E79BB6CCA}
 		{7CB5C777-A8DC-485C-8E86-80E4043680E2} = {4352D366-EC5C-43F3-AD54-7A36A4BE0BA4}
 		{4E53EAD3-E78A-466D-A238-7FFF6C2C738E} = {4352D366-EC5C-43F3-AD54-7A36A4BE0BA4}
+		{D2C77E21-E7C0-4297-8EC8-FE45165BD0DB} = {BDF498E9-8739-48DF-B72C-9456B4507A16}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {598A3A02-79C7-4D50-889E-D65594383E6D}
