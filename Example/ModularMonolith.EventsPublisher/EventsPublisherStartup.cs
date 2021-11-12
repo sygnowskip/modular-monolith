@@ -1,9 +1,13 @@
-﻿using ExternalSystem.Events.Locations;
+﻿using System;
+using ExternalSystem.Events.Locations;
+using GreenPipes;
 using Hexure.EventsPublisher;
 using Hexure.MassTransit;
 using Hexure.MassTransit.RabbitMq.Settings;
 using Hexure.Time;
 using Hexure.Workers;
+using MassTransit;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -12,6 +16,7 @@ using ModularMonolith.Dependencies;
 using ModularMonolith.Exams.Events;
 using ModularMonolith.Persistence;
 using ModularMonolith.Registrations.Contracts.Events;
+using Newtonsoft.Json;
 
 namespace ModularMonolith.EventsPublisher
 {
@@ -45,6 +50,15 @@ namespace ModularMonolith.EventsPublisher
                 .AddRabbitMQ(rabbitConnectionString: RabbitMqConnectionStringBuilder.Build(rabbitMqSettings.Host,
                     rabbitMqSettings.Username, rabbitMqSettings.Password));
 
+        }
+        
+        public override void Configure(IApplicationBuilder app, IServiceProvider serviceProvider)
+        {
+#if DEBUG
+            var massTransitConfiguration =
+                JsonConvert.SerializeObject(serviceProvider.GetRequiredService<IBusControl>().GetProbeResult());
+#endif
+            base.Configure(app, serviceProvider);
         }
     }
 }

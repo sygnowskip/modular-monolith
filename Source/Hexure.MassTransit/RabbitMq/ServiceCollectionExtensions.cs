@@ -40,14 +40,14 @@ namespace Hexure.MassTransit.RabbitMq
 
             RegisterRabbitMq(serviceCollection, rabbitMqSettings, (busConfigurator, provider) =>
                 {
+                    busConfigurator.UseRetry(x =>
+                        x.Incremental(2, TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(12)));
                     busConfigurator.UseServiceScope(provider);
                     busConfigurator.ReceiveEndpointForEachConsumer(provider, rabbitMqSettings.QueuePrefix,
                         withConsumersFromAssemblies,
                         configurator =>
                         {
                             configurator.PrefetchCount = 64;
-                            configurator.UseMessageRetry(x =>
-                                x.Incremental(2, TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(12)));
                         });
 
                     busConfigurator.UseConsumeFilter(typeof(TransactionFilter<>), provider);
