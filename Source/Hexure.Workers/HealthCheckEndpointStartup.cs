@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Hexure.Workers
@@ -7,14 +8,11 @@ namespace Hexure.Workers
     {
         public abstract void ConfigureServices(IServiceCollection serviceCollection);
 
-        public void Configure(IApplicationBuilder app)
+        public virtual void Configure(IApplicationBuilder app, IServiceProvider serviceProvider)
         {
             app.UseHttpsRedirection();
             app.UseRouting();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapHealthChecks("/api/health-check");
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapHealthChecks("/api/health-check"); });
         }
     }
 }

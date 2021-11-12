@@ -68,7 +68,7 @@ namespace Hexure.Tests.Unit.MediatR
             var behavior = new TransactionalCommandsBehavior<Command, Result<int>>(_transactionProviderMock.Object, _transactionalBehaviorValidator);
             Func<Task> handleAction = async () => await behavior.Handle(new Command(), CancellationToken.None, () => throw new Exception("Inavlid execution"));
 
-            handleAction.Should().Throw<Exception>();
+            handleAction.Should().ThrowAsync<Exception>();
             _transactionProviderMock.Verify(provider => provider.RollbackTransactionAsync(), Times.Once);
         }
 

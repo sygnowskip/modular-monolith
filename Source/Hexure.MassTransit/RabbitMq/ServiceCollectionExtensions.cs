@@ -40,14 +40,14 @@ namespace Hexure.MassTransit.RabbitMq
 
             RegisterRabbitMq(serviceCollection, rabbitMqSettings, (busConfigurator, provider) =>
                 {
+                    busConfigurator.UseRetry(x =>
+                        x.Incremental(2, TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(12)));
                     busConfigurator.UseServiceScope(provider);
                     busConfigurator.ReceiveEndpointForEachConsumer(provider, rabbitMqSettings.QueuePrefix,
                         withConsumersFromAssemblies,
                         configurator =>
                         {
                             configurator.PrefetchCount = 64;
-                            configurator.UseMessageRetry(x =>
-                                x.Incremental(2, TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(12)));
                         });
 
                     busConfigurator.UseConsumeFilter(typeof(TransactionFilter<>), provider);
@@ -68,12 +68,8 @@ namespace Hexure.MassTransit.RabbitMq
 
             serviceCollection.AddMassTransit(configurator =>
             {
-                //TODO: Migrate to CreateUsingRabbitMq (MassTrasit@7 change)
-                //https://masstransit-project.com/getting-started/upgrade-v6.html#version-7
-                configurator.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(factoryConfigurator =>
+                configurator.UsingRabbitMq((context, factoryConfigurator) =>
                 {
-                    factoryConfigurator.UseHealthCheck(provider);
-
                     factoryConfigurator.Host(rabbitMqSettings.Host, hostConfigurator =>
                     {
                         hostConfigurator.Username(rabbitMqSettings.Username);
@@ -88,15 +84,15 @@ namespace Hexure.MassTransit.RabbitMq
                     factoryConfigurator.MessageTopology.SetEntityNameFormatter(
                         new EventNamespaceNameFormatter(
                             factoryConfigurator.MessageTopology.EntityNameFormatter,
-                            provider.GetRequiredService<IEventNameProvider>()));
+                            context.GetRequiredService<IEventNameProvider>()));
 
-                    factoryConfigurator.SetMessageSerializer(provider
+                    factoryConfigurator.SetMessageSerializer(context
                         .GetRequiredService<EventNamespaceMessageSerializer>);
                     factoryConfigurator.AddMessageDeserializer(JsonMessageSerializer.JsonContentType,
-                        provider.GetRequiredService<EventNamespaceMessageDeserializer>);
+                        context.GetRequiredService<EventNamespaceMessageDeserializer>);
 
-                    rabbitMqBusConfiguratorAction?.Invoke(factoryConfigurator, provider);
-                }));
+                    rabbitMqBusConfiguratorAction?.Invoke(factoryConfigurator, context);
+                });
 
                 configuratorAction?.Invoke(configurator);
             });

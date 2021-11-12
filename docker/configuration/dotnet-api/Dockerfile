@@ -1,5 +1,5 @@
 # build
-FROM mcr.microsoft.com/dotnet/sdk:5.0.102-ca-patch-buster-slim AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG ASSEMBLY_NAME
 ARG PROJECT_PATH
 WORKDIR /src
@@ -9,7 +9,7 @@ WORKDIR "/src/${PROJECT_PATH}"
 RUN dotnet publish "${ASSEMBLY_NAME}.csproj" -c Release -o /api
 
 # run
-FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
 RUN apt-get update && apt-get install -y --no-install-recommends curl
 ARG ASSEMBLY_NAME
 ENV RUN_ASSEMBLY_FILENAME="${ASSEMBLY_NAME}.dll"
