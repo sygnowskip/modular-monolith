@@ -11,11 +11,9 @@ using ModularMonolith.Exams.Language.Validators;
 using ModularMonolith.Exams.Persistence;
 using ModularMonolith.Language.Locations;
 using ModularMonolith.Language.Subjects;
-using ModularMonolith.Payments;
-using ModularMonolith.Persistence.Repositories;
 using ModularMonolith.Persistence.Validators;
 using ModularMonolith.ReadModels;
-using ModularMonolith.Registrations;
+using ModularMonolith.Registrations.Domain;
 
 namespace ModularMonolith.Persistence
 {
@@ -29,8 +27,6 @@ namespace ModularMonolith.Persistence
         
         public static IServiceCollection AddWritePersistence(this IServiceCollection services, string connectionString)
         {
-            services.AddTransient<IRegistrationRepository, RegistrationRepository>();
-            services.AddTransient<IPaymentRepository, PaymentRepository>();
             services.AddDbContext<MonolithDbContext>((provider, builder) =>
                 {
                     var serviceProvider = new ServiceCollection()
@@ -59,7 +55,6 @@ namespace ModularMonolith.Persistence
                 provider.GetRequiredService<MonolithDbContext>());
             services.AddTransient<ILocationExistenceValidator, LocationExistenceValidator>();
             services.AddTransient<ISubjectExistenceValidator, SubjectExistenceValidator>();
-            services.AddTransient<IExamExistenceValidator, ExamExistenceValidator>();
 
             return services;
         }

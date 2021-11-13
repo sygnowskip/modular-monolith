@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ModularMonolith.Exams.Domain;
+using ModularMonolith.Exams.Language.Validators;
+using ModularMonolith.Exams.Persistence.Validators;
 
 namespace ModularMonolith.Exams.Persistence
 {
@@ -10,6 +12,7 @@ namespace ModularMonolith.Exams.Persistence
         {
             services.AddTransient<IExamDbContext>(provider => provider.GetService<TDbContext>());
             services.AddTransient<IExamRepository, ExamRepository>();
+            services.AddTransient<IExamExistenceValidator, ExamExistenceValidator>();
         }
     }
 }

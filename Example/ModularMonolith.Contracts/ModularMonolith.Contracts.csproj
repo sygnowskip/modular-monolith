@@ -6,6 +6,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ModularMonolith.Exams.Language\ModularMonolith.Exams.Language.csproj" />
+      <ProjectReference Include="..\ModularMonolith.Registrations.Language\ModularMonolith.Registrations.Language.csproj" />
     </ItemGroup>
 
 </Project>

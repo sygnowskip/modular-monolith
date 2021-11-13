@@ -12,7 +12,6 @@
     <ProjectReference Include="..\ModularMonolith.Configuration\ModularMonolith.Configuration.csproj" />
     <ProjectReference Include="..\ModularMonolith.Dependencies\ModularMonolith.Dependencies.csproj" />
     <ProjectReference Include="..\ModularMonolith.Persistence\ModularMonolith.Persistence.csproj" />
-    <ProjectReference Include="..\ModularMonolith.Registrations.Contracts\ModularMonolith.Registrations.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

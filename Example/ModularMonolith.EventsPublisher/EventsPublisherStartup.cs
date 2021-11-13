@@ -15,7 +15,7 @@ using ModularMonolith.Configuration;
 using ModularMonolith.Dependencies;
 using ModularMonolith.Exams.Events;
 using ModularMonolith.Persistence;
-using ModularMonolith.Registrations.Contracts.Events;
+using ModularMonolith.Registrations.Events;
 using Newtonsoft.Json;
 
 namespace ModularMonolith.EventsPublisher

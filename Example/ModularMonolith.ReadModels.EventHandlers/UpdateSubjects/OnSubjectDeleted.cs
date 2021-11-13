@@ -23,7 +23,6 @@ namespace ModularMonolith.ReadModels.EventHandlers.UpdateSubjects
                 return;
 
             _monolithDbContext.Subjects.Remove(subject);
-            await _monolithDbContext.SaveChangesAsync();
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using Hexure.Events.Namespace;
-using ModularMonolith.Payments.Contracts.Events;
-using ModularMonolith.Registrations.Contracts.Events;
+using ModularMonolith.Registrations.Events;
 using NUnit.Framework;
 
 namespace ModularMonolith.Tests.Unit.Events
@@ -23,7 +22,7 @@ namespace ModularMonolith.Tests.Unit.Events
         [Test]
         public void ShouldReturnEmptyValueForAssemblyWithoutAttribute()
         {
-            var eventsNamespace = _eventNamespaceReader.GetFromAssemblyOfType<PaymentCompleted>();
+            var eventsNamespace = _eventNamespaceReader.GetFromAssemblyOfType<TestEvent>();
 
             eventsNamespace.HasValue.Should().BeFalse();
         }
@@ -40,7 +39,7 @@ namespace ModularMonolith.Tests.Unit.Events
         [Test]
         public void ShouldReturnEmptyValueForAssemblyWithoutAttributeOnRuntimeType()
         {
-            var eventsNamespace = _eventNamespaceReader.GetFromAssemblyOfType(typeof(PaymentCompleted));
+            var eventsNamespace = _eventNamespaceReader.GetFromAssemblyOfType(typeof(TestEvent));
 
             eventsNamespace.HasValue.Should().BeFalse();
         }

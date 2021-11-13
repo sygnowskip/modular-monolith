@@ -25,7 +25,6 @@ namespace ModularMonolith.ReadModels.EventHandlers.UpdateSubjects
 
             await _monolithDbContext.Subjects.AddAsync(new Subject(new SubjectId(context.Message.Id), 
                 context.Message.Name));
-            await _monolithDbContext.SaveChangesAsync();
         }
     }
 }

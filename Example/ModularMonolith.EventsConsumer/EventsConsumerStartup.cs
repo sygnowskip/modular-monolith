@@ -29,8 +29,6 @@ namespace ModularMonolith.EventsConsumer
                 .WithHandlersFromAssemblyOfType<OnLocationAdded>()
                 .WithServices(services =>
                 {
-                    services.AddRegistrations();
-                    services.AddPayments();
                     services.AddPersistence(
                         configuration.GetConnectionString("Database"),
                         configuration.GetConnectionString("Database"));

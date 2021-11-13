@@ -3,7 +3,7 @@ using System.Linq;
 using FluentAssertions;
 using Hexure.Results.Extensions;
 using Hexure.Time;
-using ModularMonolith.Registrations;
+using ModularMonolith.Registrations.Domain;
 using ModularMonolith.Registrations.Language.ValueObjects;
 using Moq;
 using NUnit.Framework;

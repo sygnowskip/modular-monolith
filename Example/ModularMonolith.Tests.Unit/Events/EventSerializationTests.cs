@@ -5,14 +5,11 @@ using FluentAssertions;
 using Hexure.Events;
 using Hexure.Events.Namespace;
 using Hexure.Events.Serialization;
-using ModularMonolith.Payments.Contracts.Events;
-using ModularMonolith.Payments.Language;
-using ModularMonolith.Registrations.Contracts.Events;
+using ModularMonolith.Registrations.Events;
 using ModularMonolith.Registrations.Language;
 using NUnit.Framework;
 
 [assembly: EventNamespace("Tests")]
-
 namespace ModularMonolith.Tests.Unit.Events
 {
     public class TestDomainEvent : IEvent
@@ -60,7 +57,7 @@ namespace ModularMonolith.Tests.Unit.Events
         [Test]
         public void ShouldNotSerializeEventsFromAssembliesWithoutDefinedNamespaces()
         {
-            var domainEvent = new PaymentCompleted(new PaymentId(Guid.NewGuid()), Guid.NewGuid(), DateTime.UtcNow);
+            var domainEvent = new TestEvent(Guid.NewGuid(), DateTime.UtcNow);
 
             var serialized = _eventSerializer.Serialize(domainEvent);
 

@@ -27,7 +27,6 @@
     <ProjectReference Include="..\ExternalSystem.Events\ExternalSystem.Events.csproj" />
     <ProjectReference Include="..\ModularMonolith.Configuration\ModularMonolith.Configuration.csproj" />
     <ProjectReference Include="..\ModularMonolith.QueryServices\ModularMonolith.QueryServices.csproj" />
-    <ProjectReference Include="..\ModularMonolith.Registrations.Contracts\ModularMonolith.Registrations.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

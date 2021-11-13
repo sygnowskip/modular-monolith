@@ -17,9 +17,7 @@
     <ProjectReference Include="..\ModularMonolith.CommandServices\ModularMonolith.CommandServices.csproj" />
     <ProjectReference Include="..\ModularMonolith.Dependencies\ModularMonolith.Dependencies.csproj" />
     <ProjectReference Include="..\ModularMonolith.Errors\ModularMonolith.Errors.csproj" />
-    <ProjectReference Include="..\ModularMonolith.Registrations.Contracts\ModularMonolith.Registrations.Contracts.csproj" />
     <ProjectReference Include="..\ModularMonolith.Registrations.Language\ModularMonolith.Registrations.Language.csproj" />
-    <ProjectReference Include="..\ModularMonolith.Registrations.Queries\ModularMonolith.Registrations.Queries.csproj" />
   </ItemGroup>
 
 

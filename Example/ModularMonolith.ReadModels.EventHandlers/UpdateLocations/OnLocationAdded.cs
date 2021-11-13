@@ -26,8 +26,6 @@ namespace ModularMonolith.ReadModels.EventHandlers.UpdateLocations
             var location = new Location(new LocationId(context.Message.Id),
                 context.Message.Name);
             await _monolithDbContext.Locations.AddAsync(location);
-
-            await _monolithDbContext.SaveChangesAsync();
         }
     }
 }

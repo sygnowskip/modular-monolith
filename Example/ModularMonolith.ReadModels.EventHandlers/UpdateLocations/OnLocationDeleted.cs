@@ -23,7 +23,6 @@ namespace ModularMonolith.ReadModels.EventHandlers.UpdateLocations
                 return;
 
             _monolithDbContext.Locations.Remove(location);
-            await _monolithDbContext.SaveChangesAsync();
         }
     }
 }

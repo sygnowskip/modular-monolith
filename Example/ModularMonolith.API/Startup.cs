@@ -62,8 +62,6 @@ namespace ModularMonolith.API
                 .AddIdentityServer(new Uri(authoritySettings.Url));
             
             //TODO: Clean up
-            services.AddRegistrations();
-            services.AddPayments();
             services.AddPersistence(
                     Configuration.GetConnectionString("Database"), 
                     Configuration.GetConnectionString("Database"))
