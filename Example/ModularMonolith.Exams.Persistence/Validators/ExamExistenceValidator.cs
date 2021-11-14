@@ -6,9 +6,9 @@ namespace ModularMonolith.Exams.Persistence.Validators
 {
     internal class ExamExistenceValidator : IExamExistenceValidator
     {
-        private readonly IExamDbContext _dbContext;
+        private readonly IExamsDbContext _dbContext;
 
-        public ExamExistenceValidator(IExamDbContext dbContext)
+        public ExamExistenceValidator(IExamsDbContext dbContext)
         {
             _dbContext = dbContext;
         }

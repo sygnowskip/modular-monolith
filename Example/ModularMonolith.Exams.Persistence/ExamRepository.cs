@@ -10,29 +10,29 @@ namespace ModularMonolith.Exams.Persistence
 {
     public class ExamRepository : IExamRepository
     {
-        private readonly IExamDbContext _examDbContext;
+        private readonly IExamsDbContext _examsDbContext;
 
-        public ExamRepository(IExamDbContext examDbContext)
+        public ExamRepository(IExamsDbContext examsDbContext)
         {
-            _examDbContext = examDbContext;
+            _examsDbContext = examsDbContext;
         }
 
         public async Task<Result<Exam>> SaveAsync(Exam aggregate)
         {
-            await _examDbContext.Exams.AddAsync(aggregate);
-            await _examDbContext.SaveChangesAsync();
+            await _examsDbContext.Exams.AddAsync(aggregate);
+            await _examsDbContext.SaveChangesAsync();
             return Result.Ok(aggregate);
         }
 
         public async Task<Result<Exam>> GetAsync(ExamId identifier)
         {
-            return Maybe<Exam>.From(await _examDbContext.Exams.SingleOrDefaultAsync(exam => exam.Id == identifier))
+            return Maybe<Exam>.From(await _examsDbContext.Exams.SingleOrDefaultAsync(exam => exam.Id == identifier))
                 .ToResult(DomainErrors.BuildAggregateNotFound(nameof(Exam), identifier.Value));
         }
 
         public Task<Result> Delete(Exam aggregate)
         {
-            _examDbContext.Exams.Remove(aggregate);
+            _examsDbContext.Exams.Remove(aggregate);
 
             return Task.FromResult(Result.Ok());
         }

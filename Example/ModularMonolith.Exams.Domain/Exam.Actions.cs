@@ -2,6 +2,7 @@
 using Hexure.Results.Extensions;
 using ModularMonolith.Exams.Domain.ValueObjects;
 using ModularMonolith.Exams.Events;
+using ModularMonolith.Language;
 
 namespace ModularMonolith.Exams.Domain
 {

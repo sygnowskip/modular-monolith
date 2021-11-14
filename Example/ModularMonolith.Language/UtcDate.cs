@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Hexure.Results;
 using Hexure.Results.Extensions;
 
-namespace ModularMonolith.Exams.Domain.ValueObjects
+namespace ModularMonolith.Language
 {
     public class UtcDate : ValueObject
     {

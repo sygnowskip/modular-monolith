@@ -13,7 +13,7 @@ using ModularMonolith.Registrations.Persistence;
 
 namespace ModularMonolith.Persistence
 {
-    internal partial class MonolithDbContext : IExamDbContext, IMonolithQueryDbContext,  ISerializedEventDbContext, IInboxDbContext, IRegistrationsDbContext
+    internal partial class MonolithDbContext : IExamsDbContext, IMonolithQueryDbContext,  ISerializedEventDbContext, IInboxDbContext, IRegistrationsDbContext
     {
         public DbSet<Registration> Registrations { get; set; }
         public DbSet<SerializedEventEntity> SerializedEvents { get; set; }

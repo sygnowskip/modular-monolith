@@ -1,13 +1,13 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using ModularMonolith.Exams.Domain;
+using ModularMonolith.Orders.Domain;
 
-namespace ModularMonolith.Exams.Persistence
+namespace ModularMonolith.Orders.Persistence
 {
-    public interface IExamDbContext
+    public interface IOrdersDbContext
     {
-        DbSet<Exam> Exams { get; }
+        DbSet<Order> Orders { get; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken());
     }
 }
