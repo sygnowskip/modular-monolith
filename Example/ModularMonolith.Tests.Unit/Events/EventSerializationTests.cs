@@ -7,9 +7,9 @@ using Hexure.Events.Namespace;
 using Hexure.Events.Serialization;
 using ModularMonolith.Registrations.Events;
 using ModularMonolith.Registrations.Language;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
-[assembly: EventNamespace("Tests")]
 namespace ModularMonolith.Tests.Unit.Events
 {
     public class TestDomainEvent : IEvent
@@ -90,9 +90,10 @@ namespace ModularMonolith.Tests.Unit.Events
         {
             var domainEvent = new TestDomainEvent(DateTime.UtcNow);
 
-            var serialized = _eventSerializer.Serialize(domainEvent);
+            var serializedEvent = new SerializedEvent("Unknown", nameof(TestDomainEvent),
+                JsonConvert.SerializeObject(domainEvent));
 
-            var deserialized = _eventDeserializer.Deserialize(serialized.Value);
+            var deserialized = _eventDeserializer.Deserialize(serializedEvent);
 
             deserialized.IsSuccess.Should().BeFalse();
             deserialized.ViolatesOnly(EventDeserializerErrors.UnableToFindTypeForEvent).Should().BeTrue();

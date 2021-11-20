@@ -1,23 +1,32 @@
-﻿using ModularMonolith.Orders.Domain.ValueObjects;
+﻿using ModularMonolith.Language.Pricing;
+using ModularMonolith.Orders.Domain.ValueObjects;
 
 namespace ModularMonolith.Orders.Tests.Unit
 {
     internal static class TestObjectsBuilder
     {
-        public static Price CreatePrice(decimal value)
+        public static Price CreatePrice(decimal net, decimal tax)
         {
-            return Price.Create(value).Value;
+            var netResult = Money.Create(net, SupportedCurrencies.USD);
+            var taxResult = Money.Create(tax, SupportedCurrencies.USD);
+            return Price.Create(netResult.Value, taxResult.Value, MockObjectsBuilder.BuildSingleCurrencyPolicy(true)).Value;
         }
         
-        public static Tax CreateTax(decimal value)
+        public static Price CreatePrice(decimal net, decimal tax, Currency currency)
         {
-            return Tax.Create(value).Value;
+            var netResult = Money.Create(net, currency);
+            var taxResult = Money.Create(tax, currency);
+            return Price.Create(netResult.Value, taxResult.Value, MockObjectsBuilder.BuildSingleCurrencyPolicy(true)).Value;
         }
 
         public static Item CreateItem(string externalId)
         {
-            return Item.Create("Item", externalId, 1, 100, 23, 123, 
-                    MockObjectsBuilder.BuildGrossPricePolicy(true)).Value;
+            return Item.Create("Item", externalId, 1, CreatePrice(100, 23)).Value;
+        }
+
+        public static Item CreateItem(string externalId, Currency currency)
+        {
+            return Item.Create("Item", externalId, 1, CreatePrice(100, 23, currency)).Value;
         }
 
         public static ContactData CreateContactData()

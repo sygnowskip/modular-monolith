@@ -13,7 +13,7 @@ namespace ModularMonolith.Tests.Unit.Errors
         {
             var property = "FirstName";
 
-            var result = Language.Errors.NotNullOrWhiteSpace.Check(value, property);
+            var result = Language.CommonErrors.NotNullOrWhiteSpace.Check(value, property);
 
             result.IsSuccess.Should().BeFalse();
             result.Error.Any(e => e.Message.Contains(property)).Should().BeTrue();
@@ -26,7 +26,7 @@ namespace ModularMonolith.Tests.Unit.Errors
             var property = "FirstName";
             var value = "John";
 
-            var result = Language.Errors.NotNullOrWhiteSpace.Check(value, property);
+            var result = Language.CommonErrors.NotNullOrWhiteSpace.Check(value, property);
 
             result.IsSuccess.Should().BeTrue();
         }

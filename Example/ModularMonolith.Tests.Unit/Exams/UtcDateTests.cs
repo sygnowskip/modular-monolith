@@ -1,6 +1,5 @@
 ﻿using System;
 using FluentAssertions;
-using ModularMonolith.Exams.Domain.ValueObjects;
 using ModularMonolith.Language;
 using NUnit.Framework;
 

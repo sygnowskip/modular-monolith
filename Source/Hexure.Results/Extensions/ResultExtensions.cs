@@ -22,6 +22,14 @@ namespace Hexure.Results.Extensions
             return Result.Ok(func());
         }
 
+        public static Result<T> OnSuccess<T>(this Result result, Func<Result<T>> func)
+        {
+            if (result.IsFailure)
+                return Result.Fail<T>(result.Error.ToArray());
+
+            return func();
+        }
+
         public static Result<K> OnSuccess<T, K>(this Result<T> result, Func<T, Result<K>> func)
         {
             if (result.IsFailure)

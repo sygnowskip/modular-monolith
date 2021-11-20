@@ -15,7 +15,7 @@ namespace ModularMonolith.Tests.Unit.Errors
         {
             var property = "FirstName";
 
-            var result = Language.Errors.MaxLength.Check(value, maxLength, property);
+            var result = Language.CommonErrors.MaxLength.Check(value, maxLength, property);
 
             result.IsSuccess.Should().Be(expected, because);
             if (!expected)

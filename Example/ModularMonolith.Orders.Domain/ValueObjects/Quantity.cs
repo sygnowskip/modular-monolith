@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Hexure.Results;
 using Hexure.Results.Extensions;
+using ModularMonolith.Language;
 
 namespace ModularMonolith.Orders.Domain.ValueObjects
 {
@@ -19,7 +20,7 @@ namespace ModularMonolith.Orders.Domain.ValueObjects
 
         public static Result<Quantity> Create(int value)
         {
-            return OrderErrors.GreaterThanZero.Check(value)
+            return CommonErrors.GreaterThanZero.Check(value)
                 .OnSuccess(() => new Quantity(value));
         }
     }

@@ -3,6 +3,7 @@ using Hexure;
 using Hexure.Events;
 using Hexure.Time;
 using ModularMonolith.Language;
+using ModularMonolith.Language.Pricing;
 using ModularMonolith.Orders.Domain.ValueObjects;
 using ModularMonolith.Orders.Language;
 using Stateless;
@@ -24,7 +25,7 @@ namespace ModularMonolith.Orders.Domain
         }
 
         public Order(UtcDate creationDate, ContactData seller, ContactData buyer,
-            IReadOnlyCollection<Item> items, Summary summary, ISystemTimeProvider systemTimeProvider)
+            IReadOnlyCollection<Item> items, Price summary, ISystemTimeProvider systemTimeProvider)
             : this(systemTimeProvider)
         {
             Status = OrderStatus.AwaitingForPayment;
@@ -41,6 +42,6 @@ namespace ModularMonolith.Orders.Domain
         public ContactData Seller { get; private set; }
         public ContactData Buyer { get; private set; }
         public IReadOnlyCollection<Item> Items { get; private set; }
-        public Summary Summary { get; private set; }
+        public Price Summary { get; private set; }
     }
 }

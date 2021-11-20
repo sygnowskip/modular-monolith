@@ -30,10 +30,10 @@ namespace ModularMonolith.Orders.Domain.ValueObjects
         public static Result<ContactData> Create(string name, string streetAddress, string city, string zipCode)
         {
             return Result.Combine(
-                    ModularMonolith.Language.Errors.NotNullOrWhiteSpace.Check(name, nameof(Name)),
-                    ModularMonolith.Language.Errors.NotNullOrWhiteSpace.Check(streetAddress, nameof(StreetAddress)),
-                    ModularMonolith.Language.Errors.NotNullOrWhiteSpace.Check(city, nameof(City)),
-                    ModularMonolith.Language.Errors.NotNullOrWhiteSpace.Check(zipCode, nameof(ZipCode)))
+                    ModularMonolith.Language.CommonErrors.NotNullOrWhiteSpace.Check(name, nameof(Name)),
+                    ModularMonolith.Language.CommonErrors.NotNullOrWhiteSpace.Check(streetAddress, nameof(StreetAddress)),
+                    ModularMonolith.Language.CommonErrors.NotNullOrWhiteSpace.Check(city, nameof(City)),
+                    ModularMonolith.Language.CommonErrors.NotNullOrWhiteSpace.Check(zipCode, nameof(ZipCode)))
                 .OnSuccess(() => new ContactData(name, streetAddress, city, zipCode));
         }
     }

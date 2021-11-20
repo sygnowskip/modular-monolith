@@ -3,6 +3,8 @@ using Hexure.Events;
 using Hexure.Results;
 using Hexure.Results.Extensions;
 using Hexure.Time;
+using ModularMonolith.Exams.Language;
+using ModularMonolith.Orders.Language;
 using ModularMonolith.Registrations.Events;
 using ModularMonolith.Registrations.Language;
 using ModularMonolith.Registrations.Language.ValueObjects;
@@ -25,13 +27,13 @@ namespace ModularMonolith.Registrations.Domain
             Id = id;
             Status = RegistrationStatus.New;
             Candidate = candidate;
-            Payment = new RegistrationPayment(100, "EUR");
         }
 
         public RegistrationId Id { get; private set; }
+        public ExamId ExamId { get; private set; }
+        public OrderId OrderId { get; private set; }
         public RegistrationStatus Status { get; private set; }
         public Candidate Candidate { get; private set; }
-        public RegistrationPayment Payment { get; private set; }
 
         public Result PaymentStarted(ISystemTimeProvider systemTimeProvider)
         {

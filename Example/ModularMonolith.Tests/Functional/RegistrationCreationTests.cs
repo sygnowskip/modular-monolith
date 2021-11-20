@@ -18,7 +18,7 @@ namespace ModularMonolith.Tests.Functional
             var httpClient = await PrepareClientWithTokenForScopes();
 
             var creationRequestContent = Serialize(new RegistrationCreationRequest("John", "Smith",
-                new DateTime(1980, 03, 01)));
+                new DateTime(1980, 03, 01), 1));
             var creationResult = await httpClient.PostAsync(new Uri(MonolithSettings.BaseUrl, "/api/registrations"),
                 creationRequestContent);
 

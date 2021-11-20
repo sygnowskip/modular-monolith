@@ -29,9 +29,6 @@ namespace ModularMonolith.Registrations.Persistence.Configurations
                             .HasColumnName($"{nameof(Candidate)}{nameof(DateOfBirth)}");
                     });
             });
-
-            //TODO: Temporary
-            builder.Ignore(r => r.Payment);
         }
     }
 }

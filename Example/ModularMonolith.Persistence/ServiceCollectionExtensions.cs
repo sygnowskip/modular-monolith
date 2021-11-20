@@ -7,13 +7,11 @@ using Hexure.Time;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.DependencyInjection;
-using ModularMonolith.Exams.Language.Validators;
 using ModularMonolith.Exams.Persistence;
 using ModularMonolith.Language.Locations;
 using ModularMonolith.Language.Subjects;
 using ModularMonolith.Persistence.Validators;
 using ModularMonolith.ReadModels;
-using ModularMonolith.Registrations.Domain;
 
 namespace ModularMonolith.Persistence
 {
