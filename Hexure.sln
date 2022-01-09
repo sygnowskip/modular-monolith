@@ -127,6 +127,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Orders.Pers
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Orders.Tests.Unit", "Example\ModularMonolith.Orders.Tests.Unit\ModularMonolith.Orders.Tests.Unit.csproj", "{84E40E3C-5FF2-4374-9F3D-2BFBE878732A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Extensions", "Example\ModularMonolith.Extensions\ModularMonolith.Extensions.csproj", "{84E6B892-F81A-4BDC-B68E-7483486F13FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Registrations.Tests.Unit", "Example\ModularMonolith.Registrations.Tests.Unit\ModularMonolith.Registrations.Tests.Unit.csproj", "{8DE7B8FA-4A83-47DC-9331-E8E9F368F9C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Exams.Tests.Unit", "Example\ModularMonolith.Exams.Tests.Unit\ModularMonolith.Exams.Tests.Unit.csproj", "{4945AEB7-3C23-4A89-958E-53532EF73931}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -321,6 +327,18 @@ Global
 		{84E40E3C-5FF2-4374-9F3D-2BFBE878732A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84E40E3C-5FF2-4374-9F3D-2BFBE878732A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84E40E3C-5FF2-4374-9F3D-2BFBE878732A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84E6B892-F81A-4BDC-B68E-7483486F13FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84E6B892-F81A-4BDC-B68E-7483486F13FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84E6B892-F81A-4BDC-B68E-7483486F13FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84E6B892-F81A-4BDC-B68E-7483486F13FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DE7B8FA-4A83-47DC-9331-E8E9F368F9C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DE7B8FA-4A83-47DC-9331-E8E9F368F9C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DE7B8FA-4A83-47DC-9331-E8E9F368F9C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DE7B8FA-4A83-47DC-9331-E8E9F368F9C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4945AEB7-3C23-4A89-958E-53532EF73931}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4945AEB7-3C23-4A89-958E-53532EF73931}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4945AEB7-3C23-4A89-958E-53532EF73931}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4945AEB7-3C23-4A89-958E-53532EF73931}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -386,6 +404,9 @@ Global
 		{983CF266-4B5C-44B2-B4E3-52E1B74F3217} = {EC08B013-3FF4-4D00-921F-5AC025C7F32F}
 		{AC622C07-579E-40C0-B0EE-105BE7A27A59} = {EC08B013-3FF4-4D00-921F-5AC025C7F32F}
 		{84E40E3C-5FF2-4374-9F3D-2BFBE878732A} = {EC08B013-3FF4-4D00-921F-5AC025C7F32F}
+		{84E6B892-F81A-4BDC-B68E-7483486F13FC} = {AB74F255-0C8E-40D8-8F26-6B5FEA417481}
+		{8DE7B8FA-4A83-47DC-9331-E8E9F368F9C6} = {2C7885E8-6DCE-4826-8438-EAB51B22DCC5}
+		{4945AEB7-3C23-4A89-958E-53532EF73931} = {5FBB51F6-F5E8-436D-A0D9-3A4AFAFE59F6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {598A3A02-79C7-4D50-889E-D65594383E6D}

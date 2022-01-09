@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Hexure.API;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -18,7 +17,7 @@ namespace ModularMonolith.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Save(RegistrationCreationRequest request)
+        public async Task<IActionResult> Save(CreateRegistrationRequest request)
         {
             /*var result = await _registrationApplicationService.Create(request);
             return CreatedOrUnprocessableEntity(result, id => $"/api/registrations/{id}");*/
@@ -26,7 +25,7 @@ namespace ModularMonolith.API.Controllers
         }
 
         [HttpGet, Route("{id}")]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> Get(long id)
         {
             var result = await Mediator.Send(new GetSingleRegistration(new RegistrationId(id)));
             return OkOrNotFound(result);

@@ -1,5 +1,4 @@
-﻿using System;
-using Hexure;
+﻿using Hexure;
 using Hexure.Results;
 using ModularMonolith.Registrations.Language;
 
@@ -12,6 +11,5 @@ namespace ModularMonolith.Registrations.Domain
 
     public interface IRegistrationRepository : IAggregateRootRepository<Registration, RegistrationId>
     {
-        Result<RegistrationId> GetIdentifierForCorrelation(Guid correlationId);
     }
 }

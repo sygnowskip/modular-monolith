@@ -5,7 +5,7 @@ using ModularMonolith.Registrations.Language.ValueObjects;
 using Moq;
 using NUnit.Framework;
 
-namespace ModularMonolith.Tests.Unit.Registrations.ValueObjects
+namespace ModularMonolith.Registrations.Tests.Unit.ValueObjects
 {
     [TestFixture]
     public class DateOfBirthTests

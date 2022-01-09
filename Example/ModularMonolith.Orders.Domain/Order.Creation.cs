@@ -22,6 +22,13 @@ namespace ModularMonolith.Orders.Domain
                 .OnSuccess(() => new Order(creationDateResult.Value, seller, buyer, items, summaryResult.Value,
                     systemTimeProvider));
         }
+        
+        public static Result<Order> CreateWithDefaultSeller(ContactData buyer, IReadOnlyCollection<Item> items,
+            ISystemTimeProvider systemTimeProvider, ISingleCurrencyPolicy singleCurrencyPolicy, ISingleItemsCurrencyPolicy singleItemsCurrencyPolicy)
+        {
+            return Create(Company.DefaultSeller, buyer, items, systemTimeProvider, singleCurrencyPolicy,
+                singleItemsCurrencyPolicy);
+        }
 
         private static Result<Price> CreateSummary(IReadOnlyCollection<Item> items,
             ISingleItemsCurrencyPolicy singleItemsCurrencyPolicy, ISingleCurrencyPolicy singleCurrencyPolicy)

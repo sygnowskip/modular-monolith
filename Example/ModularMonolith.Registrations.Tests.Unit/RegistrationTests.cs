@@ -3,12 +3,15 @@ using System.Linq;
 using FluentAssertions;
 using Hexure.Results.Extensions;
 using Hexure.Time;
+using ModularMonolith.Exams.Language;
+using ModularMonolith.Orders.Language;
 using ModularMonolith.Registrations.Domain;
+using ModularMonolith.Registrations.Language;
 using ModularMonolith.Registrations.Language.ValueObjects;
 using Moq;
 using NUnit.Framework;
 
-namespace ModularMonolith.Tests.Unit.Registrations
+namespace ModularMonolith.Registrations.Tests.Unit
 {
     [TestFixture]
     public class RegistrationTests
@@ -28,7 +31,7 @@ namespace ModularMonolith.Tests.Unit.Registrations
         {
             var registration = DateOfBirth.Create(new DateTime(1980, 01, 01), _systemTimeProviderMock.Object)
                 .OnSuccess(dob => Candidate.Create("John", "Smith", dob))
-                .OnSuccess(candidate => Registration.Create(candidate, _systemTimeProviderMock.Object));
+                .OnSuccess(candidate => Registration.Create(new ExternalRegistrationId(),new ExamId(10), new OrderId(10), candidate,  _systemTimeProviderMock.Object));
 
             registration.IsSuccess.Should().BeTrue();
         }
@@ -38,7 +41,7 @@ namespace ModularMonolith.Tests.Unit.Registrations
         {
             var registration = DateOfBirth.Create(new DateTime(1980, 01, 01), _systemTimeProviderMock.Object)
                 .OnSuccess(dob => Candidate.Create("John", "Smith", dob))
-                .OnSuccess(candidate => Registration.Create(candidate, _systemTimeProviderMock.Object));
+                .OnSuccess(candidate => Registration.Create(new ExternalRegistrationId(),new ExamId(10), new OrderId(10), candidate, _systemTimeProviderMock.Object));
 
             registration.IsSuccess.Should().BeTrue();
             registration.Value.HasDomainEvents.Should().BeTrue();
@@ -50,7 +53,7 @@ namespace ModularMonolith.Tests.Unit.Registrations
         [Test]
         public void ShouldNotAllowToCreateRegistrationForNullCandidate()
         {
-            var registration = Registration.Create(null, _systemTimeProviderMock.Object);
+            var registration = Registration.Create(new ExternalRegistrationId(),new ExamId(10), new OrderId(10), null, _systemTimeProviderMock.Object);
 
             registration.IsSuccess.Should().BeFalse();
         }

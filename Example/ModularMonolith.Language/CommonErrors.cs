@@ -1,4 +1,5 @@
-﻿using Hexure.Results;
+﻿using System;
+using Hexure.Results;
 using ModularMonolith.Language.Pricing;
 
 namespace ModularMonolith.Language
@@ -13,6 +14,18 @@ namespace ModularMonolith.Language
             public static Result Check(string value, string property)
             {
                 return Result.Create(!string.IsNullOrWhiteSpace(value),
+                    Error.Build(property).SetPropertyName(property));
+            }
+        }
+        
+        public static class NotEmpty
+        {
+            public static readonly Error.ErrorType Error =
+                new Error.ErrorType(nameof(NotNullOrWhiteSpace), "Field cannot be empty ({0})");
+
+            public static Result Check(Guid value, string property)
+            {
+                return Result.Create(value != Guid.Empty,
                     Error.Build(property).SetPropertyName(property));
             }
         }

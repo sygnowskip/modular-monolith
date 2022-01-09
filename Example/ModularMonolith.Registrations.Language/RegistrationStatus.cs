@@ -3,8 +3,8 @@
     public enum RegistrationStatus : byte
     {
         New,
-        AwaitingPayment,
         Paid,
-        Completed
+        Completed,
+        Cancelled
     }
 }

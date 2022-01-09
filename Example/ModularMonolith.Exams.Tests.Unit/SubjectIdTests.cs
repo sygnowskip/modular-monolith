@@ -3,7 +3,7 @@ using ModularMonolith.Language.Subjects;
 using Moq;
 using NUnit.Framework;
 
-namespace ModularMonolith.Tests.Unit.Exams
+namespace ModularMonolith.Exams.Tests.Unit
 {
     [TestFixture]
     public class SubjectIdTests

@@ -31,8 +31,8 @@ namespace ModularMonolith.Orders.Tests.Unit
                     TestObjectsBuilder.CreateContactData(),
                     new List<Item>()
                     {
-                        TestObjectsBuilder.CreateItem("REG~123"), 
-                        TestObjectsBuilder.CreateItem("REG~124") 
+                        TestObjectsBuilder.CreateItem(Guid.NewGuid()), 
+                        TestObjectsBuilder.CreateItem(Guid.NewGuid()) 
                     }.AsReadOnly(),
                     MockObjectsBuilder.BuildSystemTimeProvider(DateTime.UtcNow),
                     MockObjectsBuilder.BuildSingleCurrencyPolicy(true),
@@ -43,8 +43,8 @@ namespace ModularMonolith.Orders.Tests.Unit
                     TestObjectsBuilder.CreateContactData(),
                     new List<Item>()
                     {
-                        TestObjectsBuilder.CreateItem("REG~123"), 
-                        TestObjectsBuilder.CreateItem("REG~124") 
+                        TestObjectsBuilder.CreateItem(Guid.NewGuid()), 
+                        TestObjectsBuilder.CreateItem(Guid.NewGuid()) 
                     }.AsReadOnly(),
                     MockObjectsBuilder.BuildSystemTimeProvider(DateTime.UtcNow),
                     MockObjectsBuilder.BuildSingleCurrencyPolicy(true),

@@ -2,7 +2,7 @@
 using ModularMonolith.Language.Subjects;
 using Moq;
 
-namespace ModularMonolith.Tests.Unit
+namespace ModularMonolith.Exams.Tests.Unit
 {
     public static class ValueObjectProvider
     {

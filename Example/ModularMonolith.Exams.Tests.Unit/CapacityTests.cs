@@ -2,7 +2,7 @@
 using ModularMonolith.Exams.Domain.ValueObjects;
 using NUnit.Framework;
 
-namespace ModularMonolith.Tests.Unit.Exams
+namespace ModularMonolith.Exams.Tests.Unit
 {
     [TestFixture]
     public class CapacityTests

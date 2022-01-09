@@ -4,15 +4,17 @@ using ModularMonolith.Registrations.Language;
 
 namespace ModularMonolith.Registrations.Events
 {
-    public class PaymentForRegistrationStarted : IEvent
+    public class RegistrationCancelled : IEvent
     {
-        public PaymentForRegistrationStarted(RegistrationId id, DateTime publishedOn)
+        public RegistrationCancelled(RegistrationId id, ExternalRegistrationId externalId, DateTime publishedOn)
         {
             Id = id;
+            ExternalId = externalId;
             PublishedOn = publishedOn;
         }
 
         public RegistrationId Id { get; }
+        public ExternalRegistrationId ExternalId { get; }
         public DateTime PublishedOn { get; }
     }
 }
