@@ -9,25 +9,19 @@ using NUnit.Framework;
 namespace ModularMonolith.Tests.Functional
 {
     [TestFixture]
-    [Ignore("Registrations are currently in obsolete architecture, will be changed soon")]
-    public class RegistrationCreationTests : BaseHttpTests
+    public class RegistrationCreationTests : BaseScenariosTests
     {
         [Test]
         public async Task ShouldCreateRegistration()
         {
-            var httpClient = await PrepareClientWithTokenForScopes();
+            var existingExam = Scenarios.Exams.Given().HaveCreatedExamAsync(capacity: 10, examDateAddDays: 10, 1, 1);
+            await Scenarios.Exams.And().ExamIsAvailableAsync(existingExam.Id);
 
-            var creationRequestContent = Serialize(new RegistrationCreationRequest("John", "Smith",
-                new DateTime(1980, 03, 01), 1));
-            var creationResult = await httpClient.PostAsync(new Uri(MonolithSettings.BaseUrl, "/api/registrations"),
-                creationRequestContent);
+            var createdRegistration = await Scenarios.Registrations.When().CreateRegistrationAsync(existingExam.Id);
 
-            creationResult.StatusCode.Should().Be(HttpStatusCode.Created);
-            var createdResourceLocation = creationResult.Headers.Location;
-
-            var getResult = await httpClient.GetAsync(new Uri(MonolithSettings.BaseUrl,
-                createdResourceLocation));
-            getResult.StatusCode.Should().Be(HttpStatusCode.OK);
+            await Scenarios.Orders.Then().OrderShouldBeCreatedAsync();
+            await Scenarios.Exams.And().ExamShouldHaveBooking(existingExam.Id);
+            createdRegistration.Should().NotBeNull();
         }
     }
 }

@@ -34,8 +34,8 @@ namespace ModularMonolith.Tests.Unit.Events
         [Test]
         public void ShouldSerializeDomainEvent()
         {
-            var registrationId = new RegistrationId(Guid.NewGuid());
-            var domainEvent = new RegistrationPaid(registrationId, DateTime.UtcNow);
+            var registrationId = new RegistrationId(1);
+            var domainEvent = new RegistrationPaid(registrationId, new ExternalRegistrationId(), DateTime.UtcNow);
 
             var serialized = _eventSerializer.Serialize(domainEvent);
 
@@ -69,9 +69,9 @@ namespace ModularMonolith.Tests.Unit.Events
         [Test]
         public void ShouldDeserializeEvent()
         {
-            var registrationId = new RegistrationId(Guid.NewGuid());
+            var registrationId = new RegistrationId(1);
             var publishedOn = DateTime.UtcNow;
-            var domainEvent = new RegistrationPaid(registrationId, publishedOn);
+            var domainEvent = new RegistrationPaid(registrationId, new ExternalRegistrationId(), publishedOn);
 
             var serialized = _eventSerializer.Serialize(domainEvent);
 

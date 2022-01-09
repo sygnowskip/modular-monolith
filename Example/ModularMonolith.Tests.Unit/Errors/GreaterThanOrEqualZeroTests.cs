@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using FluentAssertions;
+﻿using FluentAssertions;
 using ModularMonolith.Language;
 using ModularMonolith.Language.Pricing;
 using NUnit.Framework;

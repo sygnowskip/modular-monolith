@@ -1,74 +1,44 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using ExternalSystem.Events.Subjects;
 using FluentAssertions;
-using MassTransit;
-using Microsoft.Extensions.DependencyInjection;
-using ModularMonolith.QueryServices.Common;
 using ModularMonolith.Tests.Common;
 using NUnit.Framework;
 
 namespace ModularMonolith.Tests.Functional
 {
     [TestFixture]
-    public class SubjectsTests : BaseHttpTests
+    public class SubjectsTests : BaseScenariosTests
     {
         [Test]
         public async Task ShouldGetListOfSubjectsAsync()
         {
-            var httpClient = await PrepareClientWithTokenForScopes();
-            var results = await GetSubjectsAsync(httpClient);
-            results.Any().Should().BeTrue();
+            Scenarios.Subjects.Given().HaveSubjectsInDatabase();
+
+            var subjects = await Scenarios.Subjects.When().GetSubjectsAsync();
+
+            subjects.Should().NotBeEmpty();
         }
 
         [Test]
         public async Task ShouldSynchroniseSubjectsAfterAdd()
         {
-            var httpClient = await PrepareClientWithTokenForScopes();
-            var bus = ServiceProvider.GetRequiredService<IBusControl>();
-            var response = await GetSubjectsAsync(httpClient);
-            var currentCount = response.Count();
+            var subjects = await Scenarios.Subjects.Given().GetSubjectsAsync();
 
-            await bus.Publish(new SubjectAdded(6, "Economy", DateTime.UtcNow));
+            await Scenarios.Messages.When().MessageIsPublishedAsync(new SubjectAdded(6, "Economy", DateTime.UtcNow));
 
-            var result = await TryUntilSuccess(async () =>
-            {
-                var results = await GetSubjectsAsync(httpClient);
-                return results.Count() == currentCount + 1;
-            }, 5, TimeSpan.FromSeconds(3));
-
-            result.Should().BeTrue();
+            await Scenarios.Subjects.Then().SubjectsCountShouldBeEqualToAsync(subjects.Count() + 1);
         }
 
         [Test]
         public async Task ShouldSynchroniseSubjectsAfterDelete()
         {
-            var httpClient = await PrepareClientWithTokenForScopes();
-            var bus = ServiceProvider.GetRequiredService<IBusControl>();
-            var response = await GetSubjectsAsync(httpClient);
-            var currentCount = response.Count();
+            var subjects = await Scenarios.Subjects.Given().GetSubjectsAsync();
 
-            await bus.Publish(new SubjectDeleted(6, DateTime.UtcNow));
+            await Scenarios.Messages.When().MessageIsPublishedAsync(new SubjectDeleted(5, DateTime.UtcNow));
 
-            var result = await TryUntilSuccess(async () =>
-            {
-                var results = await GetSubjectsAsync(httpClient);
-                return results.Count() == currentCount - 1;
-            }, 5, TimeSpan.FromSeconds(3));
-
-            result.Should().BeTrue();
-        }
-
-        private async Task<IEnumerable<SubjectDto>> GetSubjectsAsync(HttpClient httpClient)
-        {
-            var response = await httpClient.GetAsync(new Uri(MonolithSettings.BaseUrl, "/api/subjects"));
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-
-            return await DeserializeAsync<IEnumerable<SubjectDto>>(response);
+            await Scenarios.Subjects.Then().SubjectsCountShouldBeEqualToAsync(subjects.Count() - 1);
         }
     }
 }

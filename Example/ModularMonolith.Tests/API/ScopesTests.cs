@@ -8,14 +8,13 @@ using NUnit.Framework;
 namespace ModularMonolith.Tests.API
 {
     [TestFixture]
-    [Ignore("Registrations / Payments are currently in obsolete architecture, will be changed soon")]
-    public class ScopesTests : BaseHttpTests
+    public class ScopesTests : BaseScenariosTests
     {
         [TestCase("api/registrations")]
         [TestCase("api/payments")]
         public async Task ShouldGet200WithToken(string relativeUrl)
         {
-            var httpClient = await PrepareClientWithTokenForScopes();
+            var httpClient = await HttpClientProvider.PrepareClientWithTokenForScopesAsync("Scopes");
             
             var result = await httpClient.GetAsync(new Uri(MonolithSettings.BaseUrl, relativeUrl));
             result.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -25,7 +24,8 @@ namespace ModularMonolith.Tests.API
         [TestCase("api/payments")]
         public async Task ShouldNotAccessEndpointsWithoutToken(string relativeUrl)
         {
-            var result = await HttpClient.GetAsync(new Uri(MonolithSettings.BaseUrl, relativeUrl));
+            var httpClient = await HttpClientProvider.PrepareClientWithTokenForScopesAsync("Scopes");
+            var result = await httpClient.GetAsync(new Uri(MonolithSettings.BaseUrl, relativeUrl));
             result.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
         }
 
@@ -33,7 +33,7 @@ namespace ModularMonolith.Tests.API
         [TestCase("api/payments", "registrations")]
         public async Task ShouldNotAccessAddressWithDifferentScope(string relativeUrl, string scopes)
         {
-            var httpClient = await PrepareClientWithTokenForScopes(scopes);
+            var httpClient = await HttpClientProvider.PrepareClientWithTokenForScopesAsync("Scopes");
 
             var result = await httpClient.GetAsync(new Uri(MonolithSettings.BaseUrl, relativeUrl));
             result.StatusCode.Should().Be(HttpStatusCode.Forbidden);
