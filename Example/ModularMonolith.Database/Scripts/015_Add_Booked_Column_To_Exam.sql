@@ -1,0 +1,9 @@
+IF NOT EXISTS (
+  SELECT *
+  FROM INFORMATION_SCHEMA.COLUMNS
+  WHERE TABLE_NAME = 'Exam' and TABLE_SCHEMA = 'exams' AND COLUMN_NAME = 'Booked'
+)
+BEGIN
+    ALTER TABLE [exams].[Exam]
+    ADD Booked [int] NOT NULL
+END
