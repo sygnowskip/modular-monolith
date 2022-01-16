@@ -14,7 +14,7 @@ namespace ModularMonolith.Orders.Tests.Unit
         public static ISingleItemsCurrencyPolicy BuildSingleItemsCurrencyPolicy(bool isSuccess)
         {
             var mock = new Mock<ISingleItemsCurrencyPolicy>();
-            mock.Setup(policy => policy.AllItemsHaveSingleCurrency(It.IsAny<IReadOnlyCollection<Item>>()))
+            mock.Setup(policy => policy.AllItemsHaveSingleCurrency(It.IsAny<IReadOnlyCollection<OrderItem>>()))
                 .Returns(() => isSuccess ? Result.Ok() : Result.Fail(Errors.CommonErrorType.Build()));
             return mock.Object;
         }

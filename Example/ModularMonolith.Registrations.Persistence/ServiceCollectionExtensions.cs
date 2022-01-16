@@ -5,7 +5,7 @@ namespace ModularMonolith.Registrations.Persistence
 {
     public static class ServiceCollectionExtensions
     {
-        public static void AddExamsWritePersistence<TDbContext>(this IServiceCollection services)
+        public static void AddRegistrationsWritePersistence<TDbContext>(this IServiceCollection services)
             where TDbContext : IRegistrationsDbContext
         {
             services.AddTransient<IRegistrationsDbContext>(provider => provider.GetService<TDbContext>());

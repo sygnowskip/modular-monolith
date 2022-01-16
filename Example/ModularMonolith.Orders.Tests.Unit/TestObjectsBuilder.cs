@@ -20,14 +20,14 @@ namespace ModularMonolith.Orders.Tests.Unit
             return Price.Create(netResult.Value, taxResult.Value, MockObjectsBuilder.BuildSingleCurrencyPolicy(true)).Value;
         }
 
-        public static Item CreateItem(Guid externalId)
+        public static OrderItem CreateItem(Guid externalId)
         {
-            return Item.Create("Item", "PRODUCT", externalId, 1, CreatePrice(100, 23)).Value;
+            return OrderItem.Create("Item", "PRODUCT", externalId, 1, CreatePrice(100, 23)).Value;
         }
 
-        public static Item CreateItem(Guid externalId, Currency currency)
+        public static OrderItem CreateItem(Guid externalId, Currency currency)
         {
-            return Item.Create("Item", "PRODUCT", externalId, 1, CreatePrice(100, 23, currency)).Value;
+            return OrderItem.Create("Item", "PRODUCT", externalId, 1, CreatePrice(100, 23, currency)).Value;
         }
 
         public static ContactData CreateContactData()

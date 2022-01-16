@@ -55,6 +55,7 @@ namespace ModularMonolith.API
                 settings.Title =  "Modular monolith API";
             });
 
+            services.AddCommonServices();
             services.AddCommands();
             services.AddQueries();
             services.AddHealthChecks()

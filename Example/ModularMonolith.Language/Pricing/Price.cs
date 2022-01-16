@@ -6,16 +6,18 @@ namespace ModularMonolith.Language.Pricing
 {
     public class Price : ValueObject
     {
-        private Price(Money net, Money tax, Money gross)
+        //EF constructor
+        protected Price(){ }
+        
+        private Price(Money net, Money tax)
         {
             Net = net;
             Tax = tax;
-            Gross = gross;
         }
 
         public Money Net { get; }
         public Money Tax { get; }
-        public Money Gross { get; }
+        public Money Gross => Net + Tax;
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Net;
@@ -30,7 +32,7 @@ namespace ModularMonolith.Language.Pricing
                     CommonErrors.GreaterThanOrEqualZero.Check(tax)
                 )
                 .OnSuccess(() => singleCurrencyPolicy.IsSingleCurrency(net, tax))
-                .OnSuccess(() => new Price(net, tax, net + tax));
+                .OnSuccess(() => new Price(net, tax));
         }
     }
 }

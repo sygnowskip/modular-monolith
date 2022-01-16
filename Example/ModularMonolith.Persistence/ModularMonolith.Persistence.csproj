@@ -16,6 +16,7 @@
     <ProjectReference Include="..\..\Source\Hexure.EntityFrameworkCore\Hexure.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\Source\Hexure.MediatR\Hexure.MediatR.csproj" />
     <ProjectReference Include="..\ModularMonolith.Exams.Persistence\ModularMonolith.Exams.Persistence.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Orders.Persistence\ModularMonolith.Orders.Persistence.csproj" />
     <ProjectReference Include="..\ModularMonolith.ReadModels.Persistence\ModularMonolith.ReadModels.Persistence.csproj" />
     <ProjectReference Include="..\ModularMonolith.Registrations.Persistence\ModularMonolith.Registrations.Persistence.csproj" />
   </ItemGroup>

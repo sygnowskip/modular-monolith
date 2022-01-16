@@ -14,7 +14,7 @@ namespace ModularMonolith.Orders.Tests.Unit
     public class OrderCreationTests
     {
         [TestCaseSource(nameof(OrderTestCases))]
-        public void ShouldReturnExpectedResult(ContactData seller, ContactData buyer, IReadOnlyCollection<Item> items,
+        public void ShouldReturnExpectedResult(ContactData seller, ContactData buyer, IReadOnlyCollection<OrderItem> items,
             ISystemTimeProvider systemTimeProvider, ISingleCurrencyPolicy singleCurrencyPolicy, ISingleItemsCurrencyPolicy singleItemsCurrencyPolicy, bool expected, string because)
         {
             var orderResult = Order.Create(seller, buyer, items, systemTimeProvider, singleCurrencyPolicy, singleItemsCurrencyPolicy);
@@ -29,7 +29,7 @@ namespace ModularMonolith.Orders.Tests.Unit
                 yield return new TestCaseData(
                     TestObjectsBuilder.CreateContactData(),
                     TestObjectsBuilder.CreateContactData(),
-                    new List<Item>()
+                    new List<OrderItem>()
                     {
                         TestObjectsBuilder.CreateItem(Guid.NewGuid()), 
                         TestObjectsBuilder.CreateItem(Guid.NewGuid()) 
@@ -41,7 +41,7 @@ namespace ModularMonolith.Orders.Tests.Unit
                 yield return new TestCaseData(
                     TestObjectsBuilder.CreateContactData(),
                     TestObjectsBuilder.CreateContactData(),
-                    new List<Item>()
+                    new List<OrderItem>()
                     {
                         TestObjectsBuilder.CreateItem(Guid.NewGuid()), 
                         TestObjectsBuilder.CreateItem(Guid.NewGuid()) 
@@ -53,7 +53,7 @@ namespace ModularMonolith.Orders.Tests.Unit
                 yield return new TestCaseData(
                     TestObjectsBuilder.CreateContactData(),
                     TestObjectsBuilder.CreateContactData(),
-                    new List<Item>().AsReadOnly(),
+                    new List<OrderItem>().AsReadOnly(),
                     MockObjectsBuilder.BuildSystemTimeProvider(DateTime.UtcNow),
                     MockObjectsBuilder.BuildSingleCurrencyPolicy(true),
                     MockObjectsBuilder.BuildSingleItemsCurrencyPolicy(true),

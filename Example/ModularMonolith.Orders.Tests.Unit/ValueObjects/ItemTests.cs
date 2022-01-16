@@ -13,7 +13,7 @@ namespace ModularMonolith.Orders.Tests.Unit.ValueObjects
         [TestCaseSource(nameof(ItemTestCases))]
         public void ShouldReturnExpectedResult(string name, Guid externalId, int quantity, Price price, bool expected, string because)
         {
-            var itemResult = Item.Create(name, "REGISTRATION", externalId, quantity, price);
+            var itemResult = OrderItem.Create(name, "REGISTRATION", externalId, quantity, price);
 
             itemResult.IsSuccess.Should().Be(expected, because);
         }

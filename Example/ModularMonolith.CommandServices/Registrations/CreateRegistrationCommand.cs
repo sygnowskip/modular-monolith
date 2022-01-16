@@ -100,10 +100,10 @@ namespace ModularMonolith.CommandServices.Registrations
                 .OnSuccess(async order => await _orderRepository.SaveAsync(order));
         }
 
-        private async Task<Result<Item>> CreateRegistrationOrderItem(ExternalRegistrationId externalRegistrationId, ExamId examId)
+        private async Task<Result<OrderItem>> CreateRegistrationOrderItem(ExternalRegistrationId externalRegistrationId, ExamId examId)
         {
             return await _examPricingProvider.GetPriceAsync(examId)
-                .OnSuccess(price => Item.Create(Products.Registration.ItemName, Products.Registration.ProductType,
+                .OnSuccess(price => OrderItem.Create(Products.Registration.ItemName, Products.Registration.ProductType,
                     externalRegistrationId, 1, price));
         }
     }

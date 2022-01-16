@@ -6,9 +6,12 @@ using ModularMonolith.Language.Pricing;
 
 namespace ModularMonolith.Orders.Domain.ValueObjects
 {
-    public class Item : ValueObject
+    public class OrderItem : ValueObject
     {
-        protected Item(string name, string productType, Guid externalId, Quantity quantity, Price price)
+        //EF constructor
+        protected OrderItem() {}
+        
+        protected OrderItem(string name, string productType, Guid externalId, Quantity quantity, Price price)
         {
             Name = name;
             ProductType = productType;
@@ -32,7 +35,7 @@ namespace ModularMonolith.Orders.Domain.ValueObjects
             yield return ProductType;
         }
 
-        public static Result<Item> Create(string name, string productType, Guid externalId, int quantity, Price price)
+        public static Result<OrderItem> Create(string name, string productType, Guid externalId, int quantity, Price price)
         {
             var quantityResult = Quantity.Create(quantity);
 
@@ -40,7 +43,7 @@ namespace ModularMonolith.Orders.Domain.ValueObjects
                     quantityResult,
                     ModularMonolith.Language.CommonErrors.NotNullOrWhiteSpace.Check(name, nameof(Name)),
                     ModularMonolith.Language.CommonErrors.NotEmpty.Check(externalId, nameof(ExternalId)))
-                .OnSuccess(() => new Item(name, productType, externalId, quantityResult.Value, price));
+                .OnSuccess(() => new OrderItem(name, productType, externalId, quantityResult.Value, price));
         }
     }
 }

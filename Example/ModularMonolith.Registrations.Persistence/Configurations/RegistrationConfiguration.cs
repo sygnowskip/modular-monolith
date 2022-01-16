@@ -5,7 +5,7 @@ using ModularMonolith.Registrations.Language.ValueObjects;
 
 namespace ModularMonolith.Registrations.Persistence.Configurations
 {
-    public class RegistrationEntityConfiguration : IEntityTypeConfiguration<Registration>
+    public class RegistrationConfiguration : IEntityTypeConfiguration<Registration>
     {
         public void Configure(EntityTypeBuilder<Registration> builder)
         {

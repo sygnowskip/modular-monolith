@@ -7,6 +7,8 @@ namespace ModularMonolith.Orders.Domain.ValueObjects
 {
     public class Quantity : ValueObject
     {
+        //EF constructor
+        protected Quantity(){}
         protected Quantity(int value)
         {
             Value = value;

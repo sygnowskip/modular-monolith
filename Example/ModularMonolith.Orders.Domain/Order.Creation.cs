@@ -12,7 +12,7 @@ namespace ModularMonolith.Orders.Domain
 {
     public partial class Order
     {
-        public static Result<Order> Create(ContactData seller, ContactData buyer, IReadOnlyCollection<Item> items,
+        public static Result<Order> Create(ContactData seller, ContactData buyer, IReadOnlyCollection<OrderItem> items,
             ISystemTimeProvider systemTimeProvider, ISingleCurrencyPolicy singleCurrencyPolicy, ISingleItemsCurrencyPolicy singleItemsCurrencyPolicy)
         {
             var creationDateResult = UtcDate.Create(systemTimeProvider.UtcNow.Date);
@@ -23,14 +23,14 @@ namespace ModularMonolith.Orders.Domain
                     systemTimeProvider));
         }
         
-        public static Result<Order> CreateWithDefaultSeller(ContactData buyer, IReadOnlyCollection<Item> items,
+        public static Result<Order> CreateWithDefaultSeller(ContactData buyer, IReadOnlyCollection<OrderItem> items,
             ISystemTimeProvider systemTimeProvider, ISingleCurrencyPolicy singleCurrencyPolicy, ISingleItemsCurrencyPolicy singleItemsCurrencyPolicy)
         {
             return Create(Company.DefaultSeller, buyer, items, systemTimeProvider, singleCurrencyPolicy,
                 singleItemsCurrencyPolicy);
         }
 
-        private static Result<Price> CreateSummary(IReadOnlyCollection<Item> items,
+        private static Result<Price> CreateSummary(IReadOnlyCollection<OrderItem> items,
             ISingleItemsCurrencyPolicy singleItemsCurrencyPolicy, ISingleCurrencyPolicy singleCurrencyPolicy)
         {
             return Result.Create(items.Any(), OrderErrors.CannotCreateOrderForEmptyListItems.Build())

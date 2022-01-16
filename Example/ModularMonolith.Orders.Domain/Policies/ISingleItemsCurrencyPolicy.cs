@@ -8,12 +8,12 @@ namespace ModularMonolith.Orders.Domain.Policies
 {
     public interface ISingleItemsCurrencyPolicy
     {
-        Result AllItemsHaveSingleCurrency(IReadOnlyCollection<Item> items);
+        Result AllItemsHaveSingleCurrency(IReadOnlyCollection<OrderItem> items);
     }
     
-    public class SingleItemsCurrencyPolicy : ISingleItemsCurrencyPolicy
+    internal class SingleItemsCurrencyPolicy : ISingleItemsCurrencyPolicy
     {
-        public Result AllItemsHaveSingleCurrency(IReadOnlyCollection<Item> items)
+        public Result AllItemsHaveSingleCurrency(IReadOnlyCollection<OrderItem> items)
         {
             var currencies = items.Select(i => i.Price.Net.Currency).Distinct().ToList();
 

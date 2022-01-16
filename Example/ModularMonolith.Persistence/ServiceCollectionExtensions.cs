@@ -10,8 +10,10 @@ using Microsoft.Extensions.DependencyInjection;
 using ModularMonolith.Exams.Persistence;
 using ModularMonolith.Language.Locations;
 using ModularMonolith.Language.Subjects;
+using ModularMonolith.Orders.Persistence;
 using ModularMonolith.Persistence.Validators;
 using ModularMonolith.ReadModels;
+using ModularMonolith.Registrations.Persistence;
 
 namespace ModularMonolith.Persistence
 {
@@ -45,6 +47,8 @@ namespace ModularMonolith.Persistence
 
             services.AddInterceptors();
             services.AddExamsWritePersistence<MonolithDbContext>();
+            services.AddOrdersWritePersistence<MonolithDbContext>();
+            services.AddRegistrationsWritePersistence<MonolithDbContext>();
 
             services.AddDomainEvents()
                 .WithPersistence<MonolithDbContext>();

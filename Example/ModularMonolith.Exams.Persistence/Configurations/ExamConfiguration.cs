@@ -30,6 +30,11 @@ namespace ModularMonolith.Exams.Persistence.Configurations
                 navigationBuilder.Property(capacity => capacity.Value)
                     .HasColumnName(nameof(Exam.Capacity));
             });
+            builder.OwnsOne(e => e.Booked, navigationBuilder =>
+            {
+                navigationBuilder.Property(booked => booked.Value)
+                    .HasColumnName(nameof(Exam.Booked));
+            });
             builder.OwnsOne(e => e.RegistrationStartDate, navigationBuilder =>
             {
                 navigationBuilder.Property(rsd => rsd.Value)
