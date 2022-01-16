@@ -5,6 +5,8 @@ namespace ModularMonolith.Language.Pricing
 {
     public class Money : ValueObject
     {
+        //EF constructor
+        protected Money(){ }
         private Money(decimal amount, Currency currency)
         {
             Amount = amount;

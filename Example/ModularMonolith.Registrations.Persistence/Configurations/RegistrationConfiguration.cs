@@ -29,6 +29,7 @@ namespace ModularMonolith.Registrations.Persistence.Configurations
                             .HasColumnName($"{nameof(Candidate)}{nameof(DateOfBirth)}");
                     });
             });
+            builder.Navigation(r => r.Candidate).IsRequired();
         }
     }
 }

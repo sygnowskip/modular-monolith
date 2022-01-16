@@ -22,6 +22,7 @@ namespace ModularMonolith.Orders.Persistence.Configurations
                 navigationBuilder.Property(cd => cd.Value)
                     .HasColumnName(nameof(Order.CreationDate));
             });
+            builder.Navigation(o => o.CreationDate).IsRequired();
             
             builder.OwnsOne(o => o.Seller, navigationBuilder =>
             {
@@ -34,6 +35,7 @@ namespace ModularMonolith.Orders.Persistence.Configurations
                 navigationBuilder.Property(s => s.ZipCode)
                     .HasColumnName($"{nameof(Order.Seller)}{nameof(ContactData.ZipCode)}");
             });
+            builder.Navigation(o => o.Seller).IsRequired();
             
             builder.OwnsOne(o => o.Buyer, navigationBuilder =>
             {
@@ -46,6 +48,7 @@ namespace ModularMonolith.Orders.Persistence.Configurations
                 navigationBuilder.Property(s => s.ZipCode)
                     .HasColumnName($"{nameof(Order.Buyer)}{nameof(ContactData.ZipCode)}");
             });
+            builder.Navigation(o => o.Buyer).IsRequired();
             
             builder.OwnsOne(o => o.Summary, navigationBuilder =>
             {
@@ -53,18 +56,29 @@ namespace ModularMonolith.Orders.Persistence.Configurations
                 {
                     ownedNavigationBuilder.Property(p => p.Amount)
                         .HasColumnName($"{nameof(Price.Net)}{nameof(Money.Amount)}");
-                    ownedNavigationBuilder.Property(p => p.Currency)
-                        .HasColumnName($"{nameof(Price.Net)}{nameof(Money.Currency)}");
+                    ownedNavigationBuilder.OwnsOne(p => p.Currency, currencyBuilder =>
+                    {
+                        currencyBuilder.Property(p => p.ShortCode)
+                            .HasColumnName($"{nameof(Price.Net)}{nameof(Money.Currency)}");
+                    });
+                    ownedNavigationBuilder.Navigation(p => p.Currency).IsRequired();
                 });
+                navigationBuilder.Navigation(p => p.Net).IsRequired();
                 navigationBuilder.OwnsOne(s => s.Tax, ownedNavigationBuilder =>
                 {
                     ownedNavigationBuilder.Property(p => p.Amount)
                         .HasColumnName($"{nameof(Price.Tax)}{nameof(Money.Amount)}");
-                    ownedNavigationBuilder.Property(p => p.Currency)
-                        .HasColumnName($"{nameof(Price.Tax)}{nameof(Money.Currency)}");
+                    ownedNavigationBuilder.OwnsOne(p => p.Currency, currencyBuilder =>
+                    {
+                        currencyBuilder.Property(p => p.ShortCode)
+                            .HasColumnName($"{nameof(Price.Net)}{nameof(Money.Currency)}");
+                    });
+                    ownedNavigationBuilder.Navigation(p => p.Currency).IsRequired();
                 });
+                navigationBuilder.Navigation(p => p.Tax).IsRequired();
                 navigationBuilder.Ignore(s => s.Gross);
             });
+            builder.Navigation(o => o.Summary).IsRequired();
             
             builder.OwnsMany(o => o.Items, navigationBuilder =>
             {
@@ -77,6 +91,7 @@ namespace ModularMonolith.Orders.Persistence.Configurations
                     ownedNavigationBuilder.Property(q => q.Value)
                         .HasColumnName(nameof(Quantity));
                 });
+                navigationBuilder.Navigation(o => o.Quantity).IsRequired();
                 
                 navigationBuilder.OwnsOne(o => o.Price, ownedNavigationBuilder =>
                 {
@@ -84,18 +99,29 @@ namespace ModularMonolith.Orders.Persistence.Configurations
                     {
                         ownedOwnedNavigationBuilder.Property(p => p.Amount)
                             .HasColumnName($"{nameof(Price.Net)}{nameof(Money.Amount)}");
-                        ownedOwnedNavigationBuilder.Property(p => p.Currency)
-                            .HasColumnName($"{nameof(Price.Net)}{nameof(Money.Currency)}");
+                        ownedOwnedNavigationBuilder.OwnsOne(p => p.Currency, currencyBuilder =>
+                        {
+                            currencyBuilder.Property(p => p.ShortCode)
+                                .HasColumnName($"{nameof(Price.Net)}{nameof(Money.Currency)}");
+                        });
+                        ownedOwnedNavigationBuilder.Navigation(p => p.Currency).IsRequired();
                     });
+                    ownedNavigationBuilder.Navigation(p => p.Net).IsRequired();
                     ownedNavigationBuilder.OwnsOne(s => s.Tax, ownedOwnedNavigationBuilder =>
                     {
                         ownedOwnedNavigationBuilder.Property(p => p.Amount)
                             .HasColumnName($"{nameof(Price.Tax)}{nameof(Money.Amount)}");
-                        ownedOwnedNavigationBuilder.Property(p => p.Currency)
-                            .HasColumnName($"{nameof(Price.Tax)}{nameof(Money.Currency)}");
+                        ownedOwnedNavigationBuilder.OwnsOne(p => p.Currency, currencyBuilder =>
+                        {
+                            currencyBuilder.Property(p => p.ShortCode)
+                                .HasColumnName($"{nameof(Price.Net)}{nameof(Money.Currency)}");
+                        });
+                        ownedOwnedNavigationBuilder.Navigation(p => p.Currency).IsRequired();
                     });
+                    ownedNavigationBuilder.Navigation(p => p.Tax).IsRequired();
                     ownedNavigationBuilder.Ignore(s => s.Gross);
                 });
+                navigationBuilder.Navigation(o => o.Price).IsRequired();
             });
             builder.Property(e => e.Status)
                 .HasConversion(new EnumToStringConverter<OrderStatus>());

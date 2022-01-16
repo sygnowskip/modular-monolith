@@ -14,7 +14,7 @@ namespace ModularMonolith.Orders.Domain.ValueObjects
             Value = value;
         }
 
-        public decimal Value { get; }
+        public int Value { get; }
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Value;
