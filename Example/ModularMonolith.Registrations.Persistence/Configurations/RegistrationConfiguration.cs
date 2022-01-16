@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Hexure.EntityFrameworkCore.SqlServer.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ModularMonolith.Registrations.Domain;
 using ModularMonolith.Registrations.Language.ValueObjects;
@@ -11,6 +12,9 @@ namespace ModularMonolith.Registrations.Persistence.Configurations
         {
             builder.ToTable(nameof(Registration), Schemas.Registrations);
             builder.HasKey(r => r.Id);
+            builder.Property(r => r.Id)
+                .IdentifierGeneratedOnAdd();
+            
             builder.OwnsOne(r => r.Candidate, navigationBuilder =>
             {
                 navigationBuilder

@@ -5,6 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Source\Hexure.EntityFrameworkCore.SqlServer\Hexure.EntityFrameworkCore.SqlServer.csproj" />
       <ProjectReference Include="..\ModularMonolith.Exams.Domain\ModularMonolith.Exams.Domain.csproj" />
     </ItemGroup>
 

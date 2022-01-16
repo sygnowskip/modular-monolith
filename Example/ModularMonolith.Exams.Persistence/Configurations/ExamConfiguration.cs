@@ -1,5 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Hexure.EntityFrameworkCore.SqlServer.Extensions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.SqlServer.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ModularMonolith.Exams.Domain;
 using ModularMonolith.Exams.Language;
@@ -13,7 +16,7 @@ namespace ModularMonolith.Exams.Persistence.Configurations
             builder.ToTable(nameof(Exam), Schemas.Exams);
             builder.HasKey(e => e.Id);
             builder.Property(e => e.Id)
-                .ValueGeneratedOnAdd();
+                .IdentifierGeneratedOnAdd();
             
             builder.OwnsOne(e => e.SubjectId, navigationBuilder =>
             {

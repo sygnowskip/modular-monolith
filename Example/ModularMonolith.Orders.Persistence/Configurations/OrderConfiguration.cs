@@ -1,5 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Hexure.EntityFrameworkCore.SqlServer.Extensions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.SqlServer.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ModularMonolith.Language.Pricing;
 using ModularMonolith.Orders.Domain;
@@ -15,7 +18,7 @@ namespace ModularMonolith.Orders.Persistence.Configurations
             builder.ToTable(nameof(Order), Schemas.Orders);
             builder.HasKey(e => e.Id);
             builder.Property(e => e.Id)
-                .ValueGeneratedOnAdd();
+                .IdentifierGeneratedOnAdd();
             
             builder.OwnsOne(o => o.CreationDate, navigationBuilder =>
             {

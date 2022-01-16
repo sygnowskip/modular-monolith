@@ -10,6 +10,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Source\Hexure.EntityFrameworkCore.SqlServer\Hexure.EntityFrameworkCore.SqlServer.csproj" />
       <ProjectReference Include="..\ModularMonolith.Registrations.Domain\ModularMonolith.Registrations.Domain.csproj" />
     </ItemGroup>
 </Project>
