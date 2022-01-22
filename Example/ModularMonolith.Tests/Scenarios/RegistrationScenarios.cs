@@ -25,7 +25,7 @@ namespace ModularMonolith.Tests.Scenarios
         public RegistrationScenarios Then() => this;
         public RegistrationScenarios And() => this;
 
-        public async Task<GetSingleRegistrationDto> CreateRegistrationAsync(long examId)
+        public async Task<RegistrationDto> CreateRegistrationAsync(long examId)
         {
             var httpClient = await PrepareClientAsync();
             var creationRequestContent = _httpClientProvider.Serialize(new CreateRegistrationRequest("John", "Smith",
@@ -38,14 +38,14 @@ namespace ModularMonolith.Tests.Scenarios
             return await GetRegistrationAsync(creationResult.Headers.Location);
         }
         
-        private async Task<GetSingleRegistrationDto> GetRegistrationAsync(Uri resourceLocation)
+        private async Task<RegistrationDto> GetRegistrationAsync(Uri resourceLocation)
         {
             var httpClient = await PrepareClientAsync();
             var getResult = await httpClient.GetAsync(new Uri(_monolithApiSettings.BaseUrl,
                 resourceLocation));
             getResult.IsSuccessStatusCode.Should().Be(true);
 
-            return JsonConvert.DeserializeObject<GetSingleRegistrationDto>(await getResult.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<RegistrationDto>(await getResult.Content.ReadAsStringAsync());
         }
 
         private Task<HttpClient> PrepareClientAsync() =>

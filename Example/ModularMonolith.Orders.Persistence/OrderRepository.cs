@@ -7,9 +7,18 @@ namespace ModularMonolith.Orders.Persistence
 {
     public class OrderRepository : IOrderRepository
     {
-        public Task<Result<Order>> SaveAsync(Order aggregate)
+        private readonly IOrdersDbContext _ordersDbContext;
+
+        public OrderRepository(IOrdersDbContext ordersDbContext)
         {
-            throw new System.NotImplementedException();
+            _ordersDbContext = ordersDbContext;
+        }
+
+        public async Task<Result<Order>> SaveAsync(Order aggregate)
+        {
+            await _ordersDbContext.Orders.AddAsync(aggregate);
+            await _ordersDbContext.SaveChangesAsync();
+            return Result.Ok(aggregate);
         }
 
         public Task<Result<Order>> GetAsync(OrderId identifier)

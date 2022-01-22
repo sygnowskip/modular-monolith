@@ -12,7 +12,7 @@ namespace ModularMonolith.Tests.Unit.Errors
         [TestCase(1, true)]
         public void ShouldReturnExpectedResult(decimal value, bool expected)
         {
-            var money = Money.Create(value, SupportedCurrencies.CHF).Value;
+            var money = Money.Create(value, SupportedCurrencies.CHF()).Value;
             
             var result = CommonErrors.GreaterThanOrEqualZero.Check(money);
 

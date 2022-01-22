@@ -1,8 +1,5 @@
-﻿using System;
-using System.Net;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using FluentAssertions;
-using ModularMonolith.Contracts.Registrations;
 using ModularMonolith.Tests.Common;
 using NUnit.Framework;
 

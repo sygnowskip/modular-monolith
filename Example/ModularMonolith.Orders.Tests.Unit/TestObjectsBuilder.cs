@@ -8,8 +8,8 @@ namespace ModularMonolith.Orders.Tests.Unit
     {
         public static Price CreatePrice(decimal net, decimal tax)
         {
-            var netResult = Money.Create(net, SupportedCurrencies.USD);
-            var taxResult = Money.Create(tax, SupportedCurrencies.USD);
+            var netResult = Money.Create(net, SupportedCurrencies.USD());
+            var taxResult = Money.Create(tax, SupportedCurrencies.USD());
             return Price.Create(netResult.Value, taxResult.Value, MockObjectsBuilder.BuildSingleCurrencyPolicy(true)).Value;
         }
         

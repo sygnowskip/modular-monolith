@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Hexure.MediatR;
 using Hexure.Results;
 using Hexure.Results.Extensions;
 using Hexure.Time;
@@ -19,7 +20,7 @@ using ModularMonolith.Registrations.Language.ValueObjects;
 
 namespace ModularMonolith.CommandServices.Registrations
 {
-    public class CreateRegistrationCommand : IRequest<Result<RegistrationId>>
+    public class CreateRegistrationCommand : ICommandRequest<RegistrationId>
     {
         private CreateRegistrationCommand(Candidate candidate, ExamId examId, ContactData buyer)
         {
@@ -59,7 +60,7 @@ namespace ModularMonolith.CommandServices.Registrations
 
         public CreateRegistrationCommandHandler(IRegistrationRepository registrationRepository,
             ISystemTimeProvider systemTimeProvider, ISingleCurrencyPolicy singleCurrencyPolicy,
-            ISingleItemsCurrencyPolicy singleItemsCurrencyPolicy, IExamPricingProvider examPricingProvider, 
+            ISingleItemsCurrencyPolicy singleItemsCurrencyPolicy, IExamPricingProvider examPricingProvider,
             IOrderRepository orderRepository, IExamRepository examRepository)
         {
             _registrationRepository = registrationRepository;
@@ -77,11 +78,11 @@ namespace ModularMonolith.CommandServices.Registrations
             var externalRegistrationId = new ExternalRegistrationId();
             var orderResult = await CreateOrder(externalRegistrationId, request.ExamId, request.Buyer);
             var bookPlaceResult = await BookPlace(request.ExamId);
-            
+
             return await Result.Combine(orderResult, bookPlaceResult)
-                .OnSuccess(() =>
-                    Registration.Create(externalRegistrationId, request.ExamId, orderResult.Value.Id, request.Candidate, _systemTimeProvider))
-                .OnSuccess(async registration => await _registrationRepository.SaveAsync(registration))
+                .OnSuccess(async () =>
+                    await Registration.CreateAsync(externalRegistrationId, request.ExamId, orderResult.Value.Id,
+                        request.Candidate, _systemTimeProvider, _registrationRepository))
                 .OnSuccess(registration => registration.Id);
         }
 
@@ -91,16 +92,18 @@ namespace ModularMonolith.CommandServices.Registrations
                 .OnSuccess(exam => exam.Book());
         }
 
-        private async Task<Result<Order>> CreateOrder(ExternalRegistrationId externalRegistrationId, ExamId examId, ContactData buyer)
+        private async Task<Result<Order>> CreateOrder(ExternalRegistrationId externalRegistrationId, ExamId examId,
+            ContactData buyer)
         {
             return await CreateRegistrationOrderItem(externalRegistrationId, examId)
-                .OnSuccess(item => Order.CreateWithDefaultSeller(buyer, new[] { item }, _systemTimeProvider,
+                .OnSuccess(item => Order.CreateWithDefaultSellerAsync(buyer, new[] { item }, _systemTimeProvider,
                     _singleCurrencyPolicy,
-                    _singleItemsCurrencyPolicy))
-                .OnSuccess(async order => await _orderRepository.SaveAsync(order));
+                    _singleItemsCurrencyPolicy,
+                    _orderRepository));
         }
 
-        private async Task<Result<OrderItem>> CreateRegistrationOrderItem(ExternalRegistrationId externalRegistrationId, ExamId examId)
+        private async Task<Result<OrderItem>> CreateRegistrationOrderItem(ExternalRegistrationId externalRegistrationId,
+            ExamId examId)
         {
             return await _examPricingProvider.GetPriceAsync(examId)
                 .OnSuccess(price => OrderItem.Create(Products.Registration.ItemName, Products.Registration.ProductType,

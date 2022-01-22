@@ -1,9 +1,13 @@
 ﻿using System.Threading.Tasks;
 using Hexure.API;
+using Hexure.Time;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ModularMonolith.CommandServices.Registrations;
 using ModularMonolith.Contracts.Registrations;
+using ModularMonolith.Exams.Language.Validators;
+using ModularMonolith.QueryServices.Registrations;
 using ModularMonolith.Registrations.Language;
 
 namespace ModularMonolith.API.Controllers
@@ -12,23 +16,28 @@ namespace ModularMonolith.API.Controllers
     [Route("api/registrations")]
     public class RegistrationsController : MediatorController
     {
-        public RegistrationsController(IMediator mediator) : base(mediator)
+        private readonly IExamExistenceValidator _examExistenceValidator;
+        private readonly ISystemTimeProvider _systemTimeProvider;
+
+        public RegistrationsController(IMediator mediator, IExamExistenceValidator examExistenceValidator,
+            ISystemTimeProvider systemTimeProvider) : base(mediator)
         {
+            _examExistenceValidator = examExistenceValidator;
+            _systemTimeProvider = systemTimeProvider;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Save(CreateRegistrationRequest request)
+        public Task<IActionResult> Save(CreateRegistrationRequest request)
         {
-            /*var result = await _registrationApplicationService.Create(request);
-            return CreatedOrUnprocessableEntity(result, id => $"/api/registrations/{id}");*/
-            return Ok();
+            return CreatedOrUnprocessableEntityAsync<CreateRegistrationCommand, RegistrationId>(
+                CreateRegistrationCommand.Create(request, _systemTimeProvider, _examExistenceValidator), 
+                id => $"/api/registrations/{id}");
         }
 
         [HttpGet, Route("{id}")]
-        public async Task<IActionResult> Get(long id)
+        public Task<IActionResult> Get(long id)
         {
-            var result = await Mediator.Send(new GetSingleRegistration(new RegistrationId(id)));
-            return OkOrNotFound(result);
+            return OkOrNotFoundAsync<GetRegistrationQuery, RegistrationDto>(GetRegistrationQuery.Create(id));
         }
     }
 }

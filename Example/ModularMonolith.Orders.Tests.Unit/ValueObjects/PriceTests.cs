@@ -14,8 +14,8 @@ namespace ModularMonolith.Orders.Tests.Unit.ValueObjects
         [TestCase(10, -10, false, "It's incorrect value for price  (tax < 0)")]
         public void ShouldReturnExpectedResult(decimal net, decimal tax, bool expected, string because)
         {
-            var netValue = Money.Create(net, SupportedCurrencies.USD).Value;
-            var taxValue = Money.Create(tax, SupportedCurrencies.USD).Value;
+            var netValue = Money.Create(net, SupportedCurrencies.USD()).Value;
+            var taxValue = Money.Create(tax, SupportedCurrencies.USD()).Value;
             
             var priceResult = Price.Create(netValue, taxValue, MockObjectsBuilder.BuildSingleCurrencyPolicy(true));
 

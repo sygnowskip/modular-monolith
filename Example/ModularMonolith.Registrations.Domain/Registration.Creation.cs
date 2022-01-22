@@ -1,4 +1,5 @@
-﻿using Hexure.Results;
+﻿using System.Threading.Tasks;
+using Hexure.Results;
 using Hexure.Results.Extensions;
 using Hexure.Time;
 using ModularMonolith.Exams.Language;
@@ -11,11 +12,16 @@ namespace ModularMonolith.Registrations.Domain
 {
     public partial class Registration
     {
-        public static Result<Registration> Create(ExternalRegistrationId externalRegistrationId, ExamId examId, OrderId orderId, Candidate candidate, ISystemTimeProvider systemTimeProvider)
+        public static async Task<Result<Registration>> CreateAsync(ExternalRegistrationId externalRegistrationId,
+            ExamId examId, OrderId orderId, Candidate candidate, ISystemTimeProvider systemTimeProvider,
+            IRegistrationRepository registrationRepository)
         {
-            return Result.Create(candidate != null, RegistrationErrors.CandidateCannotBeEmpty.Build())
-                .OnSuccess(() => new Registration(externalRegistrationId, examId, orderId, candidate, systemTimeProvider))
-                .OnSuccess(registration => registration.RaiseEvent(new RegistrationCreated(registration.Id, registration.ExternalId, candidate, systemTimeProvider.UtcNow)));
+            return await Result.Create(candidate != null, RegistrationErrors.CandidateCannotBeEmpty.Build())
+                .OnSuccess(() =>
+                    new Registration(externalRegistrationId, examId, orderId, candidate, systemTimeProvider))
+                .OnSuccess(async registration => await registrationRepository.SaveAsync(registration))
+                .OnSuccess(registration => registration.RaiseEvent(new RegistrationCreated(registration.Id,
+                    registration.ExternalId, candidate, systemTimeProvider.UtcNow)));
         }
     }
 }

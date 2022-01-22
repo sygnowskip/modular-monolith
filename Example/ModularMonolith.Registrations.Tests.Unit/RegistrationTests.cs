@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using FluentAssertions;
+using Hexure.Results;
 using Hexure.Results.Extensions;
 using Hexure.Time;
 using ModularMonolith.Exams.Language;
@@ -17,6 +19,7 @@ namespace ModularMonolith.Registrations.Tests.Unit
     public class RegistrationTests
     {
         private readonly Mock<ISystemTimeProvider> _systemTimeProviderMock;
+        private readonly Mock<IRegistrationRepository> _registrationRepositoryMock;
 
         public RegistrationTests()
         {
@@ -24,24 +27,30 @@ namespace ModularMonolith.Registrations.Tests.Unit
             _systemTimeProviderMock
                 .Setup(provider => provider.UtcNow)
                 .Returns(new DateTime(2020, 04, 01));
+
+            _registrationRepositoryMock = new Mock<IRegistrationRepository>();
+            _registrationRepositoryMock.Setup(r => r.SaveAsync(It.IsAny<Registration>()))
+                .Returns<Registration>(registration => Task.FromResult(Result.Ok(registration)));
         }
 
         [Test]
-        public void ShouldCreateRegistration()
+        public async Task ShouldCreateRegistration()
         {
-            var registration = DateOfBirth.Create(new DateTime(1980, 01, 01), _systemTimeProviderMock.Object)
+            var registration = await DateOfBirth.Create(new DateTime(1980, 01, 01), _systemTimeProviderMock.Object)
                 .OnSuccess(dob => Candidate.Create("John", "Smith", dob))
-                .OnSuccess(candidate => Registration.Create(new ExternalRegistrationId(),new ExamId(10), new OrderId(10), candidate,  _systemTimeProviderMock.Object));
+                .OnSuccess(candidate => Registration.CreateAsync(new ExternalRegistrationId(),new ExamId(10), new OrderId(10), candidate,  
+                    _systemTimeProviderMock.Object, _registrationRepositoryMock.Object));
 
             registration.IsSuccess.Should().BeTrue();
         }
 
         [Test]
-        public void ShouldAddEventOnRegistrationCreation()
+        public async Task ShouldAddEventOnRegistrationCreation()
         {
-            var registration = DateOfBirth.Create(new DateTime(1980, 01, 01), _systemTimeProviderMock.Object)
+            var registration = await DateOfBirth.Create(new DateTime(1980, 01, 01), _systemTimeProviderMock.Object)
                 .OnSuccess(dob => Candidate.Create("John", "Smith", dob))
-                .OnSuccess(candidate => Registration.Create(new ExternalRegistrationId(),new ExamId(10), new OrderId(10), candidate, _systemTimeProviderMock.Object));
+                .OnSuccess(candidate => Registration.CreateAsync(new ExternalRegistrationId(),new ExamId(10), new OrderId(10), candidate, 
+                    _systemTimeProviderMock.Object, _registrationRepositoryMock.Object));
 
             registration.IsSuccess.Should().BeTrue();
             registration.Value.HasDomainEvents.Should().BeTrue();
@@ -51,9 +60,10 @@ namespace ModularMonolith.Registrations.Tests.Unit
         }
 
         [Test]
-        public void ShouldNotAllowToCreateRegistrationForNullCandidate()
+        public async Task ShouldNotAllowToCreateRegistrationForNullCandidate()
         {
-            var registration = Registration.Create(new ExternalRegistrationId(),new ExamId(10), new OrderId(10), null, _systemTimeProviderMock.Object);
+            var registration = await Registration.CreateAsync(new ExternalRegistrationId(),new ExamId(10), new OrderId(10), null, 
+                _systemTimeProviderMock.Object, _registrationRepositoryMock.Object);
 
             registration.IsSuccess.Should().BeFalse();
         }

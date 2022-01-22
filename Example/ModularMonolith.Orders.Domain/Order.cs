@@ -24,12 +24,12 @@ namespace ModularMonolith.Orders.Domain
             ConfigureStateMachine();
         }
 
-        public Order(UtcDate creationDate, ContactData seller, ContactData buyer,
+        private Order(UtcDateTime creationDateTime, ContactData seller, ContactData buyer,
             IReadOnlyCollection<OrderItem> items, Price summary, ISystemTimeProvider systemTimeProvider)
             : this(systemTimeProvider)
         {
             Status = OrderStatus.AwaitingForPayment;
-            CreationDate = creationDate;
+            CreationDateTime = creationDateTime;
             Seller = seller;
             Buyer = buyer;
             Items = items;
@@ -38,7 +38,7 @@ namespace ModularMonolith.Orders.Domain
 
         public OrderId Id { get; }
         public OrderStatus Status { get; private set; }
-        public UtcDate CreationDate { get; private set; }
+        public UtcDateTime CreationDateTime { get; private set; }
         public ContactData Seller { get; private set; }
         public ContactData Buyer { get; private set; }
         public IReadOnlyCollection<OrderItem> Items { get; private set; }

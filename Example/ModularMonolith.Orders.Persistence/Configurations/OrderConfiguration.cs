@@ -1,8 +1,6 @@
 ﻿using Hexure.EntityFrameworkCore.SqlServer.Extensions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.SqlServer.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ModularMonolith.Language.Pricing;
 using ModularMonolith.Orders.Domain;
@@ -20,12 +18,12 @@ namespace ModularMonolith.Orders.Persistence.Configurations
             builder.Property(e => e.Id)
                 .IdentifierGeneratedOnAdd();
             
-            builder.OwnsOne(o => o.CreationDate, navigationBuilder =>
+            builder.OwnsOne(o => o.CreationDateTime, navigationBuilder =>
             {
                 navigationBuilder.Property(cd => cd.Value)
-                    .HasColumnName(nameof(Order.CreationDate));
+                    .HasColumnName(nameof(Order.CreationDateTime));
             });
-            builder.Navigation(o => o.CreationDate).IsRequired();
+            builder.Navigation(o => o.CreationDateTime).IsRequired();
             
             builder.OwnsOne(o => o.Seller, navigationBuilder =>
             {
@@ -58,7 +56,8 @@ namespace ModularMonolith.Orders.Persistence.Configurations
                 navigationBuilder.OwnsOne(s => s.Net, ownedNavigationBuilder =>
                 {
                     ownedNavigationBuilder.Property(p => p.Amount)
-                        .HasColumnName($"{nameof(Price.Net)}{nameof(Money.Amount)}");
+                        .HasColumnName($"{nameof(Price.Net)}{nameof(Money.Amount)}")
+                        .HasPrecision(7, 3);
                     ownedNavigationBuilder.OwnsOne(p => p.Currency, currencyBuilder =>
                     {
                         currencyBuilder.Property(p => p.ShortCode)
@@ -70,11 +69,12 @@ namespace ModularMonolith.Orders.Persistence.Configurations
                 navigationBuilder.OwnsOne(s => s.Tax, ownedNavigationBuilder =>
                 {
                     ownedNavigationBuilder.Property(p => p.Amount)
-                        .HasColumnName($"{nameof(Price.Tax)}{nameof(Money.Amount)}");
+                        .HasColumnName($"{nameof(Price.Tax)}{nameof(Money.Amount)}")
+                        .HasPrecision(7, 3);
                     ownedNavigationBuilder.OwnsOne(p => p.Currency, currencyBuilder =>
                     {
                         currencyBuilder.Property(p => p.ShortCode)
-                            .HasColumnName($"{nameof(Price.Net)}{nameof(Money.Currency)}");
+                            .HasColumnName($"{nameof(Price.Tax)}{nameof(Money.Currency)}");
                     });
                     ownedNavigationBuilder.Navigation(p => p.Currency).IsRequired();
                 });
@@ -87,8 +87,11 @@ namespace ModularMonolith.Orders.Persistence.Configurations
             {
                 navigationBuilder.WithOwner().HasForeignKey(nameof(OrderId));
                 navigationBuilder.ToTable(nameof(OrderItem), Schemas.Orders);
-                navigationBuilder.HasKey("Id");
+                navigationBuilder.HasVirtualPrimaryKey();
 
+                navigationBuilder.Property(i => i.Name);
+                navigationBuilder.Property(i => i.ExternalId);
+                navigationBuilder.Property(i => i.ProductType);
                 navigationBuilder.OwnsOne(i => i.Quantity, ownedNavigationBuilder =>
                 {
                     ownedNavigationBuilder.Property(q => q.Value)
@@ -101,7 +104,8 @@ namespace ModularMonolith.Orders.Persistence.Configurations
                     ownedNavigationBuilder.OwnsOne(s => s.Net, ownedOwnedNavigationBuilder =>
                     {
                         ownedOwnedNavigationBuilder.Property(p => p.Amount)
-                            .HasColumnName($"{nameof(Price.Net)}{nameof(Money.Amount)}");
+                            .HasColumnName($"{nameof(Price.Net)}{nameof(Money.Amount)}")
+                            .HasPrecision(7, 3);
                         ownedOwnedNavigationBuilder.OwnsOne(p => p.Currency, currencyBuilder =>
                         {
                             currencyBuilder.Property(p => p.ShortCode)
@@ -113,11 +117,12 @@ namespace ModularMonolith.Orders.Persistence.Configurations
                     ownedNavigationBuilder.OwnsOne(s => s.Tax, ownedOwnedNavigationBuilder =>
                     {
                         ownedOwnedNavigationBuilder.Property(p => p.Amount)
-                            .HasColumnName($"{nameof(Price.Tax)}{nameof(Money.Amount)}");
+                            .HasColumnName($"{nameof(Price.Tax)}{nameof(Money.Amount)}")
+                            .HasPrecision(7, 3);
                         ownedOwnedNavigationBuilder.OwnsOne(p => p.Currency, currencyBuilder =>
                         {
                             currencyBuilder.Property(p => p.ShortCode)
-                                .HasColumnName($"{nameof(Price.Net)}{nameof(Money.Currency)}");
+                                .HasColumnName($"{nameof(Price.Tax)}{nameof(Money.Currency)}");
                         });
                         ownedOwnedNavigationBuilder.Navigation(p => p.Currency).IsRequired();
                     });

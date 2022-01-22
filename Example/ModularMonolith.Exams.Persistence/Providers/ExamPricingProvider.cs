@@ -15,12 +15,12 @@ namespace ModularMonolith.Exams.Persistence.Providers
             _singleCurrencyPolicy = singleCurrencyPolicy;
         }
 
-        public async Task<Result<Price>> GetPriceAsync(ExamId examId)
+        public Task<Result<Price>> GetPriceAsync(ExamId examId)
         {
-            return Price.Create(
-                net: Money.Create(100, SupportedCurrencies.USD).Value,
-                tax: Money.Create(0, SupportedCurrencies.USD).Value,
-                _singleCurrencyPolicy);
+            return Task.FromResult(Price.Create(
+                net: Money.Create(100, SupportedCurrencies.USD()).Value,
+                tax: Money.Create(0, SupportedCurrencies.USD()).Value,
+                _singleCurrencyPolicy));
         }
     }
 }

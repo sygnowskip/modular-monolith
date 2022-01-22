@@ -1,8 +1,6 @@
 ﻿using Hexure.EntityFrameworkCore.SqlServer.Extensions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.SqlServer.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ModularMonolith.Exams.Domain;
 using ModularMonolith.Exams.Language;
