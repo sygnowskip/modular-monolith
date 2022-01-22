@@ -1,0 +1,25 @@
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'orders' AND  TABLE_NAME = 'Order')
+BEGIN
+	CREATE TABLE [orders].[Order](
+		[Id] bigint IDENTITY(1,1) NOT NULL,
+		[Status] NVARCHAR(30) NOT NULL,
+		[CreationDateTime] DATETIME2 NOT NULL,
+        [SellerName] NVARCHAR(MAX) NOT NULL,
+        [SellerStreetAddress] NVARCHAR(MAX) NOT NULL,
+        [SellerCity] NVARCHAR(MAX) NOT NULL,
+        [SellerZipCode] NVARCHAR(MAX) NOT NULL,
+        [BuyerName] NVARCHAR(MAX) NOT NULL,
+        [BuyerStreetAddress] NVARCHAR(MAX) NOT NULL,
+        [BuyerCity] NVARCHAR(MAX) NOT NULL,
+        [BuyerZipCode] NVARCHAR(MAX) NOT NULL,
+        [NetAmount] DECIMAL(7,3) NOT NULL,
+        [NetCurrency] NVARCHAR(3) NOT NULL,
+        [TaxAmount] DECIMAL(7,3) NOT NULL,
+        [TaxCurrency] NVARCHAR(3) NOT NULL,
+	    
+	 CONSTRAINT [PK_Order] PRIMARY KEY CLUSTERED 
+	(
+		[Id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+END
