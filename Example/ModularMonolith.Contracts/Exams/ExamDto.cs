@@ -11,6 +11,7 @@ namespace ModularMonolith.Contracts.Exams
         public long SubjectId { get; set; }
         public string SubjectName { get; set; }
         public int Capacity { get; set; }
+        public int Booked { get; set; }
         public DateTime RegistrationStartDate { get; set; }
         public DateTime RegistrationEndDate { get; set; }
         public DateTime ExamDateTime { get; set; }

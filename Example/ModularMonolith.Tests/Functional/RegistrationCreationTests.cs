@@ -11,12 +11,12 @@ namespace ModularMonolith.Tests.Functional
         [Test]
         public async Task ShouldCreateRegistration()
         {
-            var existingExam = Scenarios.Exams.Given().HaveCreatedExamAsync(capacity: 10, examDateAddDays: 10, 1, 1);
+            var existingExam = await Scenarios.Exams.Given().HaveCreatedExamAsync(capacity: 10, examDateAddDays: 50, 1, 1);
             await Scenarios.Exams.And().ExamIsAvailableAsync(existingExam.Id);
 
             var createdRegistration = await Scenarios.Registrations.When().CreateRegistrationAsync(existingExam.Id);
 
-            await Scenarios.Orders.Then().OrderShouldBeCreatedAsync();
+            await Scenarios.Orders.Then().OrderShouldBeCreatedAsync(createdRegistration.OrderId);
             await Scenarios.Exams.And().ExamShouldHaveBooking(existingExam.Id);
             createdRegistration.Should().NotBeNull();
         }

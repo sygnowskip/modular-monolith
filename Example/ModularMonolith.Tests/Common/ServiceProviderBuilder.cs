@@ -9,7 +9,9 @@ using Hexure.Testing.Resources;
 using Hexure.Testing.Snapshots;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using ModularMonolith.Configuration;
+using ModularMonolith.Tests.Scenarios;
 
 namespace ModularMonolith.Tests.Common
 {
@@ -27,6 +29,15 @@ namespace ModularMonolith.Tests.Common
                 serviceProvider.GetRequiredService<IConfiguration>().GetSection(ApplicationSettings.Authority).Get<AuthoritySettings>());
             serviceCollection.AddTransient(serviceProvider =>
                 serviceProvider.GetRequiredService<IConfiguration>().GetSection(ApplicationSettings.Monolith).Get<MonolithApiSettings>());
+            serviceCollection.AddTransient<IHttpClientProvider, HttpClientProvider>();
+            
+            serviceCollection.AddTransient<Scenarios.Scenarios>();
+            serviceCollection.AddTransient<ExamScenarios>();
+            serviceCollection.AddTransient<LocationScenarios>();
+            serviceCollection.AddTransient<MessageScenarios>();
+            serviceCollection.AddTransient<OrderScenarios>();
+            serviceCollection.AddTransient<RegistrationScenarios>();
+            serviceCollection.AddTransient<SubjectScenarios>();
 
             serviceCollection.AddHttpClient();
             serviceCollection.AddDomainEvents();

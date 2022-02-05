@@ -1,8 +1,11 @@
-﻿using System.Threading;
+﻿using System.Data;
+using System.Threading;
 using System.Threading.Tasks;
+using Dapper;
 using Hexure.Results;
 using MediatR;
 using ModularMonolith.Contracts.Registrations;
+using ModularMonolith.Errors;
 
 namespace ModularMonolith.QueryServices.Registrations
 {
@@ -23,14 +26,36 @@ namespace ModularMonolith.QueryServices.Registrations
     
     public class GetRegistrationQueryHandler : IRequestHandler<GetRegistrationQuery, Result<RegistrationDto>>
     {
-        public Task<Result<RegistrationDto>> Handle(GetRegistrationQuery request, CancellationToken cancellationToken)
+        private readonly IDbConnection _dbConnection;
+
+        public GetRegistrationQueryHandler(IDbConnection dbConnection)
         {
-            throw new System.NotImplementedException();
+            _dbConnection = dbConnection;
+        }
+
+        public async Task<Result<RegistrationDto>> Handle(GetRegistrationQuery request, CancellationToken cancellationToken)
+        {
+            var registration =
+                await _dbConnection.QuerySingleAsync<RegistrationDto>(BuildQuery(), new { id = request.Id });
+            
+            
+            return registration != null
+                ? Result.Ok(registration)
+                : Result.Fail<RegistrationDto>(DomainErrors.BuildNotFound("Registration", request.Id));
         }
 
         private string BuildQuery()
         {
-            return null;
+            return @"SELECT [Id]
+      ,[ExamId]
+      ,[OrderId]
+      ,[ExternalId]
+      ,[Status]
+      ,[CandidateFirstName]
+      ,[CandidateLastName]
+      ,[CandidateDateOfBirth]
+  FROM [registrations].[Registration]
+  WHERE [Id] = @id";
         }
     }
 }

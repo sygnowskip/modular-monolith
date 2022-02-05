@@ -63,14 +63,20 @@ namespace ModularMonolith.Tests.Scenarios
             var examCreationResult = await httpClient.PostAsync(new Uri(_monolithApiSettings.BaseUrl, "/api/exams"),
                 examCreationRequest);
 
-            examCreationResult.IsSuccessStatusCode.Should().Be(true);
+            var response = await examCreationResult.Content.ReadAsStringAsync();
+            examCreationResult.IsSuccessStatusCode.Should().BeTrue();
 
             return await GetExamAsync(examCreationResult.Headers.Location);
         }
 
         public async Task ExamIsAvailableAsync(long examId)
         {
-            throw new NotImplementedException();
+            var uri = new Uri(_monolithApiSettings.BaseUrl, $"/api/exams/{examId}/open");
+            var httpClient = await PrepareClientAsync();
+            var openingExamResult =
+                await httpClient.PatchAsync(new Uri(_monolithApiSettings.BaseUrl, $"/api/exams/{examId}/open"), null);
+
+            openingExamResult.IsSuccessStatusCode.Should().BeTrue();
         }
 
         public async Task ExamsCountShouldBeEqualToAsync(int expectedExamsCount)
@@ -79,12 +85,12 @@ namespace ModularMonolith.Tests.Scenarios
             allExams.Count().Should().Be(expectedExamsCount);
         }
 
-        public async Task ExamShouldHaveBooking(int examId)
+        public async Task ExamShouldHaveBooking(long examId)
         {
-            throw new NotImplementedException();
+            var exam = await GetExamAsync(examId);
+            exam.Booked.Should().Be(1);
         }
-        
-        
+
         private async Task<IEnumerable<ExamDto>> GetAllExamsAsync()
         {
             var httpClient = await PrepareClientAsync();
@@ -97,11 +103,15 @@ namespace ModularMonolith.Tests.Scenarios
         private async Task<ExamDto> GetExamAsync(Uri resourceLocation)
         {
             var httpClient = await PrepareClientAsync();
-            var getResult = await httpClient.GetAsync(new Uri(_monolithApiSettings.BaseUrl,
-                resourceLocation));
+            var getResult = await httpClient.GetAsync(new Uri(_monolithApiSettings.BaseUrl, resourceLocation));
             getResult.IsSuccessStatusCode.Should().Be(true);
 
             return JsonConvert.DeserializeObject<ExamDto>(await getResult.Content.ReadAsStringAsync());
+        }
+        
+        private async Task<ExamDto> GetExamAsync(long examId)
+        {
+            return await GetExamAsync(new Uri($"/api/exams/{examId}", UriKind.Relative));
         }
 
         private Task<HttpClient> PrepareClientAsync() =>

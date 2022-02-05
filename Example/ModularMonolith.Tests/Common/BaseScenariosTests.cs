@@ -20,7 +20,7 @@ namespace ModularMonolith.Tests.Common
             ServiceProvider = ServiceProviderBuilder.Build();
             _busControl = ServiceProvider.GetRequiredService<IBusControl>();
             MonolithSettings = ServiceProvider.GetRequiredService<MonolithApiSettings>();
-            HttpClientProvider = ServiceProvider.GetRequiredService<HttpClientProvider>();
+            HttpClientProvider = ServiceProvider.GetRequiredService<IHttpClientProvider>();
             Scenarios = ServiceProvider.GetRequiredService<Scenarios.Scenarios>();
         }
 

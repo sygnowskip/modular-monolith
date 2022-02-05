@@ -15,6 +15,7 @@ SELECT [ex].[Id]
       ,[ex].[SubjectId]
 	  ,[sbj].[Name] as 'SubjectName'
       ,[ex].[Capacity]
+      ,[ex].[Booked]
       ,[ex].[RegistrationStartDate]
       ,[ex].[RegistrationEndDate]
       ,[ex].[ExamDateTime]

@@ -38,17 +38,6 @@ namespace ModularMonolith.Exams.Domain
                 ExamErrors.Actions.UnableToOpenForRegistration.Build());
         }
 
-        public Result CloseRegistration()
-        {
-            return _stateMachine.PerformIfPossible(ExamActions.CloseRegistration,
-                ExamErrors.Actions.UnableToCloseRegistration.Build());
-        }
-
-        public Result MarkAsDone()
-        {
-            return _stateMachine.PerformIfPossible(ExamActions.MarkAsDone, ExamErrors.Actions.UnableToMarkAsDone.Build());
-        }
-
         public Result Delete()
         {
             return _stateMachine.PerformIfPossible(ExamActions.Delete, ExamErrors.Actions.UnableToDelete.Build());

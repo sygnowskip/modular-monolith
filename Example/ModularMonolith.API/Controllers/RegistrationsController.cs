@@ -34,10 +34,10 @@ namespace ModularMonolith.API.Controllers
                 id => $"/api/registrations/{id}");
         }
 
-        [HttpGet, Route("{id}")]
-        public Task<IActionResult> Get(long id)
+        [HttpGet, Route("{registrationId}")]
+        public Task<IActionResult> Get(long registrationId)
         {
-            return OkOrNotFoundAsync<GetRegistrationQuery, RegistrationDto>(GetRegistrationQuery.Create(id));
+            return OkOrNotFoundAsync<GetRegistrationQuery, RegistrationDto>(GetRegistrationQuery.Create(registrationId));
         }
     }
 }
