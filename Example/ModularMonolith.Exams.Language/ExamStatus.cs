@@ -4,8 +4,6 @@
     {
         Planned,
         AvailableForRegistration,
-        ClosedForRegistration,
-        TookPlace,
         Deleted
     }
 }

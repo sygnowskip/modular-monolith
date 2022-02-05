@@ -9,6 +9,7 @@ using ModularMonolith.Contracts.Exams;
 using ModularMonolith.Exams.Domain;
 using ModularMonolith.Exams.Domain.ValueObjects;
 using ModularMonolith.Exams.Language;
+using ModularMonolith.Language;
 using ModularMonolith.Language.Locations;
 using ModularMonolith.Language.Subjects;
 

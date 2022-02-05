@@ -7,15 +7,13 @@ using Hexure.Time;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.DependencyInjection;
-using ModularMonolith.Exams.Language.Validators;
 using ModularMonolith.Exams.Persistence;
 using ModularMonolith.Language.Locations;
 using ModularMonolith.Language.Subjects;
-using ModularMonolith.Payments;
-using ModularMonolith.Persistence.Repositories;
+using ModularMonolith.Orders.Persistence;
 using ModularMonolith.Persistence.Validators;
 using ModularMonolith.ReadModels;
-using ModularMonolith.Registrations;
+using ModularMonolith.Registrations.Persistence;
 
 namespace ModularMonolith.Persistence
 {
@@ -29,8 +27,6 @@ namespace ModularMonolith.Persistence
         
         public static IServiceCollection AddWritePersistence(this IServiceCollection services, string connectionString)
         {
-            services.AddTransient<IRegistrationRepository, RegistrationRepository>();
-            services.AddTransient<IPaymentRepository, PaymentRepository>();
             services.AddDbContext<MonolithDbContext>((provider, builder) =>
                 {
                     var serviceProvider = new ServiceCollection()
@@ -51,6 +47,8 @@ namespace ModularMonolith.Persistence
 
             services.AddInterceptors();
             services.AddExamsWritePersistence<MonolithDbContext>();
+            services.AddOrdersWritePersistence<MonolithDbContext>();
+            services.AddRegistrationsWritePersistence<MonolithDbContext>();
 
             services.AddDomainEvents()
                 .WithPersistence<MonolithDbContext>();
@@ -59,7 +57,6 @@ namespace ModularMonolith.Persistence
                 provider.GetRequiredService<MonolithDbContext>());
             services.AddTransient<ILocationExistenceValidator, LocationExistenceValidator>();
             services.AddTransient<ISubjectExistenceValidator, SubjectExistenceValidator>();
-            services.AddTransient<IExamExistenceValidator, ExamExistenceValidator>();
 
             return services;
         }

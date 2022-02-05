@@ -5,13 +5,10 @@ using FluentAssertions;
 using Hexure.Events;
 using Hexure.Events.Namespace;
 using Hexure.Events.Serialization;
-using ModularMonolith.Payments.Contracts.Events;
-using ModularMonolith.Payments.Language;
-using ModularMonolith.Registrations.Contracts.Events;
+using ModularMonolith.Registrations.Events;
 using ModularMonolith.Registrations.Language;
+using Newtonsoft.Json;
 using NUnit.Framework;
-
-[assembly: EventNamespace("Tests")]
 
 namespace ModularMonolith.Tests.Unit.Events
 {
@@ -37,8 +34,8 @@ namespace ModularMonolith.Tests.Unit.Events
         [Test]
         public void ShouldSerializeDomainEvent()
         {
-            var registrationId = new RegistrationId(Guid.NewGuid());
-            var domainEvent = new RegistrationPaid(registrationId, DateTime.UtcNow);
+            var registrationId = new RegistrationId(1);
+            var domainEvent = new RegistrationPaid(registrationId, new ExternalRegistrationId(), DateTime.UtcNow);
 
             var serialized = _eventSerializer.Serialize(domainEvent);
 
@@ -60,7 +57,7 @@ namespace ModularMonolith.Tests.Unit.Events
         [Test]
         public void ShouldNotSerializeEventsFromAssembliesWithoutDefinedNamespaces()
         {
-            var domainEvent = new PaymentCompleted(new PaymentId(Guid.NewGuid()), Guid.NewGuid(), DateTime.UtcNow);
+            var domainEvent = new TestEvent(Guid.NewGuid(), DateTime.UtcNow);
 
             var serialized = _eventSerializer.Serialize(domainEvent);
 
@@ -72,9 +69,9 @@ namespace ModularMonolith.Tests.Unit.Events
         [Test]
         public void ShouldDeserializeEvent()
         {
-            var registrationId = new RegistrationId(Guid.NewGuid());
+            var registrationId = new RegistrationId(1);
             var publishedOn = DateTime.UtcNow;
-            var domainEvent = new RegistrationPaid(registrationId, publishedOn);
+            var domainEvent = new RegistrationPaid(registrationId, new ExternalRegistrationId(), publishedOn);
 
             var serialized = _eventSerializer.Serialize(domainEvent);
 
@@ -93,9 +90,10 @@ namespace ModularMonolith.Tests.Unit.Events
         {
             var domainEvent = new TestDomainEvent(DateTime.UtcNow);
 
-            var serialized = _eventSerializer.Serialize(domainEvent);
+            var serializedEvent = new SerializedEvent("Unknown", nameof(TestDomainEvent),
+                JsonConvert.SerializeObject(domainEvent));
 
-            var deserialized = _eventDeserializer.Deserialize(serialized.Value);
+            var deserialized = _eventDeserializer.Deserialize(serializedEvent);
 
             deserialized.IsSuccess.Should().BeFalse();
             deserialized.ViolatesOnly(EventDeserializerErrors.UnableToFindTypeForEvent).Should().BeTrue();

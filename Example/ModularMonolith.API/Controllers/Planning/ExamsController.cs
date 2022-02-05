@@ -56,6 +56,14 @@ namespace ModularMonolith.API.Controllers.Planning
                 id => $"/api/exams/{id}");
         }
 
+        [HttpPatch, Route("{examId}/open")]
+        [SwaggerResponse(typeof(void))]
+        public Task<IActionResult> OpenForRegistration(long examId)
+        {
+            return NoContentOrUnprocessableEntityOrNotFound(OpenExamForRegistrationCommand.Create(examId, _examExistenceValidator), 
+                DomainErrors.AggregateNotFound);
+        }
+
         [HttpPut, Route("{examId}")]
         [SwaggerResponse(typeof(void))]
         public Task<IActionResult> Edit(long examId, EditExamRequest request)

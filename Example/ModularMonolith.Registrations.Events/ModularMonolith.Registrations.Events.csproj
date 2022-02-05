@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\Source\Hexure\Hexure.csproj" />
+        <ProjectReference Include="..\ModularMonolith.Registrations.Language\ModularMonolith.Registrations.Language.csproj" />
+    </ItemGroup>
+
+</Project>

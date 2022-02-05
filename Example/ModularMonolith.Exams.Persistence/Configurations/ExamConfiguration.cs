@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Hexure.EntityFrameworkCore.SqlServer.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ModularMonolith.Exams.Domain;
@@ -13,7 +14,7 @@ namespace ModularMonolith.Exams.Persistence.Configurations
             builder.ToTable(nameof(Exam), Schemas.Exams);
             builder.HasKey(e => e.Id);
             builder.Property(e => e.Id)
-                .ValueGeneratedOnAdd();
+                .IdentifierGeneratedOnAdd();
             
             builder.OwnsOne(e => e.SubjectId, navigationBuilder =>
             {
@@ -29,6 +30,11 @@ namespace ModularMonolith.Exams.Persistence.Configurations
             {
                 navigationBuilder.Property(capacity => capacity.Value)
                     .HasColumnName(nameof(Exam.Capacity));
+            });
+            builder.OwnsOne(e => e.Booked, navigationBuilder =>
+            {
+                navigationBuilder.Property(booked => booked.Value)
+                    .HasColumnName(nameof(Exam.Booked));
             });
             builder.OwnsOne(e => e.RegistrationStartDate, navigationBuilder =>
             {

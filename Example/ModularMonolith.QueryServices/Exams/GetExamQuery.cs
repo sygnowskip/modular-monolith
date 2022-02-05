@@ -37,6 +37,7 @@ namespace ModularMonolith.QueryServices.Exams
 
         public async Task<Result<ExamDto>> Handle(GetExamQuery request, CancellationToken cancellationToken)
         {
+            //TODO: Dapper is not mapping dates as UTC, but as Unspecified
             var exam = await _dbConnection.QuerySingleAsync<ExamDto>(_queryBuilder.SingleExamQuery(),
                 new {id = request.Id});
 

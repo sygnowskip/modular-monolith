@@ -17,9 +17,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ModularMonolith.Exams.Domain\ModularMonolith.Exams.Domain.csproj" />
-    <ProjectReference Include="..\ModularMonolith.Payments.Contracts\ModularMonolith.Payments.Contracts.csproj" />
-    <ProjectReference Include="..\ModularMonolith.Payments\ModularMonolith.Payments.csproj" />
-    <ProjectReference Include="..\ModularMonolith.Registrations\ModularMonolith.Registrations.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Registrations.Domain\ModularMonolith.Registrations.Domain.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Registrations.Events\ModularMonolith.Registrations.Events.csproj" />
   </ItemGroup>
 
 </Project>

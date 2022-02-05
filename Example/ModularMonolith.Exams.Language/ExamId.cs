@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace ModularMonolith.Exams.Language
 {
-    public class ExamId : Identifier
+    public sealed class ExamId : Identifier
     {
         [JsonConstructor]
         internal ExamId(long value) : base(value)

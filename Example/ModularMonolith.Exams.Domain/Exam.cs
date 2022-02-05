@@ -4,6 +4,7 @@ using Hexure.Events;
 using Hexure.Time;
 using ModularMonolith.Exams.Domain.ValueObjects;
 using ModularMonolith.Exams.Language;
+using ModularMonolith.Language;
 using ModularMonolith.Language.Locations;
 using ModularMonolith.Language.Subjects;
 using Stateless;
@@ -15,7 +16,6 @@ namespace ModularMonolith.Exams.Domain
         private readonly ISystemTimeProvider _systemTimeProvider;
 
         private readonly StateMachine<ExamStatus, ExamActions> _stateMachine;
-
 
         protected Exam(ISystemTimeProvider systemTimeProvider)
         {
@@ -31,6 +31,7 @@ namespace ModularMonolith.Exams.Domain
         {
             LocationId = locationId;
             Capacity = capacity;
+            Booked = Booked.Zero;
             SubjectId = subjectId;
             RegistrationStartDate = registrationStartDate;
             RegistrationEndDate = registrationEndDate;
@@ -44,6 +45,7 @@ namespace ModularMonolith.Exams.Domain
         public UtcDateTime ExamDateTime { get; }
         
         public Capacity Capacity { get; private set; }
+        public Booked Booked { get; private set; }
         public UtcDate RegistrationStartDate { get; private set; }
         public UtcDate RegistrationEndDate { get; private set; }
         public ExamStatus Status { get; private set; }

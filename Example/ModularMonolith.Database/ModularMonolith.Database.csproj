@@ -20,21 +20,27 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\001_Create_Registrations_Schema.sql" />
-    <EmbeddedResource Include="Scripts\002_Create_Registration.sql" />
-    <EmbeddedResource Include="Scripts\003_Create_Schema_For_Events.sql" />
-    <EmbeddedResource Include="Scripts\004_Create_SerializedEvent_Table.sql" />
+    <EmbeddedResource Include="Scripts\001_Create_Schema_For_Events.sql" />
+    <EmbeddedResource Include="Scripts\002_Create_SerializedEvent_Table.sql" />
+    <EmbeddedResource Include="Scripts\003_Create_Read_Schema.sql" />
+    <EmbeddedResource Include="Scripts\004_Create_Subjects_And_Locations.sql" />
     <EmbeddedResource Include="Scripts\005_Create_Exam_Schema.sql" />
     <EmbeddedResource Include="Scripts\006_Create_Exam.sql" />
-    <EmbeddedResource Include="Scripts\007_Create_Read_Schema.sql" />
-    <EmbeddedResource Include="Scripts\008_Create_Subjects_And_Locations.sql" />
-    <EmbeddedResource Include="Scripts\009_Create_Exam_View.sql" />
-    <EmbeddedResource Include="Scripts\010_Remove_SerializedEvent_ProcessedOn_Column.sql" />
-    <EmbeddedResource Include="Scripts\011_Add_MessageId_Column_To_Serialized_Event_Table.sql" />
-    <EmbeddedResource Include="Scripts\012_Create_ProcessedEvent_Table.sql" />
-    <EmbeddedResource Include="Scripts\013_Clean_Up_Job_For_Processed_Events.sql" />
-    <EmbeddedResource Include="Scripts\014_Delete_Exam_View.sql" />
+    <EmbeddedResource Include="Scripts\007_Create_Exam_View.sql" />
+    <EmbeddedResource Include="Scripts\008_Remove_SerializedEvent_ProcessedOn_Column.sql" />
+    <EmbeddedResource Include="Scripts\009_Add_MessageId_Column_To_Serialized_Event_Table.sql" />
+    <EmbeddedResource Include="Scripts\010_Create_ProcessedEvent_Table.sql" />
+    <EmbeddedResource Include="Scripts\011_Clean_Up_Job_For_Processed_Events.sql" />
+    <EmbeddedResource Include="Scripts\012_Delete_Exam_View.sql" />
+    <EmbeddedResource Include="Scripts\013_Add_Booked_Column_To_Exam.sql" />
+    <EmbeddedResource Include="Scripts\014_Create_Orders_Schema.sql" />
+    <EmbeddedResource Include="Scripts\015_Create_Order.sql" />
+    <EmbeddedResource Include="Scripts\016_Create_OrderItem.sql" />
     <EmbeddedResource Include="TestData\001_Subjects_And_Locations.sql" />
+    <None Remove="Scripts\017_Create_Registrations_Schema.sql" />
+    <EmbeddedResource Include="Scripts\017_Create_Registrations_Schema.sql" />
+    <None Remove="Scripts\018_Create_Registration.sql" />
+    <EmbeddedResource Include="Scripts\018_Create_Registration.sql" />
   </ItemGroup>
 
   <ItemGroup>

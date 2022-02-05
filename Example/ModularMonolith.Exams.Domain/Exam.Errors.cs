@@ -53,5 +53,9 @@ namespace ModularMonolith.Exams.Domain
                 new Error.ErrorType(Combine(nameof(RegistrationEndDate), nameof(HasToBeSetBeforeExamDate)),
                     "Registration end date has to be set before exam date");
         }
+        
+        public static readonly Error.ErrorType NoMoreCapacityAvailable =
+            new Error.ErrorType(Combine(nameof(ExamErrors), nameof(NoMoreCapacityAvailable)),
+                "There are no more places available for this exam");
     }
 }

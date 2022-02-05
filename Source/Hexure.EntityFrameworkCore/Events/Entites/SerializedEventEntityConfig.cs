@@ -26,6 +26,7 @@ namespace Hexure.EntityFrameworkCore.Events.Entites
                     .HasColumnName(
                         $"{nameof(SerializedEventEntity.SerializedEvent)}{nameof(SerializedEvent.Type)}");
             });
+            builder.Navigation(e => e.SerializedEvent).IsRequired();
         }
     }
 }

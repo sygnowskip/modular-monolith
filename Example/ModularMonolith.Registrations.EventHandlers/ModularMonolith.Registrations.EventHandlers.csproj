@@ -8,11 +8,4 @@
     <PackageReference Include="MassTransit" Version="7.2.4" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ModularMonolith.Payments.Contracts\ModularMonolith.Payments.Contracts.csproj" />
-    <ProjectReference Include="..\ModularMonolith.Registrations.Commands\ModularMonolith.Registrations.Commands.csproj" />
-    <ProjectReference Include="..\ModularMonolith.Registrations.Contracts\ModularMonolith.Registrations.Contracts.csproj" />
-    <ProjectReference Include="..\ModularMonolith.Registrations\ModularMonolith.Registrations.csproj" />
-  </ItemGroup>
-
 </Project>

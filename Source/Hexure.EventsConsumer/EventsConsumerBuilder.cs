@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Reflection;
 using Hexure.MassTransit.RabbitMq;
 using Hexure.MassTransit.RabbitMq.Settings;
+using Hexure.Time;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Hexure.EventsConsumer
 {
@@ -16,6 +18,7 @@ namespace Hexure.EventsConsumer
         private EventsConsumerBuilder(IServiceCollection serviceCollection)
         {
             _serviceCollection = serviceCollection;
+            _serviceCollection.TryAddTransient<ISystemTimeProvider, SystemTimeProvider>();
         }
 
         public EventsConsumerBuilder WithHandlersFromAssemblyOfType<THandler>()

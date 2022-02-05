@@ -7,13 +7,14 @@ using NUnit.Framework;
 namespace ModularMonolith.Tests.Identity
 {
     [TestFixture]
-    public class IdentityTests : BaseHttpTests
+    public class IdentityTests : BaseScenariosTests
     {
         [Test]
         public async Task ShouldBeAbleToGetTokenForClient()
         {
-            var discoveryDocument = await GetDiscoveryDocumentAsync();
-            var token = await HttpClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest()
+            var httpClient = HttpClientProvider.CreateClient();
+            var discoveryDocument = await HttpClientProvider.GetDiscoveryDocumentAsync();
+            var token = await httpClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest()
             {
                 Address = discoveryDocument.TokenEndpoint,
                 ClientId = "modular-monolith-client",
@@ -27,8 +28,9 @@ namespace ModularMonolith.Tests.Identity
         [Test]
         public async Task ShouldNotGetTokenForNonExistingClient()
         {
-            var discoveryDocument = await GetDiscoveryDocumentAsync();
-            var token = await HttpClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest()
+            var httpClient = HttpClientProvider.CreateClient();
+            var discoveryDocument = await HttpClientProvider.GetDiscoveryDocumentAsync();
+            var token = await httpClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest()
             {
                 Address = discoveryDocument.TokenEndpoint,
                 ClientId = "non-existing-client",
