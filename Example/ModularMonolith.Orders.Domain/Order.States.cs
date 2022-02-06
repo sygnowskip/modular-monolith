@@ -2,7 +2,7 @@
 {
     public partial class Order
     {
-        private void ConfigureStateMachine()
+        protected override void ConfigureStates()
         {
         }
     }

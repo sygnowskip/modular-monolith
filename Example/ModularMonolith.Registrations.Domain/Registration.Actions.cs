@@ -7,13 +7,13 @@ namespace ModularMonolith.Registrations.Domain
     {
         public Result MarkAsPaid()
         {
-            return _stateMachine.PerformIfPossible(RegistrationActions.MarkAsPaid,
+            return CheckIfPossible(RegistrationActions.MarkAsPaid,
                 RegistrationErrors.Actions.UnableToMarkAsPaid.Build());
         }
 
         public Result Cancel()
         {
-            return _stateMachine.PerformIfPossible(RegistrationActions.Cancel,
+            return CheckIfPossible(RegistrationActions.Cancel,
                 RegistrationErrors.Actions.UnableToCancel.Build());
         }
     }

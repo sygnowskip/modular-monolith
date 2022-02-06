@@ -36,11 +36,10 @@
     <EmbeddedResource Include="Scripts\014_Create_Orders_Schema.sql" />
     <EmbeddedResource Include="Scripts\015_Create_Order.sql" />
     <EmbeddedResource Include="Scripts\016_Create_OrderItem.sql" />
-    <EmbeddedResource Include="TestData\001_Subjects_And_Locations.sql" />
-    <None Remove="Scripts\017_Create_Registrations_Schema.sql" />
     <EmbeddedResource Include="Scripts\017_Create_Registrations_Schema.sql" />
-    <None Remove="Scripts\018_Create_Registration.sql" />
     <EmbeddedResource Include="Scripts\018_Create_Registration.sql" />
+    <EmbeddedResource Include="Scripts\019_Create_Concurrency_Tokens.sql" />
+    <EmbeddedResource Include="TestData\001_Subjects_And_Locations.sql" />
   </ItemGroup>
 
   <ItemGroup>
