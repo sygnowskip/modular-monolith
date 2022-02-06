@@ -15,6 +15,8 @@ namespace ModularMonolith.Exams.Persistence.Configurations
             builder.HasKey(e => e.Id);
             builder.Property(e => e.Id)
                 .IdentifierGeneratedOnAdd();
+            builder.Property(e => e.DomainTimestamp)
+                .IsConcurrencyToken();
             
             builder.OwnsOne(e => e.SubjectId, navigationBuilder =>
             {

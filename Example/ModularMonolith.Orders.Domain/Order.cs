@@ -10,18 +10,10 @@ using Stateless;
 
 namespace ModularMonolith.Orders.Domain
 {
-    public partial class Order : Entity, IAggregateRoot<OrderId>
+    public partial class Order : AggregateRoot<OrderId, OrderStatus, OrderActions>
     {
-        private readonly ISystemTimeProvider _systemTimeProvider;
-
-        private readonly StateMachine<OrderStatus, OrderActions> _stateMachine;
-
-        protected Order(ISystemTimeProvider systemTimeProvider)
+        private Order(ISystemTimeProvider systemTimeProvider) : base(systemTimeProvider)
         {
-            _systemTimeProvider = systemTimeProvider;
-            _stateMachine = new StateMachine<OrderStatus, OrderActions>(() => Status, status => Status = status);
-
-            ConfigureStateMachine();
         }
 
         private Order(UtcDateTime creationDateTime, ContactData seller, ContactData buyer,
@@ -36,8 +28,6 @@ namespace ModularMonolith.Orders.Domain
             Summary = summary;
         }
 
-        public OrderId Id { get; }
-        public OrderStatus Status { get; private set; }
         public UtcDateTime CreationDateTime { get; private set; }
         public ContactData Seller { get; private set; }
         public ContactData Buyer { get; private set; }

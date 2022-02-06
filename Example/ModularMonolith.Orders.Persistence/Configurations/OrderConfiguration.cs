@@ -14,9 +14,11 @@ namespace ModularMonolith.Orders.Persistence.Configurations
         public void Configure(EntityTypeBuilder<Order> builder)
         {
             builder.ToTable(nameof(Order), Schemas.Orders);
-            builder.HasKey(e => e.Id);
-            builder.Property(e => e.Id)
+            builder.HasKey(o => o.Id);
+            builder.Property(o => o.Id)
                 .IdentifierGeneratedOnAdd();
+            builder.Property(o => o.DomainTimestamp)
+                .IsConcurrencyToken();
             
             builder.OwnsOne(o => o.CreationDateTime, navigationBuilder =>
             {

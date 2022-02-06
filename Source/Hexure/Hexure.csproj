@@ -8,6 +8,7 @@
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
     <PackageReference Include="NewId" Version="3.0.3" />
+    <PackageReference Include="Stateless" Version="5.11.0" />
   </ItemGroup>
 
   <ItemGroup>

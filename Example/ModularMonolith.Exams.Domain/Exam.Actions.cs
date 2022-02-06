@@ -14,11 +14,11 @@ namespace ModularMonolith.Exams.Domain
             if (Capacity == capacity)
                 return Result.Ok(this);
 
-            return _stateMachine.PerformIfPossible(ExamActions.ChangeCapacity, ExamErrors.Actions.UnableToChangeCapacity.Build())
+            return CheckIfPossible(ExamActions.ChangeCapacity, ExamErrors.Actions.UnableToChangeCapacity.Build())
                 .OnSuccess(() =>
                 {
                     Capacity = capacity;
-                    RaiseEvent(new ExamCapacityChanged(Id, Capacity.Value, _systemTimeProvider.UtcNow));
+                    RaiseEvent(new ExamCapacityChanged(Id, Capacity.Value, SystemTimeProvider.UtcNow));
                     return this;
                 });
         }
@@ -34,13 +34,13 @@ namespace ModularMonolith.Exams.Domain
 
         public Result OpenForRegistration()
         {
-            return _stateMachine.PerformIfPossible(ExamActions.OpenForRegistration,
+            return CheckIfPossible(ExamActions.OpenForRegistration,
                 ExamErrors.Actions.UnableToOpenForRegistration.Build());
         }
 
         public Result Delete()
         {
-            return _stateMachine.PerformIfPossible(ExamActions.Delete, ExamErrors.Actions.UnableToDelete.Build());
+            return CheckIfPossible(ExamActions.Delete, ExamErrors.Actions.UnableToDelete.Build());
         }
 
         public Result Book()
@@ -61,15 +61,15 @@ namespace ModularMonolith.Exams.Domain
             if (RegistrationStartDate == registrationStartDate)
                 return Result.Ok(this);
             
-            return _stateMachine.PerformIfPossible(ExamActions.ChangeRegistrationStartDate,
+            return CheckIfPossible(ExamActions.ChangeRegistrationStartDate,
                     ExamErrors.RegistrationStartDate.UnableToChange.Build())
-                .AndEnsure(() => _systemTimeProvider.UtcNow.Date < registrationStartDate.Value,
+                .AndEnsure(() => SystemTimeProvider.UtcNow.Date < registrationStartDate.Value,
                     ExamErrors.RegistrationStartDate.HasToBeSetInTheFuture.Build())
                 .OnSuccess(() =>
                 {
                     RegistrationStartDate = registrationStartDate;
                     RaiseEvent(new ExamRegistrationStartDateChanged(Id, RegistrationStartDate.Value,
-                        _systemTimeProvider.UtcNow));
+                        SystemTimeProvider.UtcNow));
                     return this;
                 });
         }
@@ -79,9 +79,9 @@ namespace ModularMonolith.Exams.Domain
             if (RegistrationEndDate == registrationEndDate)
                 return Result.Ok(this);
 
-            return _stateMachine.PerformIfPossible(ExamActions.ChangeRegistrationEndDate,
+            return CheckIfPossible(ExamActions.ChangeRegistrationEndDate,
                     ExamErrors.RegistrationEndDate.UnableToChange.Build())
-                .AndEnsure(() => _systemTimeProvider.UtcNow.Date < registrationEndDate.Value,
+                .AndEnsure(() => SystemTimeProvider.UtcNow.Date < registrationEndDate.Value,
                     ExamErrors.RegistrationEndDate.HasToBeSetInTheFuture.Build())
                 .AndEnsure(() => registrationEndDate.Value < ExamDateTime.Value.Date, 
                     ExamErrors.RegistrationEndDate.HasToBeSetBeforeExamDate.Build())
@@ -89,7 +89,7 @@ namespace ModularMonolith.Exams.Domain
                 {
                     RegistrationEndDate = registrationEndDate;
                     RaiseEvent(new ExamRegistrationEndDateChanged(Id, RegistrationEndDate.Value,
-                        _systemTimeProvider.UtcNow));
+                        SystemTimeProvider.UtcNow));
                     return this;
                 });
         }

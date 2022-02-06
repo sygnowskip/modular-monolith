@@ -5,26 +5,26 @@ namespace ModularMonolith.Exams.Domain
 {
     public partial class Exam
     {
-        private void ConfigureStateMachine()
+        protected override void ConfigureStates()
         {
-            _stateMachine.Configure(ExamStatus.Planned)
+            StateMachine.Configure(ExamStatus.Planned)
                 .Permit(ExamActions.Delete, ExamStatus.Deleted)
                 .PermitReentry(ExamActions.ChangeCapacity)
                 .PermitReentry(ExamActions.ChangeRegistrationStartDate)
                 .PermitReentry(ExamActions.ChangeRegistrationEndDate)
                 .Permit(ExamActions.OpenForRegistration, ExamStatus.AvailableForRegistration);
 
-            _stateMachine.Configure(ExamStatus.AvailableForRegistration)
-                .OnEntry(() => RaiseEvent(new ExamAvailable(Id, _systemTimeProvider.UtcNow)))
+            StateMachine.Configure(ExamStatus.AvailableForRegistration)
+                .OnEntry(() => RaiseEvent(new ExamAvailable(Id, SystemTimeProvider.UtcNow)))
                 .PermitReentry(ExamActions.Book)
                 .PermitReentry(ExamActions.Free);
 
-            _stateMachine.Configure(ExamStatus.Deleted)
-                .OnEntry(() => RaiseEvent(new ExamDeleted(Id, _systemTimeProvider.UtcNow)));
+            StateMachine.Configure(ExamStatus.Deleted)
+                .OnEntry(() => RaiseEvent(new ExamDeleted(Id, SystemTimeProvider.UtcNow)));
         }
     }
 
-    internal enum ExamActions
+    public enum ExamActions
     {
         OpenForRegistration,
         Delete,
